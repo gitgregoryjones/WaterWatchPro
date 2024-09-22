@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Report Page</title>
+    <style>
+        @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css');
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #CFE1D1;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .row {
+            padding: 1rem;
+        }
+
+        /* Header row */
+        .header {
+            background-color: inherit;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 1rem 0;
+        }
+
+        .header img {
+            max-height: 80px;
+        }
+
+        /* Second row with 3 columns */
+        .content-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .column {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            flex-direction: column;
+        }
+
+        .center-column {
+            flex: 1.25;
+        }
+
+        /* Button styles */
+        .button {
+            background-color: #549D50; 
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            margin: 10px 0;
+            font-size: 1rem;
+            cursor: pointer;
+            text-transform: uppercase; 
+            min-width: 120px; 
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: background-color 0.3s ease;
+        }
+
+        .button:hover, .button:active, .active {
+            background-color: #2592A8;
+        }
+
+        /* Button container */
+        .button-container {
+            display: flex;
+            gap: 20px;
+        }
+
+        /* Form styles */
+        .form-container {
+            display: flex;
+            flex-direction: column;
+            text-align: left;
+            width: 100%;
+        }
+
+        .form-group {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            background-color: #549D50;
+            color: white;
+            padding: 5px;
+            border-radius: 5px;
+            width: 100%;
+        }
+
+        .form-group label {
+            margin: 0;
+            width: 30%;
+        }
+
+        .form-group input {
+            background-color: inherit;
+            color: white;
+            font-weight: bold;
+            font-size: 17px;
+            border: none;
+            width: 70%;
+            padding: 5px;
+        }
+
+        /* Set fields to read-only except for radio and email */
+        input[type="text"]:not([id="email"]),
+        input[type="text"]:not([name="report-format"]),
+        input[type="text"]:not([id="data-type"]) {
+            pointer-events: none;
+        }
+
+        /* Radio group styling */
+        .radio-group {
+            display: flex;
+            justify-content: center;
+            background-color: #549D50;
+            color: white;
+            padding: 5px;
+            border-radius: 5px;
+            margin-bottom: 1rem; /* 1 rem of space below this row */
+        }
+
+        .radio-group label {
+            margin: 0 10px;
+            background-color: inherit;
+        }
+
+        .form-submit {
+            display: flex;
+            justify-content: center;
+        }
+
+        /* Make radio buttons match color scheme */
+        input[type="radio"] {
+            accent-color: #549D50;
+        }
+
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <!-- First Row: Header -->
+        <div class="row header">
+            <img src="https://i.postimg.cc/RhnPqttf/Logo.png" alt="Logo">
+        </div>
+
+        <!-- Second Row: 3 Columns -->
+        <div class="row content-row">
+            <div class="column"></div> <!-- Empty first column -->
+
+            <!-- Second column with buttons -->
+            <div class="column center-column">
+                <div class="button-container">
+                    <button class="button active">Report</button>
+                    <a href="map.html" style="text-decoration:none"><button class="button">Return</button></a>
+                </div>
+            </div>
+
+            <div class="column"></div> <!-- Empty third column -->
+        </div>
+
+        <!-- Third Row: Form -->
+        <div class="row content-row">
+            <div class="column"></div> <!-- Empty first column -->
+
+            <!-- Second column with form -->
+            <div class="column center-column">
+                <form class="form-container">
+                    <div class="form-group">
+                        <label for="location">Location:</label>
+                        <input type="text" id="location" name="location" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label for="date-range">Date Range:</label>
+                        <input type="text" id="date-range" name="date-range" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label for="time-range">Time Range:</label>
+                        <input type="text" id="time-range" name="time-range" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label for="data-type">Data Type Hourly or 15 Min:</label>
+                        <input type="text" id="data-type" name="data-type">
+                    </div>
+                    <div class="radio-group">
+                        <label for="pdf">PDF</label>
+                        <input type="radio" id="pdf" name="report-format" value="pdf">
+                        <label for="csv">CSV</label>
+                        <input type="radio" id="csv" name="report-format" value="csv">
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email Report To:</label>
+                        <input type="email" id="email" name="email">
+                    </div>
+                    <div class="form-submit">
+                        <button class="button" type="submit">Submit</button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="column"></div> <!-- Empty third column -->
+        </div>
+
+    </div>
+
+    <script>
+        // Function to get URL parameters
+        function getURLParameter(name) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(name) || '';
+        }
+
+        // Populate fields from URL
+        window.onload = function() {
+            document.getElementById('location').value = getURLParameter('location');
+            document.getElementById('date-range').value = getURLParameter('date-range');
+            document.getElementById('time-range').value = getURLParameter('time-range');
+            document.getElementById('data-type').value = getURLParameter('data-type');
+        }
+    </script>
+
+</body>
+
+</html>
