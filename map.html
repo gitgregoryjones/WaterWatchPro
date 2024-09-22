@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather Dashboard</title>
+    <style>
+        @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css');
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #CFE1D1;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .row {
+            padding: 1rem;
+        }
+
+        /* Header row */
+        .header {
+            background-color: inherit;
+            color: white;
+            display: flex;
+            align-items: center;
+            padding: 1rem 0;
+        }
+
+        .header img {
+            margin-left: 0rem;
+            margin-top: -1.25rem;
+            max-height: 80px;
+        }
+
+        /* Second row with 3 columns */
+        .content-row {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+        }
+
+        .column {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            flex-direction: column;
+        }
+
+        .center-column {
+            flex: 1.25;
+        }
+
+        /* Placeholder div in center column */
+        #map {
+            width: 400px;
+            height: 300px;
+            border-radius: 10px;
+        }
+
+        /* Button styles */
+        .button {
+            background-color: #549D50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            margin: 10px 0;
+            font-size: 1rem;
+            cursor: pointer;
+            text-transform: uppercase;
+            min-width: 120px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: background-color 0.3s ease;
+        }
+
+        .button:hover,
+        .button:active {
+            background-color: #2592A8;
+        }
+
+        /* Button container for the third row */
+        .button-container {
+            display: flex;
+            justify-content: space-around;
+            gap: 20px;
+            width: 100%;
+        }
+
+        .scrollable-div {
+            width: 48%;
+            height: 300px;
+            overflow-y: scroll;
+            border: 1px solid #549D50;
+            background-color: #CFE1D1;
+            position: relative;
+            font-weight: bold;
+        }
+
+        .contacts {
+            background-color: #CFE1D1;
+        }
+
+        .scrollable-option {
+            background-color: white;
+            color: #549D50;
+            padding: 10px;
+            margin: 5px;
+            cursor: pointer;
+            text-align: left;
+        }
+
+        .contacts>.scrollable-option {
+            color: black;
+            font-weight: bold;
+            background-color: silver;
+            margin-bottom: .1rem;
+        }
+
+        .scrollable-option:hover {
+            background-color: #f0f0f0;
+        }
+
+        .contacts>.scrollable-option:hover {
+            background-color: inherit;
+        }
+
+        .chart-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 80%;
+            margin: 0 auto;
+        }
+
+        canvas {
+            max-width: 100%;
+        }
+
+        /* Contact container styles */
+        .contact-container {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            margin-top: 20px;
+            background-color: inherit;
+        }
+
+        /* Date/Time Display */
+        .date-time-display {
+            margin-top: 10px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: #549D50;
+        }
+
+        /* Adjust for responsive design */
+        @media (max-width: 768px) {
+            .header img {
+                max-height: 50px;
+            }
+
+            #map {
+                width: 300px;
+                height: 200px;
+            }
+
+            .scrollable-div {
+                width: 100%;
+                margin-bottom: 10px;
+            }
+
+            .button-container {
+                flex-direction: row;
+            }
+        }
+    </style>
+
+    <!-- Include the Google Maps API with your API key -->
+  	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+</head>
+
+<body>
+    <div class="container">
+        <!-- First Row: Header -->
+        <div class="row header">
+            <img src="https://i.postimg.cc/RhnPqttf/Logo.png" alt="Logo">
+        </div>
+
+        <!-- Second Row: 3 Columns -->
+        <div class="row content-row">
+            <div class="column">
+                <button class="button report">Report</button>
+                <button class="button query">Query</button>
+                <a href="contact.html" style="text-decoration:none"><button class="button">Contact</button></a>
+            </div>
+            <div class="column center-column">
+                <div id="map"></div>
+            </div>
+            <div class="column">
+                <div class="contact-container">
+                    <!-- Custom scrollable div for cities -->
+                    <div class="scrollable-div">
+                        <div class="scrollable-option" onclick="updateMap('Atlanta')">&gt; Atlanta</div>
+                        <div class="scrollable-option" onclick="updateMap('New York')">&gt; New York</div>
+                        <div class="scrollable-option" onclick="updateMap('Los Angeles')">&gt; Los Angeles</div>
+                        <!-- Other locations here -->
+                    </div>
+
+                    <!-- Custom scrollable div for contacts -->
+                    <div class="scrollable-div contacts" contenteditable="false">
+                        <div class="scrollable-option">John Doe<br>(555) 123-4567</div>
+                        <!-- Other contacts here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Third Row - 3 buttons in the second column -->
+        <div class="row content-row">
+            <div class="column"></div>
+
+            <div class="column center-column">
+                <div class="button-container">
+                    <button class="button" data-timeframe="1hr">1 HR</button>
+                    <button class="button" data-timeframe="15min">15 MIN</button>
+                    <input type="datetime-local" id="datetime" class="button">
+                </div>
+                <div class="date-time-display" id="selected-datetime"></div>
+            </div>
+
+            <div class="column"></div>
+        </div>
+
+        <!-- Fourth Row - Chart -->
+        <div class="row content-row">
+            <div class="column"></div>
+
+            <div class="column center-column chart-container">
+                <canvas id="myChart"></canvas>
+            </div>
+
+            <div class="column"></div>
+        </div>
+    </div>
+
+    <script>
+        // Chart.js setup
+        var ctx = document.getElementById('myChart').getContext('2d');
+        var myChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: [9, 10, 11, 12, 13, 14, 15, 16, 17, 18],
+                datasets: [{
+                    label: 'Y Values',
+                    data: [0.025, 0.06, 0.09, 0.13, 0, 0, 0.23, 0.05, 0, 0],
+                    backgroundColor: '#2592A8',
+                    borderColor: '#2592A8',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        max: 0.25,
+                        ticks: {
+                            stepSize: 0.05
+                        }
+                    },
+                    x: {
+                        ticks: {
+                            stepSize: 1
+                        }
+                    }
+                }
+            }
+        });
+
+        // Google Maps and city coordinates
+        const cities = {
+            'Atlanta': {
+                lat: 33.7490,
+                lng: -84.3880
+            },
+            'New York': {
+                lat: 40.7128,
+                lng: -74.0060
+            },
+            'Los Angeles': {
+                lat: 34.0522,
+                lng: -118.2437
+            },
+            'Chicago': {
+                lat: 41.8781,
+                lng: -87.6298
+            },
+            'Houston': {
+                lat: 29.7604,
+                lng: -95.3698
+            },
+            'Phoenix': {
+                lat: 33.4484,
+                lng: -112.0740
+            },
+            'Philadelphia': {
+                lat: 39.9526,
+                lng: -75.1652
+            },
+            'San Antonio': {
+                lat: 29.4241,
+                lng: -98.4936
+            },
+            'San Diego': {
+                lat: 32.7157,
+                lng: -117.1611
+            },
+            'Dallas': {
+                lat: 32.7767,
+                lng: -96.7970
+            },
+            'San Jose': {
+                lat: 37.3382,
+                lng: -121.8863
+            }
+        };
+
+        let map;
+
+        function initMap() {
+            const dcity = cities["Atlanta"];
+            map = new google.maps.Map(document.getElementById('map'), {
+                center: {
+                    lat: dcity.lat,
+                    lng: dcity.lng
+                },
+                zoom: 10
+            });
+        }
+
+        function updateMap(city) {
+            const coords = cities[city];
+            map.setCenter(coords);
+            map.setZoom(10);
+        }
+
+        // Initialize map on page load
+        window.onload = initMap;
+
+        // Display the selected date/time below the calendar input
+        document.getElementById('datetime').addEventListener('change', function() {
+            const selectedDateTime = this.value;
+            document.getElementById('selected-datetime').textContent = `Selected: ${selectedDateTime}`;
+        });
+      
+      // Handle the "Report" button click
+document.querySelector('.query').addEventListener('click', function() {
+    if (!selectedLocation) {
+        // Show the validation dialog if any field is missing
+        showDialog('Please select a location, timeframe, and date/time.');
+    } else {
+        // Redirect to report.html with query parameters
+      //location=New+York&data-type=1hr&date-range=2024-09-05&time-range=19%3A11
+        const params = new URLSearchParams({
+            location: selectedLocation
+        });
+      /*
+      // Handle the "Report" button click
+document.querySelector('.report').addEventListener('click', function() {
+    if (!selectedLocation || !selectedTimeframe || !selectedDateTime) {
+        // Show the validation dialog if any field is missing
+        showDialog('Please select a location, timeframe, and date/time.');
+    } else {
+        // Redirect to report.html with query parameters
+      //location=New+York&data-type=1hr&date-range=2024-09-05&time-range=19%3A11
+        const params = new URLSearchParams({
+            location: selectedLocation,
+            "data-type": selectedTimeframe,
+            "date-range": selectedDateTime.split("T")[0],
+			"time-range": selectedDateTime.split("T")[1]
+        });
+        window.location.href = `report.html?${params.toString()}`;
+    }
+});
+      */
+        window.location.href = `query.html?${params.toString()}`;
+    }
+});
+    </script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDB1H16XfSPZDH2Nztq23llhWHr5kdsgGs"></script>
+    <script src="map.js"></script> <!-- Include the map.js file for logic -->
+</body>
+
+</html>
