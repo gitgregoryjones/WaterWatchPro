@@ -396,6 +396,32 @@ document.querySelector('.report').addEventListener('click', function() {
                 window.location.href = `query.html?${params.toString()}`;
             }
         });
+
+        window.onload = function() {
+            initMap(); // Initialize the map
+
+            // Retrieve saved locations from localStorage
+            const savedLocations = JSON.parse(localStorage.getItem('locations')) || [];
+
+            // Find the location list div
+            const locationList = document.querySelector('.scrollable-div');
+
+            // Add saved locations to the location list
+            savedLocations.forEach(location => {
+                const locationDiv = document.createElement('div');
+                locationDiv.classList.add('scrollable-option');
+                console.log(JSON.stringify(location))
+                locationDiv.innerHTML = `&gt; ${location.locationName}`; // Assuming the 'name' property exists in the saved location
+                cities[location.locationName] = {
+                    lat: location.latitude,
+                    lng: location.longitude
+                }
+                locationDiv.onclick = function() {
+                    updateMap(location.locationName);
+                };
+                locationList.appendChild(locationDiv);
+            });
+        };
     </script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDB1H16XfSPZDH2Nztq23llhWHr5kdsgGs"></script>
