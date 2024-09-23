@@ -196,6 +196,43 @@
         canvas {
             max-width: 100%;
         }
+        .number-spinner {
+    display: inline-flex;
+    align-items: center;
+    position: relative;
+}
+
+#threshold {
+    width: 80px;
+    text-align: center;
+    border: 1px solid #ccc;
+    height: 40px;
+    padding: 0 10px;
+    font-size: 16px;
+}
+
+.spinner-btn {
+    position: absolute;
+    left: 80px;
+    width: 30px;
+    height: 20px;
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+    cursor: pointer;
+    text-align: center;
+    font-size: 12px;
+    line-height: 20px;
+    padding: 0;
+}
+
+#increase {
+    top: 0;
+    border-bottom: none;
+}
+
+#decrease {
+    bottom: 0;
+}
     </style>
     <!-- Chart.js CDN -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -243,9 +280,13 @@
                         <input type="date" id="end-date-range" name="end-date-range">
                     </div>
                     <div class="submit-group">
-                        <label for="end-date-range">Threshold:</label>
-                        <input type="text" id="threshold" name="threshold" placeholder="">
-                    </div>
+    <label for="threshold">Threshold:</label>
+    <div class="number-spinner">
+        <button type="button" class="spinner-btn" id="decrease">▼</button>
+        <input type="number" id="threshold" step="0.05" value="0.25" required/>
+        <button type="button" class="spinner-btn" id="increase">▲</button>
+    </div>
+</div>
                     <button type="submit" class="button">Submit</button>
                 </form>
             </div>
@@ -314,6 +355,19 @@
             document.getElementById('date-range').value = getURLParameter('date-range');
             document.getElementById('time-range').value = getURLParameter('time-range');
            // document.getElementById('data-type').value = getURLParameter('data-type');
+
+          // Spinner functionality for threshold
+const input = document.getElementById('threshold');
+const increaseBtn = document.getElementById('increase');
+const decreaseBtn = document.getElementById('decrease');
+
+increaseBtn.addEventListener('click', () => {
+    input.stepUp();  // increases by step value
+});
+
+decreaseBtn.addEventListener('click', () => {
+    input.stepDown();  // decreases by step value
+});
         }
     </script>
 
