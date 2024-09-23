@@ -3,12 +3,35 @@ document.addEventListener("DOMContentLoaded", function () {
     const selectAllButtons = document.querySelectorAll('.select-all');
     const unselectAllButtons = document.querySelectorAll('.unselect-all');
 
-    locationLists.forEach(list => {
-        list.addEventListener('dragstart', handleDragStart);
-        list.addEventListener('dragover', handleDragOver);
-        list.addEventListener('drop', handleDrop);
+  	let listboxesOpt =       document.querySelectorAll('.scrollable-option');
+        // Add event delegation to handle clicks on options
+listboxesOpt.forEach(opt => {
+    opt.addEventListener('click', function(e) {
+        //if (e.target && e.target.classList.contains('scrollable-option')) {
+            e.target.classList.toggle('selected');
+       // }
     });
+});
 
+// Function to move selected options from one list to another
+function moveOptions(fromList, toList) {
+    const selectedOptions = Array.from(fromList.querySelectorAll('.scrollable-option.selected'));
+
+    selectedOptions.forEach(option => {
+        option.classList.remove('selected');  // Deselect when moving
+        toList.appendChild(option);
+    });
+}
+
+// Event listeners for the arrow buttons
+document.getElementById('moveToRight').addEventListener('click', function() {
+    moveOptions(document.getElementById('leftList'), document.getElementById('rightList'));
+});
+
+document.getElementById('moveToLeft').addEventListener('click', function() {
+    moveOptions(document.getElementById('rightList'), document.getElementById('leftList'));
+});
+    
     // Select All button functionality
     selectAllButtons.forEach((button, index) => {
         button.addEventListener('click', () => selectAll(locationLists[index]));
@@ -30,60 +53,5 @@ document.addEventListener("DOMContentLoaded", function () {
         const options = list.querySelectorAll('.scrollable-option');
         options.forEach(option => option.classList.remove('selected'));
     }
-
-    // Drag start event
-    function handleDragStart(e) {
-        const selectedElements = document.querySelectorAll('.scrollable-option.selected');
-        const selectedData = [...selectedElements].map(el => ({ id: el.id, html: el.innerHTML }));
-        
-        e.dataTransfer.setData('application/json', JSON.stringify(selectedData));
-        e.dataTransfer.effectAllowed = 'move';
-    }
-
-    // Drag over event
-    function handleDragOver(e) {
-        e.preventDefault(); // Prevent default to allow dropping
-        e.dataTransfer.dropEffect = 'move';
-    }
-
-    // Drop event
-    function handleDrop(e) {
-        e.preventDefault();
-        const droppedData = JSON.parse(e.dataTransfer.getData('application/json'));
-
-        if (e.target.classList.contains('scrollable-div')) {
-            droppedData.forEach(data => {
-                const draggedElement = document.getElementById(data.id);
-
-                // Clone the dragged element for the new list
-                const clonedElement = draggedElement.cloneNode(true);
-                clonedElement.classList.remove('dragging');
-                clonedElement.classList.remove('selected');
-                clonedElement.setAttribute('draggable', true);
-
-                // Generate a new unique ID for the cloned element
-                const newId = `opt-${Math.floor(Math.random() * 10000)}`;
-                clonedElement.id = newId;
-
-                // Append the cloned element to the new list
-                e.target.appendChild(clonedElement);
-
-                // Remove the original element from its source list
-                draggedElement.remove();
-            });
-        }
-    }
-
-    // Allow draggable on all list items and assign unique IDs
-    const options = document.querySelectorAll('.scrollable-option');
-    var optionNumber = 1;
-    options.forEach(option => {
-        option.setAttribute('draggable', true);
-        option.setAttribute('id', `opt-${optionNumber++}`);
-
-        // Add multi-select functionality (toggle selected class)
-        option.addEventListener('click', (e) => {
-            e.target.classList.toggle('selected');
-        });
-    });
-});
+})
+   
