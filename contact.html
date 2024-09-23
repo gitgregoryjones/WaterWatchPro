@@ -180,7 +180,6 @@
         .arrows i:hover {
             color: #2592A8;
         }
-
     </style>
     <script src="contact.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
@@ -195,7 +194,8 @@
 
         <!-- Second Row: 3 Columns, with buttons in the second column -->
         <div class="row content-row">
-            <div class="column"></div> <!-- Empty first column -->
+            <div class="column"></div>
+            <!-- Empty first column -->
 
             <div class="column center-column">
                 <div class="button-container">
@@ -206,7 +206,8 @@
                 </div>
             </div>
 
-            <div class="column"></div> <!-- Empty third column -->
+            <div class="column"></div>
+            <!-- Empty third column -->
         </div>
 
         <!-- Third Row: Contact List, Assigned, Un-assigned -->
@@ -229,7 +230,7 @@
             <!-- First column with Add/Delete buttons -->
             <div class="column">
                 <div class="two-button-container little">
-                  <a href="addcontact.html" style="text-decoration:none"><button class="button">Add New Contact</button></a>
+                    <a href="addcontact.html" style="text-decoration:none"><button class="button">Add New Contact</button></a>
                     <button class="button">Delete Selected</button>
                 </div>
             </div>
@@ -237,7 +238,7 @@
             <!-- Second column with Select All/Unselect All buttons -->
             <div class="column">
                 <div class="two-button-container little">
-                     <button class="button select-all">Select All</button>
+                    <button class="button select-all">Select All</button>
                     <button class="button unselect-all">Un-select All</button>
                 </div>
             </div>
@@ -285,51 +286,22 @@
                     </div>
                     <!-- Arrows for moving between lists -->
                 </div>
-                </div>
-            
+            </div>
+
             <div class="column">
-                    <!-- Right list (div-based list) -->
-                    
-                    <div id="rightList" class="list-box">
-                        <div class="scrollable-option">Phoenix</div>
-                        <div class="scrollable-option">Philadelphia</div>
-                        <div class="scrollable-option">San Antonio</div>
-                        <div class="scrollable-option">San Diego</div>
-                    </div>
-             
+                <!-- Right list (div-based list) -->
+
+                <div id="rightList" class="list-box">
+                    <div class="scrollable-option">Phoenix</div>
+                    <div class="scrollable-option">Philadelphia</div>
+                    <div class="scrollable-option">San Antonio</div>
+                    <div class="scrollable-option">San Diego</div>
+                </div>
+
             </div>
         </div>
     </div>
-<script>
-        // Toggle selected class on click
-        document.querySelectorAll('.scrollable-option').forEach(option => {
-            option.addEventListener('click', function () {
-                option.classList.toggle('selected');
-            });
-        });
-
-        // Function to move selected options from one list to another
-        function moveOptions(fromList, toList) {
-            const selectedOptions = Array.from(fromList.querySelectorAll('.scrollable-option.selected'));
-            
-            
-            selectedOptions.forEach(option => {
-                //alert(option.outerHTML)
-                option.classList.remove('selected');  // Deselect when moving
-                //alert(toList.outerHTML)
-                toList.appendChild(option);
-            });
-        }
-
-        // Event listeners for the arrow buttons
-        document.getElementById('moveToRight').addEventListener('click', function () {
-            moveOptions(document.getElementById('leftList'), document.getElementById('rightList'));
-        });
-
-        document.getElementById('moveToLeft').addEventListener('click', function () {
-            moveOptions(document.getElementById('rightList'), document.getElementById('leftList'));
-        });
-    </script>
+   
 </body>
 
 </html>
