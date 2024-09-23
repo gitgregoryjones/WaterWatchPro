@@ -186,8 +186,8 @@
     </style>
 
     <!-- Include the Google Maps API with your API key -->
-  	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
 </head>
 
 <body>
@@ -362,19 +362,19 @@
             const selectedDateTime = this.value;
             document.getElementById('selected-datetime').textContent = `Selected: ${selectedDateTime}`;
         });
-      
-      // Handle the "Report" button click
-document.querySelector('.query').addEventListener('click', function() {
-    if (!selectedLocation) {
-        // Show the validation dialog if any field is missing
-        showDialog('Please select a location, timeframe, and date/time.');
-    } else {
-        // Redirect to report.html with query parameters
-      //location=New+York&data-type=1hr&date-range=2024-09-05&time-range=19%3A11
-        const params = new URLSearchParams({
-            location: selectedLocation
-        });
-      /*
+
+        // Handle the "Report" button click
+        document.querySelector('.query').addEventListener('click', function() {
+            if (!selectedLocation) {
+                // Show the validation dialog if any field is missing
+                showDialog('Please select a location, timeframe, and date/time.');
+            } else {
+                // Redirect to report.html with query parameters
+                //location=New+York&data-type=1hr&date-range=2024-09-05&time-range=19%3A11
+                const params = new URLSearchParams({
+                    location: selectedLocation
+                });
+                /*
       // Handle the "Report" button click
 document.querySelector('.report').addEventListener('click', function() {
     if (!selectedLocation || !selectedTimeframe || !selectedDateTime) {
@@ -393,13 +393,14 @@ document.querySelector('.report').addEventListener('click', function() {
     }
 });
       */
-        window.location.href = `query.html?${params.toString()}`;
-    }
-});
+                window.location.href = `query.html?${params.toString()}`;
+            }
+        });
     </script>
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDB1H16XfSPZDH2Nztq23llhWHr5kdsgGs"></script>
-    <script src="map.js"></script> <!-- Include the map.js file for logic -->
+    <script src="map.js"></script>
+    <!-- Include the map.js file for logic -->
 </body>
 
 </html>
