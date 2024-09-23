@@ -114,6 +114,45 @@
         .form-group-checkbox input {
             margin-right: 10px;
         }
+
+        .number-spinner {
+            display: inline-flex;
+            align-items: center;
+            position: relative;
+        }
+
+        #threshold {
+            width: 80px;
+            text-align: center;
+            border: 1px solid #ccc;
+            height: 40px;
+            padding: 0 10px;
+            font-size: 16px;
+        }
+
+        .spinner-btn {
+            position: absolute;
+            left: 80px;
+            width: 30px;
+            height: 20px;
+            background-color: #f0f0f0;
+            border: 1px solid #ccc;
+            cursor: pointer;
+            text-align: center;
+            font-size: 12px;
+            line-height: 20px;
+            padding: 0;
+        }
+
+        #increase {
+            top: 0;
+            border-bottom: none;
+        }
+
+        #decrease {
+            bottom: 0;
+        }
+
     </style>
     <!-- Google Maps API -->
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDB1H16XfSPZDH2Nztq23llhWHr5kdsgGs"></script>
@@ -128,7 +167,7 @@
 
         <!-- Form for adding location -->
         <div class="form-container">
-            <form action="#" method="POST">
+            <form id="locationForm" action="#" method="POST">
                 <div class="form-group">
                     <label for="latitude">Latitude of Location:</label>
                     <input type="number" step="0.000001" id="latitude" name="latitude" required>
@@ -147,7 +186,11 @@
                 </div>
                 <div class="form-group">
                     <label for="threshold">RapidRain Threshold:</label>
-                    <input type="number" step="0.01" id="threshold" name="threshold" value="0.25" required>
+                    <div class="number-spinner">
+                        <button type="button" class="spinner-btn" id="decrease">▼</button>
+                        <input type="number" id="threshold" step="0.05" value="0.25" required/>
+                        <button type="button" class="spinner-btn" id="increase">▲</button>
+                    </div>
                 </div>
 
                 <!-- Buttons for form submission and return -->
@@ -175,12 +218,63 @@
         }
 
         // Event listener for the checkbox to use current location
-        document.getElementById('useCurrentLocation').addEventListener('change', function () {
+        document.getElementById('useCurrentLocation').addEventListener('change', function() {
             if (this.checked) {
                 getCurrentLocation();
             } else {
                 document.getElementById('latitude').value = '';
                 document.getElementById('longitude').value = '';
+            }
+        });
+
+        // Spinner functionality for threshold
+        const input = document.getElementById('threshold');
+        const increaseBtn = document.getElementById('increase');
+        const decreaseBtn = document.getElementById('decrease');
+
+        increaseBtn.addEventListener('click', () => {
+            input.stepUp();
+        });
+
+        decreaseBtn.addEventListener('click', () => {
+            input.stepDown();
+        });
+
+        // Function to save location to localStorage after validation
+        document.getElementById('locationForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent form submission
+
+            // Get form values
+            const latitude = document.getElementById('latitude').value;
+            const longitude = document.getElementById('longitude').value;
+            const locationName = document.getElementById('locationName').value;
+            const threshold = document.getElementById('threshold').value;
+
+            // Validate form values
+            if (latitude && longitude && locationName && threshold) {
+                // Create a location object
+                const newLocation = {
+                    latitude: parseFloat(latitude),
+                    longitude: parseFloat(longitude),
+                    locationName: locationName,
+                    threshold: parseFloat(threshold)
+                };
+
+                // Get existing locations from localStorage
+                let locations = JSON.parse(localStorage.getItem('locations')) || [];
+
+                // Add the new location
+                locations.push(newLocation);
+
+                // Save updated locations array back to localStorage
+                localStorage.setItem('locations', JSON.stringify(locations));
+
+                alert('Location successfully added!');
+
+                // Reset the form
+                this.reset();
+            } else {
+                alert('Please fill out all fields.');
             }
         });
     </script>
