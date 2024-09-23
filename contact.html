@@ -134,8 +134,56 @@
             column-gap: 1.5rem;
         }
 
+        .list-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .list-box {
+            width: 200px;
+            height: 300px;
+            border: 1px solid #549D50;
+            background-color: #CFE1D1;
+            overflow-y: scroll;
+        }
+
+        .list-box .scrollable-option {
+            background-color: white;
+            color: #549D50;
+            padding: 10px;
+            margin: 5px;
+            cursor: pointer;
+            text-align: left;
+            user-select: none;
+        }
+
+        .list-box .scrollable-option.selected {
+            background-color: #2592A8;
+            color: white;
+        }
+
+        .arrows {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .arrows i {
+            font-size: 2rem;
+            cursor: pointer;
+            color: #549D50;
+        }
+
+        .arrows i:hover {
+            color: #2592A8;
+        }
+
     </style>
     <script src="contact.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 
 <body>
@@ -223,38 +271,65 @@
 
             <!-- Second Column: Locations (from map.html) -->
             <div class="column">
-                <div class="scrollable-div">
-                    <div class="scrollable-option">&gt; New York</div>
-                    <div class="scrollable-option">&gt; Los Angeles</div>
-                    <div class="scrollable-option">&gt; Chicago</div>
-                    <div class="scrollable-option">&gt; Houston</div>
-                    <div class="scrollable-option">&gt; Phoenix</div>
-                    <div class="scrollable-option">&gt; Philadelphia</div>
-                    <div class="scrollable-option">&gt; San Antonio</div>
-                    <div class="scrollable-option">&gt; San Diego</div>
-                    <div class="scrollable-option">&gt; Dallas</div>
-                    <div class="scrollable-option">&gt; San Jose</div>
+                <div class="list-container">
+                    <!-- Left list (div-based list) -->
+                    <div id="leftList" class="list-box">
+                        <div class="scrollable-option">New York</div>
+                        <div class="scrollable-option">Los Angeles</div>
+                        <div class="scrollable-option">Chicago</div>
+                        <div class="scrollable-option">Houston</div>
+                    </div>
+                    <div class="arrows">
+                        <i id="moveToRight" class="fas fa-arrow-right"></i>
+                        <i id="moveToLeft" class="fas fa-arrow-left"></i>
+                    </div>
+                    <!-- Arrows for moving between lists -->
                 </div>
-            </div>
-
-            <!-- Third Column: Locations (same as second column) -->
+                </div>
+            
             <div class="column">
-                <div class="scrollable-div">
-                    <div class="scrollable-option">&gt; New York</div>
-                    <div class="scrollable-option">&gt; Los Angeles</div>
-                    <div class="scrollable-option">&gt; Chicago</div>
-                    <div class="scrollable-option">&gt; Houston</div>
-                    <div class="scrollable-option">&gt; Phoenix</div>
-                    <div class="scrollable-option">&gt; Philadelphia</div>
-                    <div class="scrollable-option">&gt; San Antonio</div>
-                    <div class="scrollable-option">&gt; San Diego</div>
-                    <div class="scrollable-option">&gt; Dallas</div>
-                    <div class="scrollable-option">&gt; San Jose</div>
-                </div>
+                    <!-- Right list (div-based list) -->
+                    
+                    <div id="rightList" class="list-box">
+                        <div class="scrollable-option">Phoenix</div>
+                        <div class="scrollable-option">Philadelphia</div>
+                        <div class="scrollable-option">San Antonio</div>
+                        <div class="scrollable-option">San Diego</div>
+                    </div>
+             
             </div>
         </div>
     </div>
+<script>
+        // Toggle selected class on click
+        document.querySelectorAll('.scrollable-option').forEach(option => {
+            option.addEventListener('click', function () {
+                option.classList.toggle('selected');
+            });
+        });
 
+        // Function to move selected options from one list to another
+        function moveOptions(fromList, toList) {
+            const selectedOptions = Array.from(fromList.querySelectorAll('.scrollable-option.selected'));
+            
+            
+            selectedOptions.forEach(option => {
+                //alert(option.outerHTML)
+                option.classList.remove('selected');  // Deselect when moving
+                //alert(toList.outerHTML)
+                toList.appendChild(option);
+            });
+        }
+
+        // Event listeners for the arrow buttons
+        document.getElementById('moveToRight').addEventListener('click', function () {
+            moveOptions(document.getElementById('leftList'), document.getElementById('rightList'));
+        });
+
+        document.getElementById('moveToLeft').addEventListener('click', function () {
+            moveOptions(document.getElementById('rightList'), document.getElementById('leftList'));
+        });
+    </script>
 </body>
 
 </html>
