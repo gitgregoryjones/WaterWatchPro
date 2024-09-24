@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Location Page</title>
+    <style>
+        @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css');
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #CFE1D1;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .row {
+            padding: 1rem;
+        }
+
+        .header {
+            background-color: inherit;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 1rem 0;
+        }
+
+        .header img {
+            max-height: 80px;
+        }
+
+        .content-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .column {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            flex-direction: column;
+        }
+
+        .center-column {
+            flex: 1.25;
+        }
+
+        .button {
+            background-color: #549D50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            margin: 10px 0;
+            font-size: 1rem;
+            cursor: pointer;
+            text-transform: uppercase;
+            min-width: 120px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: background-color 0.3s ease;
+        }
+
+        .button:hover,
+        .button:active,
+        .active {
+            background-color: #2592A8;
+        }
+
+        .button-container {
+            display: flex;
+            justify-content: space-around;
+            gap: 20px;
+        }
+
+        .two-button-container {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            justify-content: center;
+        }
+
+        .little {
+            min-width: 20px;
+            max-width: 80px;
+            display: flex;
+            flex-direction: row;
+        }
+
+        .little button {
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .scrollable-div {
+            width: 100%;
+            height: 300px;
+            overflow-y: scroll;
+            border: 1px solid #549D50;
+            background-color: white;
+            position: relative;
+            margin-top: 1rem;
+        }
+
+        .scrollable-option {
+            background-color: white;
+            color: #549D50;
+            padding: 10px;
+            margin: 5px;
+            cursor: pointer;
+            text-align: left;
+        }
+
+        .scrollable-option:hover {
+            background-color: #f0f0f0;
+        }
+
+        .content-row:last-child {
+            column-gap: 1.5rem;
+        }
+
+        .list-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .list-box {
+            width: 200px;
+            height: 300px;
+            border: 1px solid #549D50;
+            background-color: #CFE1D1;
+            overflow-y: scroll;
+        }
+
+        .list-box .scrollable-option {
+            background-color: white;
+            color: #549D50;
+            padding: 10px;
+            margin: 5px;
+            cursor: pointer;
+            text-align: left;
+            user-select: none;
+        }
+
+        .list-box .scrollable-option.selected {
+            background-color: #2592A8;
+            color: white;
+        }
+
+        .arrows {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .arrows i {
+            font-size: 2rem;
+            cursor: pointer;
+            color: #549D50;
+        }
+
+        .arrows i:hover {
+            color: #2592A8;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="row header">
+            <img src="https://i.postimg.cc/RhnPqttf/Logo.png" alt="Logo">
+        </div>
+
+        <div class="row content-row">
+            <div class="column"></div>
+
+            <div class="column center-column">
+                <div class="button-container">
+                    <a href="contact.html" style="text-decoration:none"><button class="button">Contact</button></a>
+                    <button class="button active">Location</button>
+                    <button class="button">Save</button>
+                    <a href="map.html" style="text-decoration:none"><button class="button">Return</button></a>
+                </div>
+            </div>
+
+            <div class="column"></div>
+        </div>
+
+        <div class="row content-row">
+            <div class="column">
+                <button class="button">Location List</button>
+            </div>
+
+            <div class="column">
+                <button class="button">Assigned</button>
+            </div>
+
+            <div class="column">
+                <button class="button">Un-assigned</button>
+            </div>
+        </div>
+
+        <div class="row content-row">
+            <div class="column">
+                <div class="two-button-container little">
+                    <a href="addlocation.html" style="text-decoration:none"><button class="button">Add New Location</button></a>
+                    <button class="button" id="deleteLocation">Delete Selected Location(s)</button>
+                </div>
+            </div>
+
+            <div class="column">
+                <div class="two-button-container little">
+                    <button class="button select-all" id="leftSelectAllLocations">Select All</button>
+                    <button class="button unselect-all" id="rightDeselectAllLocations">Un-select All</button>
+                </div>
+            </div>
+
+            <div class="column">
+                <div class="two-button-container little">
+                    <button class="button select-all" id="rightSelectAllLocations">Select All</button>
+                    <button class="button unselect-all" id="rightDeselectAllLocations">Un-select All</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="row content-row">
+            <div class="column">
+                <div class="list-box" id="locationList"></div>
+            </div>
+
+            <div class="column">
+                <div class="list-box" id="customerList"></div>
+            </div>
+
+            <div class="column">
+                <div class="list-box" id="assignedCustomerList"></div>
+            </div>
+
+            <div class="arrows">
+                <i id="moveToAssigned" class="fas fa-arrow-right"></i>
+                <i id="moveToUnassigned" class="fas fa-arrow-left"></i>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        window.onload = function () {
+            const locationList = document.getElementById('locationList');
+            const customerList = document.getElementById('customerList');
+            const assignedCustomerList = document.getElementById('assignedCustomerList');
+
+            const locations = JSON.parse(localStorage.getItem('locations')) || [];
+            locations.forEach(location => {
+                const locationDiv = document.createElement('div');
+                locationDiv.classList.add('scrollable-option');
+                locationDiv.textContent = location.locationName;
+                locationList.appendChild(locationDiv);
+            });
+
+            const customers = JSON.parse(localStorage.getItem('customers')) || [];
+            customers.forEach(customer => {
+                const customerDiv = document.createElement('div');
+                customerDiv.classList.add('scrollable-option');
+                customerDiv.innerHTML = `${customer.name}<br>${customer.email}<br>${customer.phone}`;
+                customerList.appendChild(customerDiv);
+            });
+
+            const moveToAssigned = document.getElementById('moveToAssigned');
+            const moveToUnassigned = document.getElementById('moveToUnassigned');
+
+            moveToAssigned.addEventListener('click', function () {
+                const selectedCustomer = document.querySelector('#customerList .selected');
+                if (selectedCustomer) {
+                    assignedCustomerList.appendChild(selectedCustomer);
+                    selectedCustomer.classList.remove('selected');
+                }
+            });
+
+            moveToUnassigned.addEventListener('click', function () {
+                const selectedAssignedCustomer = document.querySelector('#assignedCustomerList .selected');
+                if (selectedAssignedCustomer) {
+                    customerList.appendChild(selectedAssignedCustomer);
+                    selectedAssignedCustomer.classList.remove('selected');
+                }
+            });
+
+            document.addEventListener('click', function (e) {
+                if (e.target.classList.contains('scrollable-option')) {
+                    if (e.target.parentElement.id === 'customerList' || e.target.parentElement.id === 'assignedCustomerList') {
+                        e.target.classList.toggle('selected');
+                    }
+                }
+            });
+        };
+    </script>
+</body>
+
+</html>
