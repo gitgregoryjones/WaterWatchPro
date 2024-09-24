@@ -1,10 +1,10 @@
 window.addEventListener("load", function () {
     const locationLists = document.querySelectorAll('.scrollable-div'); // Select all location lists
-    const selectAllButtonLeft = document.querySelectorAll('leftUnassignedSelectAll');
-    const unselectAllButtonLeft = document.getElementId('rightUnassignedDeSelectAll');
+    const selectAllButtonLeft = document.getElementById('leftUnassignedSelectAll');
+    const unselectAllButtonLeft = document.getElementById('rightUnassignedDeSelectAll');
 
-    const selectAllButtonRight = document.querySelectorAll('rightSelectAll');
-    const unselectAllButtonRight = document.getElementId('rightDeSelectAll');
+    const selectAllButtonRight = document.getElementById('rightSelectAll');
+    const unselectAllButtonRight = document.getElementById('rightDeSelectAll');
 
   	
         // Add event delegation to handle clicks on options
