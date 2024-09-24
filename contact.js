@@ -5,14 +5,8 @@ window.addEventListener("load", function () {
 
   	let listboxesOpt =       document.querySelectorAll('.scrollable-option');
         // Add event delegation to handle clicks on options
-listboxesOpt.forEach(opt => {
-    opt.addEventListener('click', function(e) {
-        //if (e.target && e.target.classList.contains('scrollable-option')) {
-            e.target.classList.toggle('selected');
-       // }
-    });
 
-            // Retrieve contacts from localStorage and append them to the contact list
+         // Retrieve contacts from localStorage and append them to the contact list
             const contacts = JSON.parse(localStorage.getItem("contacts")) || [];
             const contactList = document.getElementById('contactList');
 
@@ -25,6 +19,15 @@ listboxesOpt.forEach(opt => {
                 contactDiv.innerHTML = `${contact.name}<br>${contact.email}<br>${contact.phone}`;
                 contactList.appendChild(contactDiv);
             });
+    
+listboxesOpt.forEach(opt => {
+    opt.addEventListener('click', function(e) {
+        //if (e.target && e.target.classList.contains('scrollable-option')) {
+            e.target.classList.toggle('selected');
+       // }
+    });
+
+       
   
 });
 
