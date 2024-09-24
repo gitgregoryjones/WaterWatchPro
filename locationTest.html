@@ -270,7 +270,7 @@
                 locationList.appendChild(locationDiv);
             });
 
-            const customers = JSON.parse(localStorage.getItem('customers')) || [];
+            const customers = JSON.parse(localStorage.getItem('contacts')) || [];
             customers.forEach(customer => {
                 const customerDiv = document.createElement('div');
                 customerDiv.classList.add('scrollable-option');
