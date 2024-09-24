@@ -18,6 +18,11 @@ window.addEventListener("load", function () {
             contactDiv.classList.add('scrollable-option');
             contactDiv.innerHTML = `${contact.name}<br>${contact.email}<br>${contact.phone}`;
             contactList.appendChild(contactDiv);
+            contactDiv.addEventListener('click', function(e) {
+                //if (e.target && e.target.classList.contains('scrollable-option')) {
+                    e.target.classList.toggle('selected');
+               // }
+            });
         });
 
         //Now that the contacts are there.  Add event listener for each
