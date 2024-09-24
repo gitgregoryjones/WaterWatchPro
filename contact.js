@@ -17,6 +17,8 @@ listboxesOpt.forEach(opt => {
             const contactList = document.getElementById('contactList');
 
             // Append each contact to the scrollable div
+            console.log(`Read Contacts as ${contacts.length}`);
+            console.log(`contacts in memory is ${localStorage.getItem("contacts")}`)
             contacts.forEach(contact => {
                 const contactDiv = document.createElement('div');
                 contactDiv.classList.add('scrollable-option');
