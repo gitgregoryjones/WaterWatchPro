@@ -3,7 +3,7 @@ window.addEventListener("load", function () {
     const selectAllButtons = document.querySelectorAll('.select-all');
     const unselectAllButtons = document.querySelectorAll('.unselect-all');
 
-  	let listboxesOpt =       document.querySelectorAll('.scrollable-option');
+  	
         // Add event delegation to handle clicks on options
 
      // Retrieve contacts from localStorage and append them to the contact list
@@ -19,6 +19,9 @@ window.addEventListener("load", function () {
             contactDiv.innerHTML = `${contact.name}<br>${contact.email}<br>${contact.phone}`;
             contactList.appendChild(contactDiv);
         });
+
+        //Now that the contacts are there.  Add event listener for each
+        let listboxesOpt =       document.querySelectorAll('.scrollable-option');
     
         listboxesOpt.forEach(opt => {
             opt.addEventListener('click', function(e) {
