@@ -123,14 +123,14 @@
             const email = document.getElementById("email").value;
 
             // Save the customer info to local storage
-            const customerInfo = { name, phone, email };
-            let customers = localStorage.getItem("customers");
-            if(customers){
-                customers[customers.length] = customerInfo;
+            const contactInfo = { name, phone, email };
+            let contacts = localStorage.getItem("contacts");
+            if(contacts){
+                contacts[customers.length] = contactInfo;
             } else {
-                customers = [customerInfo];
+                contacts = [contactInfo];
             }
-            localStorage.setItem("customers", JSON.stringify(customerInfo));
+            localStorage.setItem("contacts", JSON.stringify(contacts));
 
             // Show a success message
             const successMessage = document.createElement("div");
