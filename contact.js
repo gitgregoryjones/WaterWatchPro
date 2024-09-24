@@ -22,11 +22,12 @@ window.addEventListener("load", function () {
                 
                 
                 locationList.appendChild(locationDiv);
+                /*
                 locationDiv.addEventListener('click', function(e) {
                     
                     e.target.classList.toggle('selected');
                     console.log('Add Location selected events');
-                });
+                });*/
             });
     
   	
@@ -52,20 +53,7 @@ window.addEventListener("load", function () {
             });
         });
 
-        //Now that the contacts are there.  Add event listener for each
-        let listboxesOpt =       document.querySelectorAll('.scrollable-option');
-    
-        listboxesOpt.forEach(opt => {
-            opt.addEventListener('click', function(e) {
-                //if (e.target && e.target.classList.contains('scrollable-option')) {
-                    e.target.classList.toggle('selected');
-               // }
-                console.log('add list events');
-            });
-        
-               
-          
-        });
+       
 
     // Function to move selected options from one list to another
     function moveOptions(fromList, toList) {
@@ -163,13 +151,30 @@ function deleteSelectedContacts() {
 document.getElementById('deleteContact').addEventListener('click', deleteSelectedContacts);
 
 // Add selection toggle functionality for contacts
+/*
 document.querySelectorAll('.scrollable-div.contacts .scrollable-option').forEach(option => {
     option.addEventListener('click', function() {
         // Toggle the 'selected' class when a contact is clicked
         option.classList.toggle('selected');
     });
 });
+*/
 
+     //Now that the contacts are there.  Add event listener for each
+        let listboxesOpt =       document.querySelectorAll('.scrollable-option');
+    
+        listboxesOpt.forEach(opt => {
+            opt.addEventListener('click', function(e) {
+                //if (e.target && e.target.classList.contains('scrollable-option')) {
+                    e.target.classList.toggle('selected');
+               // }
+              
+            });
+              console.log(`add list events for ${opt.outerHTML}`);
+        
+               
+          
+        });
     
 })
    
