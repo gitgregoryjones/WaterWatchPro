@@ -4,7 +4,7 @@ window.addEventListener("load", function () {
     const unselectAllButtonLeft = document.getElementId('rightUnassignedDeSelectAll');
 
     const selectAllButtonRight = document.querySelectorAll('rightSelectAll');
-    const unselectAllButtonRight = document.getElementId('rightUnassignedDeSelectAll');
+    const unselectAllButtonRight = document.getElementId('rightDeSelectAll');
 
   	
         // Add event delegation to handle clicks on options
