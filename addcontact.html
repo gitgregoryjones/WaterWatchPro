@@ -124,7 +124,7 @@
 
             // Save the customer info to local storage
             const contactInfo = { name, phone, email };
-            let contacts = localStorage.getItem("contacts");
+            let contacts = JSON.parse(localStorage.getItem("contacts")) || [];
             if(contacts){
                 contacts[contacts.length] = contactInfo;
             } else {
