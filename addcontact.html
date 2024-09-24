@@ -124,7 +124,13 @@
 
             // Save the customer info to local storage
             const customerInfo = { name, phone, email };
-            localStorage.setItem("customerInfo", JSON.stringify(customerInfo));
+            let customers = localStorage.getItem("customers");
+            if(customers){
+                customers[customers.length] = customerInfo;
+            } else {
+                customers = [customerInfo];
+            }
+            localStorage.setItem("customers", JSON.stringify(customerInfo));
 
             // Show a success message
             const successMessage = document.createElement("div");
