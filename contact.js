@@ -1,7 +1,7 @@
 window.addEventListener("load", function () {
     const locationLists = document.querySelectorAll('.scrollable-div'); // Select all location lists
     const selectAllButtonLeft = document.getElementById('leftUnassignedSelectAll');
-    const unselectAllButtonLeft = document.getElementById('rightUnassignedDeSelectAll');
+    const unselectAllButtonLeft = document.getElementById('leftUnassignedDeSelectAll');
 
     const selectAllButtonRight = document.getElementById('rightSelectAll');
     const unselectAllButtonRight = document.getElementById('rightDeSelectAll');
