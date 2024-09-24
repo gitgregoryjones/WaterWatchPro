@@ -82,6 +82,8 @@ window.addEventListener("load", function () {
     //Event Listeners for Delete Buttons, etc 
     // Function to handle the deletion of selected contacts
 function deleteSelectedContacts() {
+     // Remove the corresponding entries from local storage
+        let contacts = JSON.parse(localStorage.getItem('contacts')) || [];
     // Get all the selected options from the contact list
     const contactList = document.querySelectorAll('.scrollable-div.contacts .scrollable-option.selected');
     
@@ -97,13 +99,8 @@ function deleteSelectedContacts() {
     if (confirmation) {
         // Iterate through all selected contacts and remove them from the DOM
         contactList.forEach(option => {
-            option.remove();
-        });
 
-        // Remove the corresponding entries from local storage
-        let contacts = JSON.parse(localStorage.getItem('contacts')) || [];
-        
-        // Update the contacts array by filtering out the deleted ones
+             // Update the contacts array by filtering out the deleted ones
         contacts = contacts.filter(contact => {
             return ![...contactList].some(selectedOption => {
                 const selectedContact = selectedOption.innerHTML.trim().split("<br>");
@@ -111,6 +108,14 @@ function deleteSelectedContacts() {
                        contact.phone === selectedContact[1];
             });
         });
+
+            
+            option.remove();
+        });
+
+       
+        
+       
 
         // Save the updated contacts list back to local storage
         localStorage.setItem('contacts', JSON.stringify(contacts));
