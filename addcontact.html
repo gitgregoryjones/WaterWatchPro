@@ -126,7 +126,7 @@
             const contactInfo = { name, phone, email };
             let contacts = localStorage.getItem("contacts");
             if(contacts){
-                contacts[customers.length] = contactInfo;
+                contacts[contacts.length] = contactInfo;
             } else {
                 contacts = [contactInfo];
             }
