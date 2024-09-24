@@ -13,7 +13,7 @@ window.addEventListener("load", function () {
             
 
             // Add saved locations to the location list
-            savedLocations.forEach(location => {
+            locationList && savedLocations.forEach(location => {
                 const locationDiv = document.createElement('div');
                 locationDiv.classList.add('scrollable-option');
                 console.log(JSON.stringify(location))
