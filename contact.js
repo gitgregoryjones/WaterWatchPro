@@ -39,21 +39,21 @@ function moveOptions(fromList, toList) {
 }
 
 // Event listeners for the arrow buttons
-document.getElementById('moveToRight').addEventListener('click', function() {
+document.getElementById('moveToRight') && document.getElementById('moveToRight').addEventListener('click', function() {
     moveOptions(document.getElementById('leftList'), document.getElementById('rightList'));
 });
 
-document.getElementById('moveToLeft').addEventListener('click', function() {
+document.getElementById('moveToLeft') && document.getElementById('moveToLeft').addEventListener('click', function() {
     moveOptions(document.getElementById('rightList'), document.getElementById('leftList'));
 });
     
     // Select All button functionality
-    selectAllButtons.forEach((button, index) => {
+    selectAllButtons && selectAllButtons.forEach((button, index) => {
         button.addEventListener('click', () => selectAll(locationLists[index]));
     });
 
     // Un-select All button functionality
-    unselectAllButtons.forEach((button, index) => {
+    unselectAllButtons && unselectAllButtons.forEach((button, index) => {
         button.addEventListener('click', () => unselectAll(locationLists[index]));
     });
 
