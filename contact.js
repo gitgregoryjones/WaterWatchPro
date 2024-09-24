@@ -1,11 +1,32 @@
 window.addEventListener("load", function () {
-    const locationLists = document.querySelectorAll('.scrollable-div'); // Select all location lists
+    const locationList = document.getElementById('leftList'); // Select all location lists
     const selectAllButtonLeft = document.getElementById('leftUnassignedSelectAll');
     const unselectAllButtonLeft = document.getElementById('leftUnassignedDeSelectAll');
 
     const selectAllButtonRight = document.getElementById('rightSelectAll');
     const unselectAllButtonRight = document.getElementById('rightDeSelectAll');
 
+
+    const savedLocations = JSON.parse(localStorage.getItem('locations')) || [];
+
+            // Find the location list div
+            
+
+            // Add saved locations to the location list
+            savedLocations.forEach(location => {
+                const locationDiv = document.createElement('div');
+                locationDiv.classList.add('scrollable-option');
+                console.log(JSON.stringify(location))
+                locationDiv.innerHTML = `&gt; ${location.locationName}`; // Assuming the 'name' property exists in the saved location
+                
+                locationDiv.addEventListener('click', function(e) {
+                    
+                    e.target.classList.toggle('selected');
+                });
+                
+                locationList.appendChild(locationDiv);
+            });
+    
   	
         // Add event delegation to handle clicks on options
 
