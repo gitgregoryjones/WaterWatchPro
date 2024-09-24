@@ -19,12 +19,13 @@ window.addEventListener("load", function () {
                 console.log(JSON.stringify(location))
                 locationDiv.innerHTML = `&gt; ${location.locationName}`; // Assuming the 'name' property exists in the saved location
                 
+                
+                
+                locationList.appendChild(locationDiv);
                 locationDiv.addEventListener('click', function(e) {
                     
                     e.target.classList.toggle('selected');
                 });
-                
-                locationList.appendChild(locationDiv);
             });
     
   	
