@@ -1,7 +1,10 @@
 window.addEventListener("load", function () {
     const locationLists = document.querySelectorAll('.scrollable-div'); // Select all location lists
-    const selectAllButtons = document.querySelectorAll('.select-all');
-    const unselectAllButtons = document.querySelectorAll('.unselect-all');
+    const selectAllButtonLeft = document.querySelectorAll('leftUnassignedSelectAll');
+    const unselectAllButtonLeft = document.getElementId('rightUnassignedDeSelectAll');
+
+    const selectAllButtonRight = document.querySelectorAll('rightSelectAll');
+    const unselectAllButtonRight = document.getElementId('rightUnassignedDeSelectAll');
 
   	
         // Add event delegation to handle clicks on options
@@ -58,15 +61,21 @@ window.addEventListener("load", function () {
         moveOptions(document.getElementById('rightList'), document.getElementById('leftList'));
     });
         
-    // Select All button functionality
-    selectAllButtons && selectAllButtons.forEach((button, index) => {
-        button.addEventListener('click', () => selectAll(locationLists[index]));
-    });
+    // Select All button functionality right List
+    selectAllButtonRight && selectAllButtonRight.addEventListener('click', () => selectAll(document.getElementById("rightList")));
+ 
     
-    // Un-select All button functionality
-    unselectAllButtons && unselectAllButtons.forEach((button, index) => {
-        button.addEventListener('click', () => unselectAll(locationLists[index]));
-    });
+    // Un-select All button functionality right List
+    unselectAllButtonRight && unselectAllButtonRight.addEventListener('click', () => unselectAll(document.getElementById("rightList")));
+
+      // Select All button functionality Left List
+    selectAllButtonLeft && selectAllButtonLeft.addEventListener('click', () => selectAll(document.getElementById("leftList")));
+ 
+    
+    // Un-select All button functionality left List
+    unselectAllButtonLeft && unselectAllButtonLeft.addEventListener('click', () => unselectAll(document.getElementById("leftList")));
+    
+    
     
     // Select all options in the list
     function selectAll(list) {
