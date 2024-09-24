@@ -11,6 +11,19 @@ listboxesOpt.forEach(opt => {
             e.target.classList.toggle('selected');
        // }
     });
+
+            // Retrieve contacts from localStorage and append them to the contact list
+            const contacts = JSON.parse(localStorage.getItem("contacts")) || [];
+            const contactList = document.getElementById('contactList');
+
+            // Append each contact to the scrollable div
+            contacts.forEach(contact => {
+                const contactDiv = document.createElement('div');
+                contactDiv.classList.add('scrollable-option');
+                contactDiv.innerHTML = `${contact.name}<br>${contact.email}<br>${contact.phone}`;
+                contactList.appendChild(contactDiv);
+            });
+  
 });
 
 // Function to move selected options from one list to another
