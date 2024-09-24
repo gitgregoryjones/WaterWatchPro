@@ -25,6 +25,7 @@ window.addEventListener("load", function () {
                 locationDiv.addEventListener('click', function(e) {
                     
                     e.target.classList.toggle('selected');
+                    console.log('Add Location selected events');
                 });
             });
     
@@ -46,6 +47,7 @@ window.addEventListener("load", function () {
             contactDiv.addEventListener('click', function(e) {
                 //if (e.target && e.target.classList.contains('scrollable-option')) {
                     e.target.classList.toggle('selected');
+                
                // }
             });
         });
@@ -58,6 +60,7 @@ window.addEventListener("load", function () {
                 //if (e.target && e.target.classList.contains('scrollable-option')) {
                     e.target.classList.toggle('selected');
                // }
+                console.log('add list events');
             });
         
                
