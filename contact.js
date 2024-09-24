@@ -143,7 +143,7 @@ function deleteSelectedContacts() {
 }
 
 // Add an event listener to the "Delete Selected" button
-document.getElementById('deleteContact').addEventListener('click', deleteSelectedContacts);
+document.getElementById('deleteContact') && document.getElementById('deleteContact').addEventListener('click', deleteSelectedContacts);
 
 // Add selection toggle functionality for contacts
 /*
