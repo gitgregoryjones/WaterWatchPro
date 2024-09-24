@@ -1,4 +1,4 @@
-document.addEventListener("DOMContentLoaded", function () {
+window.addEventListener("load", function () {
     const locationLists = document.querySelectorAll('.scrollable-div'); // Select all location lists
     const selectAllButtons = document.querySelectorAll('.select-all');
     const unselectAllButtons = document.querySelectorAll('.unselect-all');
