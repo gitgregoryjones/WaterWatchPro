@@ -6,6 +6,7 @@ window.addEventListener("load", function () {
     const selectAllButtonRight = document.getElementById('rightSelectAll');
     const unselectAllButtonRight = document.getElementById('rightDeSelectAll');
 
+    var setUpMapLocations = null;
 
     const savedLocations = JSON.parse(localStorage.getItem('locations')) || [];
 
