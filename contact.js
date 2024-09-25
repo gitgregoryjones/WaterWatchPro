@@ -82,7 +82,8 @@ window.addEventListener("load", function () {
     
     // Un-select All button functionality left List
     unselectAllButtonLeft && unselectAllButtonLeft.addEventListener('click', () => unselectAll(document.getElementById("leftList")));
-    
+
+    setUpMapLocations && setUpMapLocations();
     
     
     // Select all options in the list
