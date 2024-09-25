@@ -421,7 +421,7 @@ document.querySelector('.report').addEventListener('click', function() {
             }
         });
 
-        window.onload = function() {
+        function setUpMapLocations() {
             initMap(); // Initialize the map
 
             // Retrieve saved locations from localStorage
