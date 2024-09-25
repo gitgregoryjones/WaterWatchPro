@@ -6,7 +6,7 @@ window.addEventListener("load", function () {
     const selectAllButtonRight = document.getElementById('rightSelectAll');
     const unselectAllButtonRight = document.getElementById('rightDeSelectAll');
 
-    var setUpMapLocations = null;
+    
 
     const savedLocations = JSON.parse(localStorage.getItem('locations')) || [];
 
@@ -84,7 +84,11 @@ window.addEventListener("load", function () {
     // Un-select All button functionality left List
     unselectAllButtonLeft && unselectAllButtonLeft.addEventListener('click', () => unselectAll(document.getElementById("leftList")));
 
-    setUpMapLocations && setUpMapLocations();
+    try {
+    setUpMapLocations();
+    } catch (e){
+        console.log(`Setup locations not defined on non-map pages `);
+    }
     
     
     // Select all options in the list
