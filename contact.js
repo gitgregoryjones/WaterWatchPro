@@ -162,20 +162,29 @@ document.querySelectorAll('.scrollable-div.contacts .scrollable-option').forEach
 */
 
      //Now that the contacts are there.  Add event listener for each
-        let listboxesOpt =       document.querySelectorAll('.scrollable-option');
+    let listboxesOpt =       document.querySelectorAll('.scrollable-option');
     
         listboxesOpt.forEach(opt => {
             opt.addEventListener('click', function(e) {
                 //if (e.target && e.target.classList.contains('scrollable-option')) {
-                    e.target.classList.toggle('selected');
-               // }
+                 e.target.classList.toggle("selected")
+                 
+                if(e.target.parentElement.classList.contains("nomulti") ){
+                    bro =  e.target.parentElement.children;
+                   for(i=0; i < e.target.parentElement.children.length; i++){
+                        console.log("Looping buddies and length is " + e.target.parentElement.children.length)
+                        console.log(`${bro[i]} == ${e.target}, ${bro[i] == e.target}`)
+                        if(bro[i] != e.target)
+                            bro[i].classList.remove("selected");
+                    }
+                    
+                    
+                 
+                }
+                
               
             });
-              console.log(`add list events for ${opt.outerHTML}`);
-        
-               
-          
-        });
+        })
     
 })
    
