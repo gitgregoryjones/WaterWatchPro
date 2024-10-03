@@ -467,5 +467,9 @@
             font-size: 18px;
             margin-top: 10px;
         }
-        
+        .arrows {
+    display: flex;
+    flex-direction: column;
+    font-size: 3rem;
+}
  
