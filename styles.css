@@ -276,5 +276,7 @@
     width: 600px;
     height: 73.5px;
 }
-
+ .active {
+        background-color:#2592A8;
+    }
  
