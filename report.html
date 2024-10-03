@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -57,100 +58,68 @@
         .center-column {
             flex: 1.25;
         }
+/* Form container styles */
+.form-container {
+    display: flex;
+    flex-direction: column;
+    gap: 15px; /* Add spacing between rows */
+    text-align: left;
+    width: 100%;
+    max-width: 500px; /* Optional: Set max-width for the form */
+    margin: 0 auto; /* Center the form */
+}
 
-        /* Button styles */
-        .button {
-            background-color: #549D50; 
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            margin: 10px 0;
-            font-size: 1rem;
-            cursor: pointer;
-            text-transform: uppercase; 
-            min-width: 120px; 
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            transition: background-color 0.3s ease;
-        }
+/* Ensure labels and inputs are aligned */
+.form-group, .radio-group, .form-button-container {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    width: 100%;
+}
+.form-button-container {
+    flex-direction:row;
+    }
+/* Label and input alignment */
+.form-group label, .form-group input, .radio-group label {
+    width: 100%;
+}
 
-        .button:hover, .button:active, .active {
-            background-color: #2592A8;
-        }
+/* Styling for input fields */
+.form-group input {
+    padding: 10px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    background-color: #549D50;
+    color: white;
+    font-weight: bold;
+    width: 100%;
+}
 
-        /* Button container */
-        .button-container {
-            display: flex;
-            gap: 20px;
-        }
+/* Radio buttons in a row */
+.radio-group {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
 
-        /* Form styles */
-        .form-container {
-            display: flex;
-            flex-direction: column;
-            text-align: left;
-            width: 100%;
-        }
+.radio-group label {
+    margin-right: 10px;
+}
 
-        .form-group {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 10px;
-            background-color: #549D50;
-            color: white;
-            padding: 5px;
-            border-radius: 5px;
-            width: 100%;
-        }
+/* Styling for radio buttons */
+input[type="radio"] {
+    accent-color: #549D50;
+    margin-right: 10px;
+}
 
-        .form-group label {
-            margin: 0;
-            width: 30%;
-        }
+/* Button container */
+.form-button-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+}
 
-        .form-group input {
-            background-color: inherit;
-            color: white;
-            font-weight: bold;
-            font-size: 17px;
-            border: none;
-            width: 70%;
-            padding: 5px;
-        }
-
-        /* Set fields to read-only except for radio and email */
-        input[type="text"]:not([id="email"]),
-        input[type="text"]:not([name="report-format"]),
-        input[type="text"]:not([id="data-type"]) {
-            pointer-events: none;
-        }
-
-        /* Radio group styling */
-        .radio-group {
-            display: flex;
-            justify-content: center;
-            background-color: #549D50;
-            color: white;
-            padding: 5px;
-            border-radius: 5px;
-            margin-bottom: 1rem; /* 1 rem of space below this row */
-        }
-
-        .radio-group label {
-            margin: 0 10px;
-            background-color: inherit;
-        }
-
-        .form-submit {
-            display: flex;
-            justify-content: center;
-        }
-
-        /* Make radio buttons match color scheme */
-        input[type="radio"] {
-            accent-color: #549D50;
-        }
 
     </style>
 </head>
@@ -211,7 +180,7 @@
                         <input type="email" id="email" name="email">
                     </div>
                      <div class="form-button-container">
-                    <button type="submit" class="button weather-button">Submit</button>
+                    <button type="submit" class="button weather-button" style="max-width:120px">Submit</button>
                     <a href="map.html" style="text-decoration: none;">
                         <button type="button" class="button weather-button">Return</button>
                     </a>
