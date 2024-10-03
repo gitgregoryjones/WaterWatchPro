@@ -279,4 +279,193 @@
  .active {
         background-color:#2592A8;
     }
+
+
+ body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #CFE1D1;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .row {
+            padding: 1rem;
+        }
+
+        /* Header row */
+        .header {
+            background-color: inherit;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 1rem 0;
+        }
+
+        .header img {
+            max-height: 80px;
+        }
+
+        /* Form container */
+        .form-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+        }
+
+        /* Form styles */
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 15px;
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .form-group label {
+            margin-bottom: 5px;
+            font-size: 16px;
+            color: #549D50;
+        }
+
+        .form-group input {
+            padding: 10px;
+            font-size: 16px;
+            border: none;
+            background-color: white;
+            color: #549D50;
+            border-radius: 5px;
+            width: 100%;
+        }
+
+        /* Button styles */
+        .button {
+            background-color: #549D50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            margin: 10px 0;
+            font-size: 1rem;
+            cursor: pointer;
+            text-transform: uppercase;
+            min-width: 120px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: background-color 0.3s ease;
+        }
+
+        .button:hover, .button:active {
+            background-color: #2592A8;
+        }
+
+        /* Button container */
+        .button-container {
+            display: flex;
+            justify-content: space-around;
+            gap: 20px;
+        }
+
+
+        .form-group-checkbox {
+            display: flex;
+            align-items: center;
+        }
+
+        .form-group-checkbox input {
+            margin-right: 10px;
+        }
+
+        .number-spinner {
+            display: inline-flex;
+            align-items: center;
+            position: relative;
+        }
+
+        #threshold {
+            width: 80px;
+            text-align: center;
+            border: 1px solid #ccc;
+            height: 40px;
+            padding: 0 10px;
+            font-size: 16px;
+        }
+
+        .spinner-btn {
+            position: absolute;
+            left: 80px;
+            width: 30px;
+            height: 20px;
+            background-color: #f0f0f0;
+            border: 1px solid #ccc;
+            cursor: pointer;
+            text-align: center;
+            font-size: 12px;
+            line-height: 20px;
+            padding: 0;
+        }
+
+        #increase {
+            top: 0;
+            border-bottom: none;
+        }
+
+        #decrease {
+            bottom: 0;
+        }
+
+
+          /* Form container */
+        .form-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+        }
+
+        /* Form styles */
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 15px;
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .form-group label {
+            margin-bottom: 5px;
+            font-size: 16px;
+            color: #549D50;
+        }
+
+        .form-group input {
+            padding: 10px;
+            font-size: 16px;
+            border: none;
+            background-color: white;
+            color: #549D50;
+            border-radius: 5px;
+            width: 100%;
+        }
+        
+         .form-button-container {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .success-message {
+            color: green;
+            font-size: 18px;
+            margin-top: 10px;
+        }
+        
  
