@@ -99,12 +99,6 @@
             gap: 20px;
         }
 
-        .form-button-container {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            margin-top: 20px;
-        }
 
         .form-group-checkbox {
             display: flex;
@@ -152,6 +146,55 @@
         #decrease {
             bottom: 0;
         }
+
+
+          /* Form container */
+        .form-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+        }
+
+        /* Form styles */
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 15px;
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .form-group label {
+            margin-bottom: 5px;
+            font-size: 16px;
+            color: #549D50;
+        }
+
+        .form-group input {
+            padding: 10px;
+            font-size: 16px;
+            border: none;
+            background-color: white;
+            color: #549D50;
+            border-radius: 5px;
+            width: 100%;
+        }
+        
+         .form-button-container {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .success-message {
+            color: green;
+            font-size: 18px;
+            margin-top: 10px;
+        }
+        
 
     </style>
     <!-- Google Maps API -->
