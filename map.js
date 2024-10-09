@@ -89,7 +89,9 @@ function showDialog(message) {
       const formattedDateTime = `${year}-${month}-${day}T${hours}:${minutes}`;
 
       // Set the value of the input field
-      document.getElementById('datetime') && document.getElementById('datetime').value = formattedDateTime;
+      if(document.getElementById('datetime')){
+      	document.getElementById('datetime').value = formattedDateTime;
+      }
     }
 
     // Call the function when the page loads
