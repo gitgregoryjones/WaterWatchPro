@@ -185,6 +185,9 @@ document.querySelectorAll('.scrollable-div.contacts .scrollable-option').forEach
               
             });
         })
+
+    //Set Default Value for Datetime field
+    setDateTimeToNow();
     
 })
    
