@@ -15,6 +15,37 @@
             min-height: 100vh;
         }
 
+body {
+      margin: 0;
+      padding: 0;
+      --height: 100vh;
+      background: url('https://i.postimg.cc/9XBd7DPq/soft-blurred-background-pastel.webp') no-repeat center center fixed;
+      background-size: cover;
+      position: relative;
+    }
+    
+    /* Use ::before to add an overlay */
+    body::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: rgba(255, 255, 255, 0.5); /* White overlay with 50% opacity */
+      z-index: 0; /* Keeps it behind the content */
+    }
+
+    /* Page content */
+    .container {
+      position: relative;
+      z-index: 1;
+      color: #333;
+      text-align: center;
+  
+
+    }
+
         .row {
             padding: 1rem;
         }
