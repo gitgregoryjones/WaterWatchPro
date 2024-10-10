@@ -58,7 +58,9 @@ body {
             flex-direction:row;
             justify-content:center;
         }
-        
+
+
+
         .insights {
     color: black;
     font-size: 4rem;
@@ -340,6 +342,12 @@ body {
         .header img {
             max-height: 80px;
         }
+
+ .sec-header, .sec-header:hover {
+        background-color:white;
+        border-bottom:5px solid green;
+        color:green;
+    }
 
         /* Form container */
         .form-container {
