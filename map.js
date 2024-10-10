@@ -91,7 +91,7 @@ function showDialog(message) {
       // Set the value of the input field
       if(document.getElementById('datetime')){
       	document.getElementById('datetime').value = formattedDateTime;
-	selectedDateTime = formattedTime;
+	selectedDateTime = formattedDateTime;
       }
     }
 
