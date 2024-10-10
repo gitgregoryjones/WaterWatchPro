@@ -246,6 +246,10 @@ document.querySelector('.report').addEventListener('click', function() {
                 };
                 locationList.appendChild(locationDiv);
             });
+
+	    //select first location in the list
+	    if(document.querySelector('.list-box > .scrollable-option'))
+	    	document.querySelector('.list-box > .scrollable-option').click()	
         };
     </script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
