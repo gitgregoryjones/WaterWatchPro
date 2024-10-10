@@ -343,11 +343,6 @@ body {
             max-height: 80px;
         }
 
- .sec-header, .sec-header:hover {
-        background-color:white;
-        border-bottom:5px solid green;
-        color:green;
-    }
 
         /* Form container */
         .form-container {
@@ -410,6 +405,13 @@ body {
             justify-content: space-around;
             gap: 20px;
         }
+
+	 .sec-header, .sec-header:hover {
+	        background-color:white !important;
+	        border-bottom:5px solid green !important;
+	        color:green !important;
+    	}
+
 
 
         .form-group-checkbox {
