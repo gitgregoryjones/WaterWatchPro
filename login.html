@@ -9,7 +9,9 @@
 <body>
     <div class="container">
         <div class="form-container">
-            <h1>WaterWatchPro Insights</h1>
+          
+            <img src="https://img1.wsimg.com/isteam/ip/88056157-8118-4fa6-a40b-afa381a48cd5/Eye%20Words.png/:/rs=w:400,cg:true"/>
+            <p>&nbsp;</p>
             <div class="toggle-buttons">
                 <button id="login-toggle" class="active">Login</button>
                 <button id="register-toggle">Register</button>
@@ -32,11 +34,16 @@
                 <label for="email-register">Email</label>
                 <input type="email" id="email-register" placeholder="Enter your email" required>
 
+                <label for="phone">Mobile Phone Number</label>
+                <input type="tel" id="phone" placeholder="Enter your phone number" required>
+
                 <label for="password-register">Password</label>
                 <input type="password" id="password-register" placeholder="Enter your password" required>
 
                 <label for="confirm-password">Confirm Password</label>
                 <input type="password" id="confirm-password" placeholder="Confirm your password" required>
+                
+                <p id="error-message" class="error-message"></p>
                 
                 <button type="submit" class="btn">Register</button>
             </form>
@@ -48,7 +55,34 @@
         const registerToggle = document.getElementById('register-toggle');
         const loginForm = document.getElementById('login-form');
         const registerForm = document.getElementById('register-form');
+        const errorMessage = document.getElementById('error-message');
+        
+        // Add event listener for registration form submit
+        registerForm.addEventListener('submit', function(event) {
+            const password = document.getElementById('password-register').value;
+            const confirmPassword = document.getElementById('confirm-password').value;
+            
+            // Regular expression to check password complexity
+            const passwordRegex = /^(?=.*[A-Z])(?=.*[!@#$%])(?=.*[0-9]).{8,}$/;
+            
+            // Validate password length and complexity
+            if (!passwordRegex.test(password)) {
+                errorMessage.textContent = "Password must be at least 8 characters long, contain at least one uppercase letter, one special character [!@#$%], and one number (0-9).";
+                errorMessage.style.color = 'red';
+                event.preventDefault();
+                return;
+            }
 
+            // Check if passwords match
+            if (password !== confirmPassword) {
+                errorMessage.textContent = "Passwords do not match.";
+                errorMessage.style.color = 'red';
+                event.preventDefault();
+                return;
+            }
+        });
+
+        // Toggle between login and register forms
         loginToggle.addEventListener('click', () => {
             loginForm.classList.add('active');
             registerForm.classList.remove('active');
