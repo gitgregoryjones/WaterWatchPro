@@ -11,6 +11,24 @@ body {
     flex-direction: column;
     height: 100vh;
     color: white;
+    position: relative; /* For background layering */
+    overflow: hidden;
+}
+
+body::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('Crew.jpeg') no-repeat center center/cover;
+    opacity: 0.3; /* Muting the image */
+    z-index: -1; /* Place it behind everything */
+    background-size: cover;
+    background-position: center;
+    background: linear-gradient(to bottom, rgba(47, 62, 70, 0.9), rgba(84, 169, 140, 0.7)), 
+                url('Crew.jpeg') no-repeat center center/cover;
 }
 
 /* Top Info Area */
@@ -20,6 +38,10 @@ body {
     align-items: center;
     padding: 10px 20px;
     background-color: #354F52;
+    border-radius: 15px;
+    margin: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: calc(100% - 40px);
 }
 
 .logo img {
@@ -47,150 +69,7 @@ body {
 /* Dashboard Content */
 .dashboard-content {
     display: flex;
-    height: 100%;
-}
-
-/* Left Navigation Area */
-.left-nav {
-    width: 300px;
-    background-color: #354F52;
-    padding: 20px;
-    border-radius: 20px;
-    margin: 20px;
-}
-
-.locations {
-    max-height: 80vh;
-    overflow-y: auto;
-    padding: 10px;
-    border-radius: 15px;
-    background-color: #2F3E46;
-    border: 2px solid #52796F;
-}
-
-.location {
-    background-color: rgba(132, 169, 140, 0.5);
-    border: 2px solid #84A98C;
-    border-radius: 10px;
-    padding: 15px;
-    margin-bottom: 10px;
-    text-align: center;
-    cursor: pointer;
-    transition: background-color 0.3s;
-}
-
-.location:hover {
-    background-color: rgba(132, 169, 140, 0.7);
-}
-
-.add-location {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: rgba(84, 169, 140, 0.5);
-    border: 2px solid #84A98C;
-}
-
-.add-location span {
-    font-size: 1.5rem;
-    margin-right: 10px;
-}
-
-/* Main Content Area */
-.main-area {
     flex: 1;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-    padding: 20px;
-}
-
-.content-card {
-    background-color: rgba(255, 255, 255, 0.3);
-    border-radius: 15px;
-    flex: 1 1 45%;
-    min-width: 300px;
-    height: 200px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: white;
-    font-size: 1.5rem;
-    border: 2px solid #52796F;
-    transition: background-color 0.3s;
-}
-
-.content-card:hover {
-    background-color: rgba(255, 255, 255, 0.5);
-}
-
-@media (max-width: 768px) {
-    .left-nav {
-        width: 100%;
-        margin-bottom: 20px;
-    }
-
-    .main-area {
-        flex-direction: column;
-    }
-
-    .content-card {
-        width: 100%;
-    }
-}
-
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: Arial, sans-serif;
-}
-
-body {
-    background-color: #2F3E46;
-    display: flex;
-    flex-direction: column;
-    height: 100vh;
-    color: white;
-}
-
-/* Top Info Area (full-width on its own row) */
-.top-info {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px 20px;
-    background-color: #354F52;
-    width: 100%;
-    
-}
-
-.logo img {
-    height: 50px;
-}
-
-.user-profile {
-    display: flex;
-    align-items: center;
-}
-
-.user-profile img {
-    height: 50px;
-    width: 50px;
-    border-radius: 50%;
-    margin-right: 10px;
-}
-
-.user-name {
-    font-size: 1.2rem;
-    font-weight: bold;
-    color: #CAD2C5;
-}
-
-/* Dashboard Content */
-.dashboard-content {
-    display: flex;
-    flex: 1; /* Take up all available height */
     width: 100%;
 }
 
@@ -201,7 +80,7 @@ body {
     padding: 20px;
     border-radius: 20px;
     margin: 20px;
-    flex-shrink: 0; /* Prevent shrinking */
+    flex-shrink: 0;
 }
 
 .locations {
@@ -254,8 +133,8 @@ body {
 .content-card {
     background-color: rgba(255, 255, 255, 0.3);
     border-radius: 15px;
-    flex: 1 1 calc(50% - 40px); /* Take 50% width minus gap */
-    min-height: 50%; /* Ensure each card is at least 50% of the height */
+    flex: 1 1 calc(50% - 40px);
+    min-height: 50%;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -284,4 +163,3 @@ body {
         min-height: 100px;
     }
 }
-
