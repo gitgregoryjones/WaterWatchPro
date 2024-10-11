@@ -4,15 +4,162 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Responsive Dashboard</title>
-    <link rel="stylesheet" href="dashboard.css">
-    
+    <link rel="stylesheet" href="https://gitgregoryjones.github.io/WaterWatchPro/dashboard.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"> <!-- Font Awesome -->
+    <style>
+        /* Main Content Area */
+        .main-area {
+            flex: 1;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            padding: 2rem;
+            overflow-y: auto;
+        }
+/* Top Navigation (Centered with Flexbox) */
+        .top-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: rgba(0, 0, 0, 0.5);
+            border-radius: 15px;
+            width: 90%;
+            margin: 2rem auto;
+            padding: 15px 30px;
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .logo img {
+            height: 30px;
+        }
+
+        .search-container {
+            display: flex;
+            align-items: center;
+            width: 50%;
+            max-width: 400px;
+            background-color: rgba(255, 255, 255, 0.2);
+            padding: 5px 10px;
+            border-radius: 8px;
+        }
+
+        .search-container input {
+            flex-grow: 1;
+            padding: 8px 10px;
+            border: none;
+            background: transparent;
+            color: white;
+        }
+
+        .add-location-btn {
+            background-color: #84A98C;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            margin-left: 10px;
+            font-size:15px;
+        }
+
+        .add-location-btn:hover {
+            background-color: #52796F;
+        }
+
+        .search-container i {
+            margin-left: -25px;
+            color: #52796F;
+        }
+
+        /* Content Cards */
+        .content-card {
+            background-color: transparent;
+            border-radius: 15px;
+            flex: 1 1 calc(50% - 40px);
+            min-height: calc(40vh - 20px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-size: 1.5rem;
+            border: 2px solid #52796F;
+            transition: background-color 0.3s;
+            position: relative;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+        .content-card:hover {
+            background-color: rgba(255, 255, 255, 0.5);
+        }
+
+        .content-card-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            --background-color: rgba(0, 0, 0, 0.9); /* Dark overlay */
+            border-radius: 15px;
+        }
+
+        .content-card.dashed {
+            background-image: url('https://gitgregoryjones.github.io/WaterWatchPro/Brookhaven.png');
+        }
+
+        /* Menu in top right corner */
+        .card-menu {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            display: flex;
+            gap: 10px;
+            background-color: rgba(0, 0, 0, 0.5);
+            padding: 5px;
+            border-radius: 5px;
+        }
+
+        .card-menu i {
+            color: white;
+            cursor: pointer;
+        }
+
+        .card-menu i:hover {
+            color: #84A98C;
+        }
+
+        /* Location Pin in top left corner */
+        .location-pin {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            color: white;
+            --background-color: rgba(0, 0, 0, 0.5);
+            --background-color: rgba(0, 128, 128, 1);
+            background-color:rgba(18, 141, 160);
+            border-radius: 5px;
+            padding:5px;
+        }
+.center-label {
+       background-color:rgba(18, 141, 160);
+            border-radius: 5px;
+            padding:5px;
+}
+    </style>
 </head>
 <body>
     <div class="wrapper">
         <!-- Top Info Area -->
         <header class="top-info">
             <div class="logo">
-                <img src="https://img1.wsimg.com/isteam/ip/88056157-8118-4fa6-a40b-afa381a48cd5/Eye%20Words.png/:/rs=w:400,cg:true" alt="Logo">
+                <img src="https://img1.wsimg.com/isteam/ip/88056157-8118-4fa6-a40b-afa381a48cd5/Eye%20Words.png/:/rs=h:30" alt="Logo">
+            </div>
+            <div class="search-container">
+                <input type="text" placeholder="Search locations...">
+                <i class="fas fa-search"></i>
+                <button class="add-location-btn">Add Location</button>
             </div>
             <div class="user-profile">
                 <img src="https://via.placeholder.com/50" alt="Profile Picture">
@@ -25,26 +172,47 @@
             <!-- Left Navigation Area -->
             <nav class="left-nav">
                 <div class="locations">
-                    <div class="location add-location">
-                        <span>+</span> Add Location
-                    </div>
-                    <div class="location">Location 1</div>
-                    <div class="location">Location 2</div>
-                    <div class="location">Location 3</div>
-                    <div class="location">Location 4</div>
-                    <div class="location">Location 5</div>
-                    <!-- Add more locations as needed -->
+                    <div class="location">Atlanta</div>
+                    <div class="location">Snellville</div>
+                    <div class="location">Airport 1</div>
+                    <div class="location">Airport 2</div>
+                    <div class="location">Complex B South</div>
                 </div>
             </nav>
 
             <!-- Main Content Area -->
             <main class="main-area">
-                <div class="content-card">Rectangle 1</div>
-                <div class="content-card">Rectangle 2</div>
+                <div class="content-card dashed">
+                    <div class="content-card-overlay"></div>
+                    <!-- Map Pin Icon in Top Left -->
+                    <i class="fas fa-map-marker-alt location-pin">Atlanta</i>
+                    
+                    <!-- Menu Icons in Top Right -->
+                    <div class="card-menu">
+                        <i class="fas fa-user"></i>
+                        <i class="fas fa-arrows-alt"></i>
+                        <i class="fas fa-trash-alt"></i>
+                    </div>
+
+                    <p class="center-label">.25 Inches, 24hrs</p>
+                </div>
+                <div class="content-card">
+                    <i class="fas fa-user location-pin">Atlanta Admins</i>
+                    
+                    <!-- Menu Icons in Top Right -->
+                    <div class="card-menu">
+                        <i class="fas fa-user"></i>
+                        <i class="fas fa-arrows-alt"></i>
+                        <i class="fas fa-trash-alt"></i>
+                    </div>
+
+                    
+                    <p class="center-label">Rectangle 2</p></div>
                 <div class="content-card">Rectangle 3</div>
                 <div class="content-card">Rectangle 4</div>
             </main>
         </div>
     </div>
+    <script src="https://gitgregoryjones.github.io/WaterWatchPro/dragcard.js"></script>
 </body>
 </html>
