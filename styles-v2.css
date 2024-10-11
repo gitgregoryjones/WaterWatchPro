@@ -11,6 +11,25 @@ body {
     justify-content: center;
     align-items: center;
     height: 100vh;
+    position: relative;
+}
+
+/* Adding the background image with a muted effect and gradient */
+body::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('Crew.jpeg') no-repeat center center/cover;
+    opacity: 0.3; /* Muting the image */
+    z-index: -1; /* Place it behind everything else */
+    background-size: cover;
+    background-position: center;
+    /* Applying gradient for the fade effect */
+    background: linear-gradient(to bottom, rgba(47, 62, 70, 0.9), rgba(84, 169, 140, 0.7)), 
+                url('Crew.jpeg') no-repeat center center/cover;
 }
 
 .container {
@@ -18,6 +37,7 @@ body {
     padding: 2rem;
     border-radius: 10px;
     box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+    z-index: 1; /* Ensure form is above the background */
 }
 
 .form-container {
