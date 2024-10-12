@@ -555,6 +555,24 @@
     .location-name {
         text-shadow 1px 1px black;
     }
+    /* Location Name Banner */
+.location-banner {
+    --background-color: #52796F; /* Match the theme */
+    color: white;
+    text-align: right;
+    padding: 15px;
+    margin: 10px; /* Add some space below the top-info section */
+    margin-right:8.25rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Add shadow for depth */
+}
+
+.location-banner h1 {
+    margin: 0;
+    font-size: 1.8rem;
+    font-weight: bold;
+}
+
 </style>
 
   <!-- Hamburger Menu -->
@@ -589,7 +607,10 @@
                 <img src="https://via.placeholder.com/50" alt="Profile Picture">
                 <p class="user-name">John Doe</p>
             </div>
-        </header>
+        </header><!-- Location Name Banner -->
+<div class="location-banner">
+    <h1 id="locationName">Viewing: Atlanta Office &nbsp;<i class="fas fa-edit"></i></h1>
+</div>
 
         <!-- Main Dashboard -->
         <div class="dashboard">
