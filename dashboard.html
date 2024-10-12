@@ -23,7 +23,7 @@
             flex-direction: column;
             min-height: 100vh;
             color: white;
-            background: linear-gradient(to bottom, rgba(47, 62, 70, 0.9), rgba(84, 169, 140, 0.5)),
+            background: linear-gradient(to bottom, rgba(47, 62, 70, 1), rgba(84, 169, 140,.9)),
                 url('https://gitgregoryjones.github.io/WaterWatchPro/Crew.jpeg') no-repeat center center/cover;
         }
 
@@ -486,6 +486,94 @@
     color: #333;
 }
 
+/* Mobile Styles */
+@media (max-width: 768px) {
+    /* Stack top info area */
+    .top-info {
+        flex-direction: column;
+        align-items: flex-end;
+        width: 100%;
+        padding: 15px;
+        margin: 0;
+    }
+
+    .logo {
+        margin-bottom: 10px;
+    }
+
+    .search-container {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+
+    .hamburger-menu {
+        margin-top: 10px;
+    }
+
+    /* Stack dashboard content */
+    .dashboard {
+        flex-direction: column;
+        margin-left: 0;
+        margin-right: 0;
+        padding: 10px;
+        border: none;
+    }
+
+    .right-content {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto;
+        gap: 20px;
+    }
+
+    /* Adjust card styles for mobile */
+    .card {
+        padding: 15px;
+        border-radius: 10px;
+    }
+
+    .card h3 {
+        font-size: 1.2rem;
+    }
+
+    .mini-card-container {
+        justify-content: center;
+        gap: 10px;
+    }
+
+    .mini-card {
+        width: 100px;
+    }
+
+    .contacts-scroll, .alarms-scroll {
+        max-height: 200px;
+    }
+
+    .search-container {
+        width: 100%;
+        padding: 5px 10px;
+    }
+
+    .location-banner {
+        margin: 10px 0;
+        text-align: center;
+    }
+
+    /* Adjust font sizes */
+    .location-banner h1 {
+        font-size: 1.5rem;
+    }
+
+    .card-footer {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .card-footer .status,
+    .card-footer .actions {
+        margin-top: 10px;
+    }
+}
+
 
     </style>
 </head>
@@ -573,6 +661,14 @@
     font-weight: bold;
 }
 
+.map {
+ background-image:url(https://gitgregoryjones.github.io/WaterWatchPro/Brookhaven.png);
+ height:100%;
+ width:100%;
+ background-size:contain;
+ border-radius:1rem;
+}
+
 </style>
 
   <!-- Hamburger Menu -->
@@ -609,7 +705,7 @@
             </div>
         </header><!-- Location Name Banner -->
 <div class="location-banner">
-    <h1 id="locationName">Viewing: Atlanta Office &nbsp;<i class="fas fa-edit"></i></h1>
+    <h1 id="locationName">Viewing: Atlanta/CFATL1 &nbsp;<i class="fas fa-edit"></i></h1>
 </div>
 
         <!-- Main Dashboard -->
@@ -648,6 +744,23 @@
                             Download Report <i class="fas fa-download"></i>
 
                         </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <h3 class="location-name">Map</h3>
+                    <!-- Toggle Control -->
+                    
+                    <div class="chart-placeholder">
+                        <div class="map"></div>
+                    </div>
+
+                    <div class="card-footer">
+                        <div class="status">
+                            <i class="fas fa-pin"></i>
+                            <span>Latitiude/Longitude : 33.860537,-84.016415</span>
+                            
+                        </div>
+                        
                     </div>
                 </div>
 
