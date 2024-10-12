@@ -3,25 +3,34 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Responsive Dashboard</title>
-    <link rel="stylesheet" href="https://gitgregoryjones.github.io/WaterWatchPro/dashboard.css">
+    <title>Custom Dashboard with Toggle</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"> <!-- Font Awesome -->
     <style>
-        /* Main Content Area */
-        .main-area {
-            flex: 1;
-            display: flex;
-            flex-wrap: wrap;
-            gap: 20px;
-            padding: 2rem;
-            overflow-y: auto;
+        /* Global Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Roboto', sans-serif;
         }
-/* Top Navigation (Centered with Flexbox) */
+
+        body {
+            background-color: #2F3E46;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            color: white;
+            background: linear-gradient(to bottom, rgba(47, 62, 70, 0.9), rgba(84, 169, 140, 0.5)),
+                url('https://gitgregoryjones.github.io/WaterWatchPro/Crew.jpeg') no-repeat center center/cover;
+        }
+
+        /* Top Navigation */
         .top-info {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background-color: rgba(0, 0, 0, 0.5);
+            background-color: rgba(0, 0, 0, 0.9);
             border-radius: 15px;
             width: 90%;
             margin: 2rem auto;
@@ -33,120 +42,329 @@
             height: 30px;
         }
 
-        .search-container {
+        .user-info {
             display: flex;
             align-items: center;
-            width: 50%;
-            max-width: 400px;
-            background-color: rgba(255, 255, 255, 0.2);
-            padding: 5px 10px;
-            border-radius: 8px;
+            display:none;
         }
 
-        .search-container input {
-            flex-grow: 1;
-            padding: 8px 10px;
-            border: none;
-            background: transparent;
-            color: white;
+        .user-info img {
+            height: 50px;
+            width: 50px;
+            border-radius: 50%;
+            margin-right: 10px;
+         
         }
 
-        .add-location-btn {
-            background-color: #84A98C;
-            color: white;
-            border: none;
-            padding: 5px 10px;
-            border-radius: 5px;
-            cursor: pointer;
-            font-weight: bold;
-            margin-left: 10px;
-            font-size:15px;
+        .user-name {
+            font-size: 1.2rem;
         }
 
-        .add-location-btn:hover {
-            background-color: #52796F;
+        /* Main Dashboard */
+        .dashboard {
+            display: flex;
+            flex-direction: row;
+            height: 80%;
+            padding: 20px;
+            justify-content: center;
+            border: 1px solid white;
+            margin-left: 10rem;
+            margin-right: 10rem;
+            border-radius: 1.5rem;
         }
 
-        .search-container i {
-            margin-left: -25px;
-            color: #52796F;
+        /* Right Content Area */
+        .right-content {
+            width: 100%;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: repeat(2, 1fr);
+            gap: 20px;
         }
 
-        /* Content Cards */
-        .content-card {
+        /* Blurred card (frosted glass effect) */
+.card {
+    background-color: rgba(132, 169, 140, 0.7);
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2); /* Box shadow for depth */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
+    backdrop-filter: blur(10px); /* This creates the blur/frosted glass effect */
+    -webkit-backdrop-filter: blur(10px); /* For Safari support */
+    border: 1px solid rgba(255, 255, 255, 0.2); /* Light border for frosted glass look */
+}
+
+.card h3 {
+    font-size: 1.5rem;
+    margin-bottom: 10px; /* Set consistent spacing for both headers */
+}
+
+/* Toggle Container */
+.toggle-container {
+    display: flex;
+    justify-content: space-between;
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 10px;
+    margin-bottom: 20px;
+    padding: 5px;
+}
+
+        .toggle-button {
             background-color: transparent;
-            border-radius: 15px;
-            flex: 1 1 calc(50% - 40px);
-            min-height: calc(40vh - 20px);
+            border: 2px solid transparent;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s, color 0.3s;
+            color: black;
+        }
+
+        .toggle-button.active {
+            background-color: black;
+            color: white;
+            font-weight: bold;
+        }
+
+        .toggle-button:hover {
+            background-color: black;
+        }
+
+        .chart-placeholder {
+            height: 150px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
             display: flex;
             justify-content: center;
             align-items: center;
-            color: white;
-            font-size: 1.5rem;
-            border: 2px solid #52796F;
-            transition: background-color 0.3s;
-            position: relative;
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
+            color: #CAD2C5;
         }
 
-        .content-card:hover {
-            background-color: rgba(255, 255, 255, 0.5);
+        .card-footer {
+            display: flex;
+            justify-content: space-between;
         }
 
-        .content-card-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            --background-color: rgba(0, 0, 0, 0.9); /* Dark overlay */
-            border-radius: 15px;
+        .card-footer .status {
+            display: flex;
+            align-items: center;
         }
 
-        .content-card.dashed {
-            background-image: url('https://gitgregoryjones.github.io/WaterWatchPro/Brookhaven.png');
+        .card-footer .status span {
+            margin-left: 10px;
         }
 
-        /* Menu in top right corner */
-        .card-menu {
-            position: absolute;
-            top: 10px;
-            right: 10px;
+        .card-footer .actions {
             display: flex;
             gap: 10px;
-            background-color: rgba(0, 0, 0, 0.5);
-            padding: 5px;
-            border-radius: 5px;
         }
 
-        .card-menu i {
-            color: white;
+        .actions i {
             cursor: pointer;
+            color: #CAD2C5;
+            transition: color 0.3s;
         }
 
-        .card-menu i:hover {
+        .actions i:hover {
             color: #84A98C;
         }
 
-        /* Location Pin in top left corner */
-        .location-pin {
+/* Settings Icon in top right corner */
+        .card-settings {
             position: absolute;
-            top: 10px;
-            left: 10px;
+            top: 1rem;
+            right: 1.5rem;
+            cursor: pointer;
             color: white;
-            --background-color: rgba(0, 0, 0, 0.5);
-            --background-color: rgba(0, 128, 128, 1);
-            background-color:rgba(18, 141, 160);
-            border-radius: 5px;
-            padding:5px;
         }
-.center-label {
-       background-color:rgba(18, 141, 160);
-            border-radius: 5px;
-            padding:5px;
-}
+
+        .card-settings i:hover {
+            color: #84A98C;
+        }
+
+        /* Custom styling for RAPIDRAIN button */
+        .rapidrain {
+            text-shadow: 1px 1px black;
+            font-size: large;
+            font-weight: bold;
+        }
+
+        /* Mini Forecast Cards */
+        .mini-card-container {
+            display: flex;
+            justify-content: space-between;
+            gap: 15px;
+        }
+
+        .mini-card {
+            background-color: rgba(255, 255, 255, 0.1); /* Same as the chart background */
+            border-radius: 15px;
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 130px;
+            min-height:150px;
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2); /* Box shadow for depth */
+            backdrop-filter: blur(10px); /* Frosted glass effect */
+            -webkit-backdrop-filter: blur(10px); /* For Safari */
+        }
+
+        .mini-card i {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+        }
+
+        .mini-card p {
+            margin: 5px 0;
+            color: white;
+            font-size: 0.9rem;
+        }
+
+        /* Scrollable Contacts Area */
+        .contacts-scroll {
+            max-height: 250px; /* Set the height of the scrollable area */
+            overflow-y: auto;
+            background-color: rgba(255, 255, 255, 0.1); /* Match the chart background */
+            border-radius: 10px;
+            padding: 10px;
+        }
+
+        .contact-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: rgba(255, 255, 255, 0.1); /* Same background color */
+            border-radius: 10px;
+            padding: 10px;
+            margin-bottom: 10px;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        
+        .contact-row.active {
+            background-color: rgba(0, 0, 0, 0.5);
+            background-color: rgba(132, 169, 140, 1);
+            font-weight:bold;
+        }
+
+        .contact-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            color: white;
+        }
+
+        .contact-info img {
+            height: 40px;
+            width: 40px;
+            border-radius: 50%;
+        }
+
+        .contact-info p {
+            margin: 0;
+            color: white;
+        }
+
+        .contact-actions i {
+            margin-left: 10px;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .contact-actions i:hover {
+            color: #84A98C;
+        }
+          .info-badge,.alarm, .headeralarm {
+        background-color: #52796F; /* You can adjust this color to fit your theme */
+        color: white;
+        padding: 5px 5px;
+        border-radius: 20px; /* Creates a pill-shaped badge */
+        font-size: 0.8rem;
+        margin-left: 0px;
+        top:-1rem;
+        position:relative;
+        /* Adds spacing between text and badge */
+        font-weight: bold;
+    }
+    
+           /* Scrollable Alarms Area */
+        .alarms-scroll {
+            max-height: 250px; /* Set the height of the scrollable area */
+            overflow-y: auto;
+            background-color: rgba(255, 255, 255, 0.1); /* Match the chart background */
+            border-radius: 10px;
+            padding: 10px;
+        }
+
+        .alarm-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: rgba(255, 255, 255, 0.1); /* Same background color */
+            border-radius: 10px;
+            padding: 10px;
+            margin-bottom: 10px;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .alarm-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            color: white;
+        }
+
+        .alarm-info i {
+            color: #FFC107; /* Yellow color for alarm icon */
+        }
+
+        .alarm-info p {
+            margin: 0;
+            color: white;
+        }
+    
+    .alarm {
+        background-color:#FFC107;
+        background-color:white;
+        border:2px solid black;
+        color:black;
+       
+    }
+    
+     .headeralarm {
+        background-color:#FFC107;
+        padding:5px 10px;
+        text-decoration:none;
+        top:0;
+        color:black;
+        background-color:white;
+        border:1px solid black;
+    }
+    
+    .card-actions {
+        position: absolute; /* Make the container for the plus sign absolute */
+        top: 1rem;          /* Position it near the top */
+        right: 1.5rem;        /* Align it to the right */
+    }
+    .location-header, .subtitle {
+        color:white;
+        font-size:1.5rem;
+        font-weight:bold;
+    }
+    .subtitle {
+        color:cyan;
+        font-weight:normal;
+        text-decoration:none;
+        font-size:16px;
+        
+    }
+    .subheader {
+        margin-top:.5rem;
+        display:none;
+    }
     </style>
 </head>
 <body>
@@ -156,63 +374,322 @@
             <div class="logo">
                 <img src="https://img1.wsimg.com/isteam/ip/88056157-8118-4fa6-a40b-afa381a48cd5/Eye%20Words.png/:/rs=h:30" alt="Logo">
             </div>
-            <div class="search-container">
-                <input type="text" placeholder="Search locations...">
-                <i class="fas fa-search"></i>
-                <button class="add-location-btn">Add Location</button>
+            <div class="location-header">
+                CFAvalonRidge / CFAvalonTH
+                <p class="subheader">
+                 
+                    <span class="subtitle"><span class="headeralarm">5</span> locations are missing a contact. Click here to run a report</span>
+                </p>
             </div>
-            <div class="user-profile">
+            <!-- Add Location Button -->
+<button class="add-location-btn">
+    <i class="fas fa-plus"></i> Add Location
+</button>
+
+<style>
+    .add-location-btn {
+        background-color: #52796F; /* Theme color for background */
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 30px; /* Rounded edges for a smooth button */
+        font-size: 1rem;
+        font-weight: bold;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        gap: 10px; /* Spacing between the icon and text */
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Light shadow for depth */
+        transition: background-color 0.3s, box-shadow 0.3s; /* Smooth hover effects */
+    }
+
+    .add-location-btn i {
+        font-size: 1.2rem;
+    }
+
+    .add-location-btn:hover {
+        background-color: #84A98C; /* Lighter shade for hover effect */
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3); /* Stronger shadow on hover */
+    }
+
+    .add-location-btn:active {
+        background-color: #354F52; /* Darker shade when button is clicked */
+        box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1); /* Reduce shadow when clicked */
+    }
+    
+    .gold-star {
+        color:gold;
+    }
+    
+    .location-name {
+        text-shadow 1px 1px black;
+    }
+</style>
+
+            <div class="user-info">
                 <img src="https://via.placeholder.com/50" alt="Profile Picture">
                 <p class="user-name">John Doe</p>
             </div>
         </header>
 
-        <!-- Dashboard Content -->
-        <div class="dashboard-content">
-            <!-- Left Navigation Area -->
-            <nav class="left-nav">
-                <div class="locations">
-                    <div class="location">Atlanta</div>
-                    <div class="location">Snellville</div>
-                    <div class="location">Airport 1</div>
-                    <div class="location">Airport 2</div>
-                    <div class="location">Complex B South</div>
-                </div>
-            </nav>
+        <!-- Main Dashboard -->
+        <div class="dashboard">
+            
 
-            <!-- Main Content Area -->
-            <main class="main-area">
-                <div class="content-card dashed">
-                    <div class="content-card-overlay"></div>
-                    <!-- Map Pin Icon in Top Left -->
-                    <i class="fas fa-map-marker-alt location-pin">Atlanta</i>
-                    
-                    <!-- Menu Icons in Top Right -->
-                    <div class="card-menu">
-                        <i class="fas fa-user"></i>
-                        <i class="fas fa-arrows-alt"></i>
-                        <i class="fas fa-trash-alt"></i>
-                    </div>
 
-                    <p class="center-label">.25 Inches, 24hrs</p>
-                </div>
-                <div class="content-card">
-                    <i class="fas fa-user location-pin">Atlanta Admins</i>
-                    
-                    <!-- Menu Icons in Top Right -->
-                    <div class="card-menu">
-                        <i class="fas fa-user"></i>
-                        <i class="fas fa-arrows-alt"></i>
-                        <i class="fas fa-trash-alt"></i>
+
+
+
+            <!-- Right Content Area -->
+            <div class="right-content">
+                <!-- Card 1 with Toggle -->
+                <div class="card">
+                    <h3 class="location-name">Current Measures</h3>
+                    <!-- Toggle Control -->
+                    <div class="toggle-container">
+                        <button class="toggle-button active" id="toggle-24h">24 Hours</button>
+                        <button class="toggle-button" id="toggle-1h">1 Hour</button>
+                        <button class="toggle-button rapidrain" id="toggle-15m"><i class="fas fa-star gold-star"></i>
+<span style="color:green">RAPID</span><span style="color:blue">RAIN</span></button>
                     </div>
 
                     
-                    <p class="center-label">Rectangle 2</p></div>
-                <div class="content-card">Rectangle 3</div>
-                <div class="content-card">Rectangle 4</div>
-            </main>
+                    <div class="chart-placeholder">Chart here</div>
+                    <div class="card-footer">
+                        <div class="status">
+                            <i class="fas fa-star gold-star"></i>
+                            <span>Custom Date Range</span>
+                            &nbsp;<i class="fas fa-calendar"></i>
+                        </div>
+                        <div class="actions">
+                            Download Report <i class="fas fa-download"></i>
+
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 2 with mini forecast cards -->
+                <div class="card">
+                    <h3>Forecast</h3>
+                        <!-- New Toggle Control -->
+                    <div class="toggle-container">
+                        <button class="toggle-button active" id="toggle-national">National Forecast</button>
+                        <button class="toggle-button" id="toggle-location"><i class="fas fa-star gold-star"></i> This Location</button>
+                    </div>
+
+                    
+                    <!-- Mini Forecast Cards -->
+                    <div class="mini-card-container">
+                        <div class="mini-card">
+                            <p>Mon</p>
+                            <i class="fas fa-cloud-showers-heavy"></i>
+                            <p>0.5 in</p>
+                        </div>
+                        <div class="mini-card">
+                            <p>Tue</p>
+                            <i class="fas fa-cloud-sun"></i>
+                            <p>0.1 in</p>
+                        </div>
+                        <div class="mini-card">
+                            <p>Wed</p>
+                            <i class="fas fa-sun"></i>
+                            <p>0.0 in</p>
+                        </div>
+                    </div>
+
+                    <div class="card-footer"style="visibility:hidden">
+                        <div class="status">
+                            <i class="fas fa-bolt"></i>
+                            <span>72% Efficiency</span>
+                        </div>
+                        <div class="actions">
+                            <i class="fas fa-edit"></i>
+                            <i class="fas fa-trash-alt"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 3 with Scrollable Contacts -->
+                <div class="card">
+                    <h3>Contacts</h3>
+                    <div class="card-actions">
+        <i class="fas fa-plus"></i>
+    </div>
+
+                    <!-- Scrollable Contacts Area -->
+                    <div class="contacts-scroll">
+                        <div class="contact-row">
+                            <div class="contact-info">
+                                <img src="https://via.placeholder.com/40" alt="Contact">
+                                <p>John Smith</p>
+                                <p>john.smith@example.com</p>
+                                <p>(555) 123-4567</p>
+                            </div>
+                            <div class="contact-actions">
+                                <i class="fas fa-edit"></i>
+                                <i class="fas fa-unlink"></i>
+                            </div>
+                        </div>
+                        <div class="contact-row">
+                            <div class="contact-info">
+                                <img src="https://via.placeholder.com/40" alt="Contact">
+                                <p>Jane Doe</p>
+                                <p>jane.doe@example.com</p>
+                                <p>(555) 765-4321</p>
+                            </div>
+                            <div class="contact-actions">
+                                <i class="fas fa-edit"></i>
+                                <i class="fas fa-unlink"></i>
+                            </div>
+                        </div><div class="contact-row">
+                            <div class="contact-info">
+                                <img src="https://via.placeholder.com/40" alt="Contact">
+                                <p>Jane Doe</p>
+                                <p>jane.doe@example.com</p>
+                                <p>(555) 765-4321</p>
+                            </div>
+                            <div class="contact-actions">
+                                <i class="fas fa-edit"></i>
+                                <i class="fas fa-unlink"></i>
+                            </div>
+                        </div>
+                        <div class="contact-row">
+                            <div class="contact-info">
+                                <img src="https://via.placeholder.com/40" alt="Contact">
+                                <p>Jane Doe</p>
+                                <p>jane.doe@example.com</p>
+                                <p>(555) 765-4321</p>
+                            </div>
+                            <div class="contact-actions">
+                                <i class="fas fa-edit"></i>
+                                <i class="fas fa-unlink"></i>
+                            </div>
+                        </div>
+                        <div class="contact-row">
+                            <div class="contact-info">
+                                <img src="https://via.placeholder.com/40" alt="Contact">
+                                <p>Jane Doe</p>
+                                <p>jane.doe@example.com</p>
+                                <p>(555) 765-4321</p>
+                            </div>
+                            <div class="contact-actions">
+                                <i class="fas fa-edit"></i>
+                                <i class="fas fa-trash-alt"></i>
+                            </div>
+                        </div>
+                        <div class="contact-row">
+                            <div class="contact-info">
+                                <img src="https://via.placeholder.com/40" alt="Contact">
+                                <p>Jane Doe</p>
+                                <p>jane.doe@example.com</p>
+                                <p>(555) 765-4321</p>
+                            </div>
+                            <div class="contact-actions">
+                                <i class="fas fa-edit"></i>
+                                <i class="fas fa-unlink"></i>
+                            </div>
+                        </div>
+                        <div class="contact-row">
+                            <div class="contact-info">
+                                <img src="https://via.placeholder.com/40" alt="Contact">
+                                <p>Jane Doe</p>
+                                <p>jane.doe@example.com</p>
+                                <p>(555) 765-4321</p>
+                            </div>
+                            <div class="contact-actions">
+                                <i class="fas fa-edit"></i>
+                                <i class="fas fa-unlink"></i>
+                            </div>
+                        </div>
+                        <!-- Add more contact rows as needed -->
+                    </div>
+
+                    <div class="card-footer">
+                        <div class="status">
+                            <span class="alarm"><i class="fas fa-user"></i>5</span> contacts are unassigned. Click here to run a report.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 4 -->
+                     <div class="card">
+            <h3>Alarms <span class="alarm">10</span></h3>
+
+            <!-- Settings Icon -->
+            <div class="card-settings">
+                <i class="fas fa-cog"></i> <!-- Font Awesome settings icon -->
+            </div>
+
+            <!-- Scrollable Alarms Area -->
+            <div class="alarms-scroll">
+                <div class="alarm-row">
+                    <div class="alarm-info">
+                        <i class="fas fa-exclamation-triangle"></i> <!-- Alarm icon -->
+                        <p>Water threshold exceeded at Main Location</p>
+                    </div>
+                    <p>2 hrs ago</p>
+                </div>
+
+                <div class="alarm-row">
+                    <div class="alarm-info">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <p>Rainfall intensity above safe levels</p>
+                    </div>
+                    <p>3 hrs ago</p>
+                </div>
+
+                <div class="alarm-row">
+                    <div class="alarm-info">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <p>Water pump malfunction</p>
+                    </div>
+                    <p>5 hrs ago</p>
+                </div>
+ <div class="alarm-row">
+                    <div class="alarm-info">
+                        <i class="fas fa-exclamation-triangle"></i> <!-- Alarm icon -->
+                        <p>Water threshold exceeded at Main Location</p>
+                    </div>
+                    <p>2 hrs ago</p>
+                </div>
+
+                <div class="alarm-row">
+                    <div class="alarm-info">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <p>Rainfall intensity above safe levels</p>
+                    </div>
+                    <p>3 hrs ago</p>
+                </div>
+
+                <div class="alarm-row">
+                    <div class="alarm-info">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <p>Water pump malfunction</p>
+                    </div>
+                    <p>5 hrs ago</p>
+                </div>
+                <!-- Add more alarm rows as needed -->
+            </div>
+
+            
+            </div>
         </div>
     </div>
-    <script src="https://gitgregoryjones.github.io/WaterWatchPro/dragcard.js"></script>
+    
+
+   <script>
+        // JavaScript to toggle active states for the first card
+        const toggleButtons = document.querySelectorAll('.toggle-button');
+
+        toggleButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                // Remove active class from all buttons in the same toggle-container
+                button.parentElement.querySelectorAll('.toggle-button').forEach(btn => btn.classList.remove('active'));
+
+                // Add active class to the clicked button
+                button.classList.add('active');
+            });
+        });
+    </script>
 </body>
 </html>
