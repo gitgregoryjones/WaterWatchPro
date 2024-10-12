@@ -6,6 +6,8 @@
     <title>Custom Dashboard with Toggle</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"> <!-- Font Awesome -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
     <style>
         /* Global Styles */
         * {
@@ -59,6 +61,60 @@
         .user-name {
             font-size: 1.2rem;
         }
+         /* Hamburger Menu */
+        .hamburger-menu {
+            position: relative;
+            display: inline-block;
+        }
+
+        .hamburger-icon {
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: white;
+        }
+
+        /* Dropdown menu */
+        .dropdown-menu {
+            display: none;
+            position: absolute;
+            top: 40px;
+            min-width:200px;
+            right: 0;
+            background-color: #52796F; /* Theme color */
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+            overflow: hidden;
+            z-index:1000;
+        }
+
+        .dropdown-menu.active {
+            display: block;
+        }
+
+        .menu-item {
+            display: flex;
+            align-items: center;
+            padding: 10px 20px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            color: white;
+        }
+
+        .menu-item i {
+            margin-right: 10px;
+        }
+
+        .menu-item:hover {
+            background-color: #354F52;
+        }
+
+        /* Dropdown icons */
+        .user-icon { color: #CAD2C5; }
+        .location-icon { color: #84A98C; }
+        .report-icon { color: #FFC107; }
+        .profile-icon { color: #CAD2C5; }
+        .logout-icon { color: #FF6B6B; }
+
 
         /* Main Dashboard */
         .dashboard {
@@ -134,14 +190,14 @@
         }
 
         .chart-placeholder {
-            height: 150px;
-            background-color: rgba(255, 255, 255, 0.1);
-            border-radius: 10px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            color: #CAD2C5;
-        }
+    height: 200px; /* Adjust this value as needed */
+    width: 100%;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 
         .card-footer {
             display: flex;
@@ -351,8 +407,9 @@
     }
     .location-header, .subtitle {
         color:white;
-        font-size:1.5rem;
+        font-size:1rem;
         font-weight:bold;
+        
     }
     .subtitle {
         color:cyan;
@@ -365,27 +422,101 @@
         margin-top:.5rem;
         display:none;
     }
+    /* Search Container */
+.search-container {
+    display: flex;
+    align-items: center;
+    background-color: rgba(255, 255, 255, 0.1); /* Slightly transparent background */
+    padding: 5px 15px;
+    border-radius: 20px; /* Rounded edges */
+    width: 300px; /* Adjust the width as needed */
+    position: relative;
+    margin: 0 20px; /* Space between logo and search */
+}
+
+.search-container input {
+    flex-grow: 1;
+    border: none;
+    background: transparent;
+    color: white;
+    font-size: 1rem;
+    outline: none;
+    padding: 10px;
+}
+
+.search-container .search-icon {
+    color: #CAD2C5; /* Icon color */
+    position: absolute;
+    right: 10px;
+    font-size: 1.2rem;
+}
+/* Notification Banner */
+.notification-banner {
+    background-color: #FFC107; /* Warning color */
+    color: black;
+    text-align: center;
+    padding: 10px;
+    font-size: 1rem;
+    position: relative;
+    width: 100%;
+    top: 0;
+    left: 0;
+    z-index: 1000; /* Ensure it stays above other elements */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add some shadow for depth */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+}
+
+/* Close Button for Banner */
+.close-banner {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    color: black;
+    position: absolute;
+    right: 20px;
+    cursor: pointer;
+    padding: 0;
+    line-height: 1;
+}
+
+.close-banner:hover {
+    color: #333;
+}
+
+
     </style>
 </head>
 <body>
     <div class="wrapper">
         <!-- Top Info Area -->
+        <!-- Notification Banner -->
+<div class="notification-banner" id="notificationBanner">
+    <p>⚠️ System Update: We will be undergoing maintenance from 12 AM to 4 AM. Some features may be unavailable.</p>
+    <button class="close-banner" id="closeBannerBtn">&times;</button>
+</div>
+
+
+
         <header class="top-info">
             <div class="logo">
                 <img src="https://img1.wsimg.com/isteam/ip/88056157-8118-4fa6-a40b-afa381a48cd5/Eye%20Words.png/:/rs=h:30" alt="Logo">
             </div>
+             <!-- Location Search Field -->
+    <div class="search-container">
+        <input type="text" id="locationSearch" placeholder="Search locations...">
+        <i class="fas fa-search search-icon"></i>
+    </div>
             <div class="location-header">
-                CFAvalonRidge / CFAvalonTH
+                Welcome, John Doe
                 <p class="subheader">
                  
                     <span class="subtitle"><span class="headeralarm">5</span> locations are missing a contact. Click here to run a report</span>
                 </p>
             </div>
-            <!-- Add Location Button -->
-<button class="add-location-btn">
-    <i class="fas fa-plus"></i> Add Location
-</button>
-
+          
 <style>
     .add-location-btn {
         background-color: #52796F; /* Theme color for background */
@@ -426,6 +557,34 @@
     }
 </style>
 
+  <!-- Hamburger Menu -->
+            <div class="hamburger-menu">
+                <i class="fas fa-bars hamburger-icon"></i> <!-- Hamburger icon -->
+
+                <!-- Dropdown Menu -->
+                <div class="dropdown-menu">
+                    <div class="menu-item">
+                        <i class="fas fa-user-group user-icon"></i>
+                        <span>Add Contact</span>
+                    </div>
+                    <div class="menu-item">
+                        <i class="fas fa-map-marker-alt location-icon"></i>
+                        <span>Add Location</span>
+                    </div>
+                    <div class="menu-item">
+                        <i class="fas fa-file-alt report-icon"></i>
+                        <span>Reports</span>
+                    </div>
+                    <div class="menu-item">
+                        <i class="fas fa-edit user-icon"></i>
+                        <span>My Profile</span>
+                    </div>
+                    <div class="menu-item">
+                        <i class="fas fa-sign-out-alt logout-icon"></i>
+                        <span>Logout</span>
+                    </div>
+                </div>
+            </div>
             <div class="user-info">
                 <img src="https://via.placeholder.com/50" alt="Profile Picture">
                 <p class="user-name">John Doe</p>
@@ -448,13 +607,16 @@
                     <!-- Toggle Control -->
                     <div class="toggle-container">
                         <button class="toggle-button active" id="toggle-24h">24 Hours</button>
-                        <button class="toggle-button" id="toggle-1h">1 Hour</button>
+                        <button class="toggle-button" id="toggle-1h">2 Hour</button>
                         <button class="toggle-button rapidrain" id="toggle-15m"><i class="fas fa-star gold-star"></i>
 <span style="color:green">RAPID</span><span style="color:blue">RAIN</span></button>
                     </div>
 
                     
-                    <div class="chart-placeholder">Chart here</div>
+                    <div class="chart-placeholder">
+    <canvas id="rainfallChart"></canvas>
+</div>
+
                     <div class="card-footer">
                         <div class="status">
                             <i class="fas fa-star gold-star"></i>
@@ -671,7 +833,11 @@
                 <!-- Add more alarm rows as needed -->
             </div>
 
-            
+             <div class="card-footer"style="visibility:hidden">
+                        <div class="status">
+                            <span class="alarm"><i class="fas fa-user"></i>5</span> contacts are unassigned. Click here to run a report.
+                        </div>
+                    </div>
             </div>
         </div>
     </div>
@@ -690,6 +856,94 @@
                 button.classList.add('active');
             });
         });
+        
+            // Toggle the dropdown menu when the hamburger icon is clicked
+        const hamburgerIcon = document.querySelector('.hamburger-icon');
+        const dropdownMenu = document.querySelector('.dropdown-menu');
+
+        hamburgerIcon.addEventListener('click', () => {
+            dropdownMenu.classList.toggle('active');
+        });
+
+        // Hide the dropdown if clicking outside of the menu
+        document.addEventListener('click', (e) => {
+            if (!hamburgerIcon.contains(e.target) && !dropdownMenu.contains(e.target)) {
+                dropdownMenu.classList.remove('active');
+            }
+        });
     </script>
+    <script>
+    // Get the context of the canvas element for Chart.js
+    const ctx = document.getElementById('rainfallChart').getContext('2d');
+
+    // Data for the 24-hour water measurements
+    const rainfallData = {
+        labels: ['12 AM', '1 AM', '2 AM', '3 AM', '4 AM', '5 AM', '6 AM', '7 AM', '8 AM', '9 AM', '10 AM', '11 AM',
+                 '12 PM', '1 PM', '2 PM', '3 PM', '4 PM', '5 PM', '6 PM', '7 PM', '8 PM', '9 PM', '10 PM', '11 PM'],
+        datasets: [{
+            label: 'Rainfall (inches)',
+            data: [0.1, 0.05, 0.15, 0.2, 0.3, 0.4, 0.25, 0.35, 0.45, 0.5, 0.55, 0.6, 0.65, 0.7, 0.75, 0.8, 0.85, 0.9, 0.95, 1.0, 1.05, 1.1, 1.15, 1.2],
+            borderColor: 'green', // Line color
+            backgroundColor: 'rgba(132, 169, 140, 0.2)', // Fill under line
+            fill: true, // Fill under the line
+            tension: 0.3, // Curved line
+            pointBackgroundColor: 'white', // Set the dot color to white
+            pointBorderColor: 'black', // Border color around the dots
+            pointRadius: 5, // Size of the dots
+        }]
+    };
+
+    // Config for the Chart.js line chart
+    const config = {
+        type: 'line',
+        data: rainfallData,
+        options: {
+            responsive: true,
+            scales: {
+                x: {
+                    title: {
+                        display: true,
+                        text: 'Hours',
+                        color: 'white',
+                        font: {
+                            size: 14
+                        }
+                    },
+                    ticks: {
+                        color: 'white'
+                    }
+                },
+                y: {
+                    title: {
+                        display: true,
+                        text: 'Rainfall (inches)',
+                        color: 'white',
+                        font: {
+                            size: 14
+                        }
+                    },
+                    ticks: {
+                        color: 'white'
+                    }
+                }
+            },
+            plugins: {
+                legend: {
+                    display: false, // Hide the legend if not needed
+                },
+            }
+        }
+    };
+
+    // Create the chart
+    const rainfallChart = new Chart(ctx, config);
+</script>
+<script>
+    document.getElementById('closeBannerBtn').addEventListener('click', function() {
+        document.getElementById('notificationBanner').style.display = 'none';
+    });
+</script>
+
+
 </body>
 </html>
