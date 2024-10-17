@@ -8,21 +8,6 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
    <style>
-:root {
-    --primary-color: #FEFAE0; /* Light background color */
-    --secondary-color: #606C38; /* Olive green for main elements */
-    --tertiary-color: #BC6C25; /* Burnt orange for accents */
-    --quaternary-color: #DDA15E; /* Golden yellow for highlights */
-    --accent-color: #283618; /* Dark green for key areas */
-    --toggle-container-dark-gradient: linear-gradient(to right, blue,green); 
-    --background-gradient-start: #FEFAE0; /* Soft cream */
-    --background-gradient-end: #DDA15E; /* Subtle gradient */
-    --card-background: rgba(96, 108, 56, 0.7); /* Frosted olive green */
-    --text-color: white; /* Dark green for contrast */
-    --hover-color: #BC6C25; /* Burnt orange for hover */
-    --icon-color: #606C38; /* Matches olive green */
-    --icon-hover-color: #DDA15E; /* Golden yellow for hover states */
-}
 
 :root {
     --primary-color: #F6FFF8; /* Soft, light green for background */
@@ -39,6 +24,23 @@
     --icon-hover-color: #CCE3DE; /* Very light green for icon hover */
     --toggle-container-dark-gradient: linear-gradient(to right, var(--primary-color), var(--tertiary-color));
 }
+
+:root {
+    --primary-color: #E0E1DD; /* Soft, light grey for background */
+    --secondary-color: #0D1B2A; /* Dark navy for main elements */
+    --tertiary-color: #415A77; /* Muted blue for accents */
+    --quaternary-color: #778DA9; /* Light blue-grey for highlights */
+    --accent-color: #1B263B; /* Dark blue for emphasis */
+    --background-gradient-start: #E0E1DD; /* Light background gradient start */
+    --background-gradient-end: rgba(0, 0, 0, 0.6); /* Gradient end with transparency */
+    --card-background: rgba(65, 90, 119, 0.7); /* Frosted muted blue */
+    --text-color: white; /* White for contrast against dark backgrounds */
+    --hover-color: #415A77; /* Muted blue for hover */
+    --icon-color: #0D1B2A; /* Dark navy for icons */
+    --icon-hover-color: #778DA9; /* Light blue-grey for icon hover */
+    --toggle-container-dark-gradient: linear-gradient(to right, var(--primary-color), var(--tertiary-color));
+}
+
 
 
 
@@ -700,6 +702,16 @@ body {
                         <i class="fas fa-sign-out-alt logout-icon"></i>
                         <span>Logout</span>
                     </div>
+                    <p>Themes</p>
+                    <hr>
+                    <div class="menu-item" onclick="handleThemeChange('blue')">
+                        
+                        <span >Blue</span>
+                    </div>
+                    <div class="menu-item" onclick="handleThemeChange('green')">
+                        
+                        <span>Green</span>
+                    </div>
                 </div>
             </div>
             <div class="user-info">
@@ -1091,6 +1103,60 @@ body {
     document.getElementById('closeBannerBtn').addEventListener('click', function() {
         document.getElementById('notificationBanner').style.display = 'none';
     });
+    
+        function handleThemeChange(theme) {
+           // const theme = document.getElementById('theme-selector').value;
+
+            if (theme === 'green') {
+                // Theme 1: Green & Fresh
+                changeTheme(
+                    '#F6FFF8', /* primary */
+                    '#6B9080', /* secondary */
+                    '#A4C3B2', /* tertiary */
+                    '#CCE3DE', /* quaternary */
+                    '#EAF4F4', /* accent */
+                    '#F6FFF8', /* background start */
+                    'rgba(0, 0, 0, 0.6)', /* background end */
+                    'rgba(107, 144, 128, 0.7)', /* card background */
+                    'white', /* text color */
+                    '#A4C3B2', /* hover color */
+                    '#6B9080', /* icon color */
+                    '#CCE3DE' /* icon hover color */
+                );
+            } else if (theme === 'blue') {
+                // Theme 2: Dark & Blue
+                changeTheme(
+                    '#E0E1DD', /* primary */
+                    '#0D1B2A', /* secondary */
+                    '#415A77', /* tertiary */
+                    '#778DA9', /* quaternary */
+                    '#1B263B', /* accent */
+                    '#E0E1DD', /* background start */
+                    'rgba(0, 0, 0, 0.6)', /* background end */
+                    'rgba(65, 90, 119, 0.7)', /* card background */
+                    'white', /* text color */
+                    '#415A77', /* hover color */
+                    '#0D1B2A', /* icon color */
+                    '#778DA9' /* icon hover color */
+                );
+            }
+        }
+
+        function changeTheme(primary, secondary, tertiary, quaternary, accent, bgStart, bgEnd, cardBg, text, hover, icon, iconHover) {
+            document.documentElement.style.setProperty('--primary-color', primary);
+            document.documentElement.style.setProperty('--secondary-color', secondary);
+            document.documentElement.style.setProperty('--tertiary-color', tertiary);
+            document.documentElement.style.setProperty('--quaternary-color', quaternary);
+            document.documentElement.style.setProperty('--accent-color', accent);
+            document.documentElement.style.setProperty('--background-gradient-start', bgStart);
+            document.documentElement.style.setProperty('--background-gradient-end', bgEnd);
+            document.documentElement.style.setProperty('--card-background', cardBg);
+            document.documentElement.style.setProperty('--text-color', text);
+            document.documentElement.style.setProperty('--hover-color', hover);
+            document.documentElement.style.setProperty('--icon-color', icon);
+            document.documentElement.style.setProperty('--icon-hover-color', iconHover);
+        }
+
 </script>
 
 
