@@ -1,0 +1,1096 @@
+<html lang="en"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Custom Dashboard with Toggle</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&amp;display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"> <!-- Font Awesome -->
+    
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+   <style>
+:root {
+    --primary-color: #FEFAE0; /* Light background color */
+    --secondary-color: #606C38; /* Olive green for main elements */
+    --tertiary-color: #BC6C25; /* Burnt orange for accents */
+    --quaternary-color: #DDA15E; /* Golden yellow for highlights */
+    --accent-color: #283618; /* Dark green for key areas */
+    --toggle-container-dark-gradient: linear-gradient(to right, blue,green); 
+    --background-gradient-start: #FEFAE0; /* Soft cream */
+    --background-gradient-end: #DDA15E; /* Subtle gradient */
+    --card-background: rgba(96, 108, 56, 0.7); /* Frosted olive green */
+    --text-color: white; /* Dark green for contrast */
+    --hover-color: #BC6C25; /* Burnt orange for hover */
+    --icon-color: #606C38; /* Matches olive green */
+    --icon-hover-color: #DDA15E; /* Golden yellow for hover states */
+}
+
+:root {
+    --primary-color: #F6FFF8; /* Soft, light green for background */
+    --secondary-color: #6B9080; /* Muted green for main elements */
+    --tertiary-color: #A4C3B2; /* Light, fresh green for accents */
+    --quaternary-color: #CCE3DE; /* Very light green for highlights */
+    --accent-color: #EAF4F4; /* Soft, light cyan for emphasis */
+    --background-gradient-start: #F6FFF8; /* Light background gradient start */
+    --background-gradient-end: #CCE3DE; /* Light background gradient end */
+    --card-background: rgba(107, 144, 128, 0.7); /* Frosted muted green */
+    --text-color: white; /* Muted green for text */
+    --hover-color: #A4C3B2; /* Light fresh green for hover */
+    --icon-color: #6B9080; /* Matches muted green for icons */
+    --icon-hover-color: #CCE3DE; /* Very light green for icon hover */
+    --toggle-container-dark-gradient: linear-gradient(to right, var(--primary-color), var(--tertiary-color));
+}
+
+
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Roboto', sans-serif;
+}
+
+body {
+    background-color: var(--primary-color);
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    color: var(--text-color);
+    background: linear-gradient(to bottom, var(--background-gradient-start), var(--background-gradient-end)),
+        url('https://gitgregoryjones.github.io/WaterWatchPro/Crew.jpeg') no-repeat center center/cover;
+}
+
+/* Top Navigation */
+.top-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.9);
+    border-radius: 15px;
+    width: 90%;
+    margin: 2rem auto;
+    padding: 15px 30px;
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+}
+
+.logo img {
+    height: 30px;
+}
+
+/* Hamburger Menu */
+.hamburger-menu {
+    position: relative;
+    display: inline-block;
+}
+
+.hamburger-icon {
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: var(--text-color);
+}
+
+/* Dropdown menu */
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    top: 40px;
+    min-width: 200px;
+    right: 0;
+    background-color: var(--secondary-color);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    overflow: hidden;
+    z-index: 1000;
+}
+
+.dropdown-menu.active {
+    display: block;
+}
+
+.menu-item {
+    display: flex;
+    align-items: center;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    color: var(--text-color);
+}
+
+.menu-item i {
+    margin-right: 10px;
+}
+
+.menu-item:hover {
+    background-color: var(--hover-color);
+}
+
+/* Dropdown icons */
+.user-icon { color: var(--icon-color); }
+.location-icon { color: var(--tertiary-color); }
+.report-icon { color: var(--accent-color); }
+.profile-icon { color: var(--icon-color); }
+.logout-icon { color: #FF6B6B; }
+
+/* Main Dashboard */
+.dashboard {
+    display: flex;
+    flex-direction: row;
+    height: 80%;
+    padding: 20px;
+    justify-content: center;
+    border: 1px solid var(--text-color);
+    margin-left: 10rem;
+    margin-right: 10rem;
+    border-radius: 1.5rem;
+}
+
+/* Right Content Area */
+.right-content {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: repeat(2, 1fr);
+    gap: 20px;
+}
+
+/* Blurred card (frosted glass effect) */
+.card {
+    background-color: var(--card-background);
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid var(--text-color);
+}
+
+.card h3 {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+}
+
+/* Toggle Container */
+.toggle-container {
+    display: flex;
+    justify-content: space-between;
+    background: var(--toggle-container-dark-gradient);
+    border-radius: 10px;
+    margin-bottom: 20px;
+    padding: 5px;
+}
+
+.toggle-button {
+    background-color: transparent;
+    border: 2px solid transparent;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+    color: black;
+}
+
+.toggle-button.active {
+    background-color: var(--hover-color);
+    color: white;
+    font-weight: bold;
+}
+
+.toggle-button:hover {
+    background-color: var(--hover-color);
+    color:white;
+}
+
+/* Mini Forecast Cards */
+.mini-card-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+}
+
+.mini-card {
+    background-color: var(--secondary-color);
+    border-radius: 15px;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 130px;
+    min-height: 150px;
+    color:var(--primary-color);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    transition: all .3s ease;
+}
+
+.mini-card i {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+}
+
+.mini-card:hover {
+    --transform:scale(1.1);
+    background-color:var(--primary-color);
+    color:var(--secondary-color);
+}
+
+.mini-card p {
+    margin: 5px 0;
+    color: white
+    font-size: 0.9rem;
+}
+
+
+
+        /* Scrollable Contacts Area */
+        .contacts-scroll {
+            max-height: 250px; /* Set the height of the scrollable area */
+            overflow-y: auto;
+            background-color: rgba(255, 255, 255, 0.1); /* Match the chart background */
+            border-radius: 10px;
+            padding: 10px;
+        }
+
+        .contact-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: var(--secondary-color);/* Same background color */
+            border-radius: 10px;
+            padding: 10px;
+            margin-bottom: 10px;
+            transition: background-color 0.3s, color 0.3s;
+            color: var(--primary-color);
+        }
+        
+       
+         .contact-row:hover {
+            background-color: var(--primary-color);
+            color: var(--secondary-color);
+            font-weight:bold;
+        }
+
+        .contact-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+          
+        }
+
+        .contact-info img {
+            height: 40px;
+            width: 40px;
+            border-radius: 50%;
+        }
+
+        .contact-info p {
+            margin: 0;
+           
+        }
+
+        .contact-actions i {
+            margin-left: 10px;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .contact-actions i:hover {
+            color: #84A98C;
+        }
+          .info-badge,.alarm, .headeralarm {
+        background-color: #52796F; /* You can adjust this color to fit your theme */
+        color: white;
+        padding: 5px 5px;
+        border-radius: 20px; /* Creates a pill-shaped badge */
+        font-size: 0.8rem;
+        margin-left: 0px;
+        top:-1rem;
+        position:relative;
+        /* Adds spacing between text and badge */
+        font-weight: bold;
+    }
+    
+           /* Scrollable Alarms Area */
+        .alarms-scroll {
+            max-height: 250px; /* Set the height of the scrollable area */
+            overflow-y: auto;
+            background-color: rgba(255, 255, 255, 0.1); /* Match the chart background */
+            border-radius: 10px;
+            padding: 10px;
+        }
+
+        .alarm-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: rgba(255, 255, 255, 0.1); /* Same background color */
+            border-radius: 10px;
+            padding: 10px;
+            margin-bottom: 10px;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .alarm-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            color: white;
+        }
+
+        .alarm-info i {
+            color: #FFC107; /* Yellow color for alarm icon */
+        }
+
+        .alarm-info p {
+            margin: 0;
+            color: white;
+        }
+    
+    .alarm {
+        background-color:#FFC107;
+        background-color:white;
+        border:2px solid black;
+        color:black;
+       
+    }
+    
+     .headeralarm {
+        background-color:#FFC107;
+        padding:5px 10px;
+        text-decoration:none;
+        top:0;
+        color:black;
+        background-color:white;
+        border:1px solid black;
+    }
+    
+    .card-actions {
+        position: absolute; /* Make the container for the plus sign absolute */
+        top: 1rem;          /* Position it near the top */
+        right: 1.5rem;        /* Align it to the right */
+    }
+    .location-header, .subtitle {
+        color: var(--text-color);
+        font-size:1rem;
+        font-weight:bold;
+        
+    }
+    .subtitle {
+        color:cyan;
+        font-weight:normal;
+        text-decoration:none;
+        font-size:16px;
+        
+    }
+    .subheader {
+        margin-top:.5rem;
+        display:none;
+    }
+    /* Search Container */
+.search-container {
+    display: flex;
+    align-items: center;
+    background-color: rgba(255, 255, 255, 0.1); /* Slightly transparent background */
+    padding: 5px 15px;
+    border-radius: 20px; /* Rounded edges */
+    width: 300px; /* Adjust the width as needed */
+    position: relative;
+    margin: 0 20px; /* Space between logo and search */
+}
+
+.search-container input {
+    flex-grow: 1;
+    border: none;
+    background: transparent;
+    color: white;
+    font-size: 1rem;
+    outline: none;
+    padding: 10px;
+}
+
+.search-container .search-icon {
+    color: #CAD2C5; /* Icon color */
+    position: absolute;
+    right: 10px;
+    font-size: 1.2rem;
+}
+/* Notification Banner */
+.notification-banner {
+    background-color: #FFC107; /* Warning color */
+    color: black;
+    text-align: center;
+    padding: 10px;
+    font-size: 1rem;
+    position: relative;
+    width: 100%;
+    top: 0;
+    left: 0;
+    z-index: 1000; /* Ensure it stays above other elements */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add some shadow for depth */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+}
+
+/* Close Button for Banner */
+.close-banner {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    color: black;
+    position: absolute;
+    right: 20px;
+    cursor: pointer;
+    padding: 0;
+    line-height: 1;
+}
+
+.close-banner:hover {
+    color: #333;
+}
+
+   .spinner {
+            display: none;
+            width: 50px;
+            height: 50px;
+            border: 5px solid #f3f3f3;
+            border-top: 5px solid #84A98C; /* Adjusted to match button color */
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
+            top:50%;
+            left:50%;
+            z-index:1000;
+            
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+/* Mobile Styles */
+@media (max-width: 768px) {
+    /* Stack top info area */
+    .top-info {
+        flex-direction: column;
+        align-items: flex-end;
+        width: 100%;
+        padding: 15px;
+        margin: 0;
+    }
+
+    .logo {
+        margin-bottom: 10px;
+    }
+
+    .search-container {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+
+    .hamburger-menu {
+        margin-top: 10px;
+    }
+
+    /* Stack dashboard content */
+    .dashboard {
+        flex-direction: column;
+        margin-left: 0;
+        margin-right: 0;
+        padding: 10px;
+        border: none;
+    }
+
+    .right-content {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto;
+        gap: 20px;
+    }
+
+    /* Adjust card styles for mobile */
+    .card {
+        padding: 15px;
+        border-radius: 10px;
+    }
+
+    .card h3 {
+        font-size: 1.2rem;
+        background-image: linear-gradient(to left, var(--primary-color), var(--text-color));
+  color: transparent;
+  background-clip: text;
+  -webkit-background-clip: text;
+    }
+
+    .mini-card-container {
+        justify-content: center;
+        gap: 10px;
+    }
+
+    .mini-card {
+        width: 100px;
+    }
+
+    .contacts-scroll, .alarms-scroll {
+        max-height: 200px;
+    }
+
+    .search-container {
+        width: 100%;
+        padding: 5px 10px;
+    }
+
+    .location-banner {
+        margin: 10px 0;
+        text-align: center;
+        
+    }
+
+    /* Adjust font sizes */
+    .location-banner h1 {
+        font-size: 1.5rem;
+        color:var(--secondary-color);
+        background:  var(--toggle-container-dark-gradient);
+    }
+
+    .card-footer {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .card-footer .status,
+    .card-footer .actions {
+        margin-top: 10px;
+    }
+}
+
+
+    </style>
+
+</head>
+<body cz-shortcut-listen="true">
+    <div class="spinner" id="spinner"></div>
+    <div class="wrapper">
+        <!-- Top Info Area -->
+        <!-- Notification Banner -->
+<div class="notification-banner" id="notificationBanner" style="display: none;">
+    <p>⚠️ System Update: We will be undergoing maintenance from 12 AM to 4 AM. Some features may be unavailable.</p>
+    <button class="close-banner" id="closeBannerBtn">×</button>
+</div>
+
+
+
+        <header class="top-info">
+            <div class="logo">
+                <img src="https://img1.wsimg.com/isteam/ip/88056157-8118-4fa6-a40b-afa381a48cd5/Eye%20Words.png/:/rs=h:30" alt="Logo">
+            </div>
+             <!-- Location Search Field -->
+    <div class="search-container">
+        <input type="text" id="locationSearch" placeholder="Search locations...">
+        <i class="fas fa-search search-icon"></i>
+    </div>
+            <div class="location-header">
+                Welcome, John Doe
+                <p class="subheader">
+                 
+                    <span class="subtitle"><span class="headeralarm">5</span> locations are missing a contact. Click here to run a report</span>
+                </p>
+            </div>
+          
+<style>
+    .add-location-btn {
+        background-color: #52796F; /* Theme color for background */
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 30px; /* Rounded edges for a smooth button */
+        font-size: 1rem;
+        font-weight: bold;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        gap: 10px; /* Spacing between the icon and text */
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Light shadow for depth */
+        transition: background-color 0.3s, box-shadow 0.3s; /* Smooth hover effects */
+    }
+
+    .add-location-btn i {
+        font-size: 1.2rem;
+    }
+
+    .add-location-btn:hover {
+        background-color: #84A98C; /* Lighter shade for hover effect */
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3); /* Stronger shadow on hover */
+    }
+
+    .add-location-btn:active {
+        background-color: #354F52; /* Darker shade when button is clicked */
+        box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1); /* Reduce shadow when clicked */
+    }
+    
+    .gold-star {
+        color:gold;
+    }
+    
+    .location-name {
+        text-shadow 1px 1px black;
+    }
+    /* Location Name Banner */
+.location-banner {
+    --background-color: #52796F; /* Match the theme */
+    color: white;
+    text-align: right;
+    padding: 15px;
+    margin: 10px; /* Add some space below the top-info section */
+    margin-right:8.25rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Add shadow for depth */
+}
+
+.location-banner h1 {
+    margin: 0;
+    font-size: 1.8rem;
+    font-weight: bold;
+}
+
+.map {
+ background-image:url(https://gitgregoryjones.github.io/WaterWatchPro/Brookhaven.png);
+ height:100%;
+ width:100%;
+ background-size:contain;
+ border-radius:1rem;
+}
+
+</style>
+
+  <!-- Hamburger Menu -->
+            <div class="hamburger-menu">
+                <i class="fas fa-bars hamburger-icon"></i> <!-- Hamburger icon -->
+
+                <!-- Dropdown Menu -->
+                <div class="dropdown-menu">
+                    <div class="menu-item">
+                        <i class="fas fa-user-group user-icon"></i>
+                        <span>Add Contact</span>
+                    </div>
+                    <div class="menu-item">
+                        <i class="fas fa-map-marker-alt location-icon"></i>
+                        <span>Add Location</span>
+                    </div>
+                    <div class="menu-item">
+                        <i class="fas fa-file-alt report-icon"></i>
+                        <span>Reports</span>
+                    </div>
+                    <div class="menu-item">
+                        <i class="fas fa-edit user-icon"></i>
+                        <span>My Profile</span>
+                    </div>
+                    <div class="menu-item logout-icon">
+                        <i class="fas fa-sign-out-alt logout-icon"></i>
+                        <span>Logout</span>
+                    </div>
+                </div>
+            </div>
+            <div class="user-info">
+                <img src="https://via.placeholder.com/50" alt="Profile Picture">
+                <p class="user-name">John Doe</p>
+            </div>
+        </header><!-- Location Name Banner -->
+<div class="location-banner">
+    <h1 id="locationName">Viewing: Atlanta/CFATL1 &nbsp;<i class="fas fa-edit"></i></h1>
+</div>
+
+        <!-- Main Dashboard -->
+        <div class="dashboard">
+            
+
+
+
+
+
+            <!-- Right Content Area -->
+            <div class="right-content">
+                <!-- Card 1 with Toggle -->
+                <div class="card">
+                    <h3 class="location-name">Current Measures</h3>
+                    <!-- Toggle Control -->
+                    <div class="toggle-container">
+                        <button class="toggle-button active" id="toggle-24h">24 Hours</button>
+                        <button class="toggle-button" id="toggle-1h">2 Hour</button>
+                        <button class="toggle-button rapidrain" id="toggle-15m"><i class="fas fa-star gold-star"></i>
+<span style="color:green">RAPID</span><span style="color:blue">RAIN</span></button>
+                    </div>
+
+                    
+                    <div class="chart-placeholder">
+    <canvas id="rainfallChart" width="800" height="400" style="display: block; box-sizing: border-box; height: 200px; width: 400px;"></canvas>
+</div>
+
+                    <div class="card-footer">
+                        <div class="status">
+                            <i class="fas fa-star gold-star"></i>
+                            <span>Custom Date Range</span>
+                            &nbsp;<i class="fas fa-calendar"></i>
+                        </div>
+                        <div class="actions">
+                            Download Report <i class="fas fa-download"></i>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <h3 class="location-name">Map</h3>
+                    <!-- Toggle Control -->
+                    
+                    <div class="chart-placeholder">
+                        <div class="map"></div>
+                    </div>
+
+                    <div class="card-footer">
+                        <div class="status">
+                            <i class="fas fa-pin"></i>
+                            <span>Latitiude/Longitude : 33.860537,-84.016415</span>
+                            
+                        </div>
+                        
+                    </div>
+                </div>
+
+                <!-- Card 2 with mini forecast cards -->
+                <div class="card">
+                    <h3>Forecast</h3>
+                        <!-- New Toggle Control -->
+                    <div class="toggle-container">
+                        <button class="toggle-button" id="toggle-national">National Forecast</button>
+                        <button class="toggle-button active" id="toggle-location"><i class="fas fa-star gold-star"></i> This Location</button>
+                    </div>
+
+                    
+                    <!-- Mini Forecast Cards -->
+                    <div class="mini-card-container">
+                        <div class="mini-card">
+                            <p>Mon</p>
+                            <i class="fas fa-cloud-showers-heavy"></i>
+                            <p>0.5 in</p>
+                        </div>
+                        <div class="mini-card">
+                            <p>Tue</p>
+                            <i class="fas fa-cloud-sun"></i>
+                            <p>0.1 in</p>
+                        </div>
+                        <div class="mini-card">
+                            <p>Wed</p>
+                            <i class="fas fa-sun"></i>
+                            <p>0.0 in</p>
+                        </div>
+                    </div>
+
+                    <div class="card-footer" style="visibility:hidden">
+                        <div class="status">
+                            <i class="fas fa-bolt"></i>
+                            <span>72% Efficiency</span>
+                        </div>
+                        <div class="actions">
+                            <i class="fas fa-edit"></i>
+                            <i class="fas fa-trash-alt"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 3 with Scrollable Contacts -->
+                <div class="card">
+                    <h3>Contacts</h3>
+                    <div class="card-actions">
+        <i class="fas fa-plus"></i>
+    </div>
+
+                    <!-- Scrollable Contacts Area -->
+                    <div class="contacts-scroll">
+                        <div class="contact-row">
+                            <div class="contact-info">
+                                <img src="https://via.placeholder.com/40" alt="Contact">
+                                <p>John Smith</p>
+                                <p>john.smith@example.com</p>
+                                <p>(555) 123-4567</p>
+                            </div>
+                            <div class="contact-actions">
+                                <i class="fas fa-edit"></i>
+                                <i class="fas fa-unlink"></i>
+                            </div>
+                        </div>
+                        <div class="contact-row">
+                            <div class="contact-info">
+                                <img src="https://via.placeholder.com/40" alt="Contact">
+                                <p>Jane Doe</p>
+                                <p>jane.doe@example.com</p>
+                                <p>(555) 765-4321</p>
+                            </div>
+                            <div class="contact-actions">
+                                <i class="fas fa-edit"></i>
+                                <i class="fas fa-unlink"></i>
+                            </div>
+                        </div><div class="contact-row">
+                            <div class="contact-info">
+                                <img src="https://via.placeholder.com/40" alt="Contact">
+                                <p>Jane Doe</p>
+                                <p>jane.doe@example.com</p>
+                                <p>(555) 765-4321</p>
+                            </div>
+                            <div class="contact-actions">
+                                <i class="fas fa-edit"></i>
+                                <i class="fas fa-unlink"></i>
+                            </div>
+                        </div>
+                        <div class="contact-row">
+                            <div class="contact-info">
+                                <img src="https://via.placeholder.com/40" alt="Contact">
+                                <p>Jane Doe</p>
+                                <p>jane.doe@example.com</p>
+                                <p>(555) 765-4321</p>
+                            </div>
+                            <div class="contact-actions">
+                                <i class="fas fa-edit"></i>
+                                <i class="fas fa-unlink"></i>
+                            </div>
+                        </div>
+                        <div class="contact-row">
+                            <div class="contact-info">
+                                <img src="https://via.placeholder.com/40" alt="Contact">
+                                <p>Jane Doe</p>
+                                <p>jane.doe@example.com</p>
+                                <p>(555) 765-4321</p>
+                            </div>
+                            <div class="contact-actions">
+                                <i class="fas fa-edit"></i>
+                                <i class="fas fa-trash-alt"></i>
+                            </div>
+                        </div>
+                        <div class="contact-row">
+                            <div class="contact-info">
+                                <img src="https://via.placeholder.com/40" alt="Contact">
+                                <p>Jane Doe</p>
+                                <p>jane.doe@example.com</p>
+                                <p>(555) 765-4321</p>
+                            </div>
+                            <div class="contact-actions">
+                                <i class="fas fa-edit"></i>
+                                <i class="fas fa-unlink"></i>
+                            </div>
+                        </div>
+                        <div class="contact-row">
+                            <div class="contact-info">
+                                <img src="https://via.placeholder.com/40" alt="Contact">
+                                <p>Jane Doe</p>
+                                <p>jane.doe@example.com</p>
+                                <p>(555) 765-4321</p>
+                            </div>
+                            <div class="contact-actions">
+                                <i class="fas fa-edit"></i>
+                                <i class="fas fa-unlink"></i>
+                            </div>
+                        </div>
+                        <!-- Add more contact rows as needed -->
+                    </div>
+
+                    <div class="card-footer">
+                        <div class="status">
+                            <span class="alarm"><i class="fas fa-user"></i>5</span> contacts are unassigned. Click here to run a report.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 4 -->
+                     <div class="card">
+            <h3>Alarms <span class="alarm">10</span></h3>
+
+            <!-- Settings Icon -->
+            <div class="card-settings">
+                <i class="fas fa-cog"></i> <!-- Font Awesome settings icon -->
+            </div>
+
+            <!-- Scrollable Alarms Area -->
+            <div class="alarms-scroll">
+                <div class="alarm-row">
+                    <div class="alarm-info">
+                        <i class="fas fa-exclamation-triangle"></i> <!-- Alarm icon -->
+                        <p>Water threshold exceeded at Main Location</p>
+                    </div>
+                    <p>2 hrs ago</p>
+                </div>
+
+                <div class="alarm-row">
+                    <div class="alarm-info">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <p>Rainfall intensity above safe levels</p>
+                    </div>
+                    <p>3 hrs ago</p>
+                </div>
+
+                <div class="alarm-row">
+                    <div class="alarm-info">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <p>Water pump malfunction</p>
+                    </div>
+                    <p>5 hrs ago</p>
+                </div>
+ <div class="alarm-row">
+                    <div class="alarm-info">
+                        <i class="fas fa-exclamation-triangle"></i> <!-- Alarm icon -->
+                        <p>Water threshold exceeded at Main Location</p>
+                    </div>
+                    <p>2 hrs ago</p>
+                </div>
+
+                <div class="alarm-row">
+                    <div class="alarm-info">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <p>Rainfall intensity above safe levels</p>
+                    </div>
+                    <p>3 hrs ago</p>
+                </div>
+
+                <div class="alarm-row">
+                    <div class="alarm-info">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <p>Water pump malfunction</p>
+                    </div>
+                    <p>5 hrs ago</p>
+                </div>
+                <!-- Add more alarm rows as needed -->
+            </div>
+
+             <div class="card-footer" style="visibility:hidden">
+                        <div class="status">
+                            <span class="alarm"><i class="fas fa-user"></i>5</span> contacts are unassigned. Click here to run a report.
+                        </div>
+                    </div>
+            </div>
+        </div>
+    </div>
+    
+
+   <script>
+   
+    const spinner = document.getElementById('spinner');
+
+   document.querySelector(".logout-icon").addEventListener('click', function(event) {
+            event.preventDefault();
+
+            // Show spinner for 3 seconds then redirect to dashboard.html
+            spinner.style.display = 'block';
+            spinner.style.position = "absolute";
+            setTimeout(() => {
+                spinner.style.display = 'none';
+                window.location.href = 'login.html';
+            }, 3000);
+        });
+   
+        // JavaScript to toggle active states for the first card
+        const toggleButtons = document.querySelectorAll('.toggle-button');
+
+        toggleButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                // Remove active class from all buttons in the same toggle-container
+                button.parentElement.querySelectorAll('.toggle-button').forEach(btn => btn.classList.remove('active'));
+
+                // Add active class to the clicked button
+                button.classList.add('active');
+            });
+        });
+        
+            // Toggle the dropdown menu when the hamburger icon is clicked
+        const hamburgerIcon = document.querySelector('.hamburger-icon');
+        const dropdownMenu = document.querySelector('.dropdown-menu');
+
+        hamburgerIcon.addEventListener('click', () => {
+            dropdownMenu.classList.toggle('active');
+        });
+
+        // Hide the dropdown if clicking outside of the menu
+        document.addEventListener('click', (e) => {
+            if (!hamburgerIcon.contains(e.target) && !dropdownMenu.contains(e.target)) {
+                dropdownMenu.classList.remove('active');
+            }
+        });
+    </script>
+    <script>
+    // Get the context of the canvas element for Chart.js
+    const ctx = document.getElementById('rainfallChart').getContext('2d');
+
+    // Data for the 24-hour water measurements
+    const rainfallData = {
+        labels: ['12 AM', '1 AM', '2 AM', '3 AM', '4 AM', '5 AM', '6 AM', '7 AM', '8 AM', '9 AM', '10 AM', '11 AM',
+                 '12 PM', '1 PM', '2 PM', '3 PM', '4 PM', '5 PM', '6 PM', '7 PM', '8 PM', '9 PM', '10 PM', '11 PM'],
+        datasets: [{
+            label: 'Rainfall (inches)',
+            data: [0.1, 0.05, 0.15, 0.2, 0.3, 0.4, 0.25, 0.35, 0.45, 0.5, 0.55, 0.6, 0.65, 0.7, 0.75, 0.8, 0.85, 0.9, 0.95, 1.0, 1.05, 1.1, 1.15, 1.2],
+            borderColor: 'green', // Line color
+            backgroundColor: 'rgba(132, 169, 140, 0.2)', // Fill under line
+            fill: true, // Fill under the line
+            tension: 0.3, // Curved line
+            pointBackgroundColor: 'white', // Set the dot color to white
+            pointBorderColor: 'black', // Border color around the dots
+            pointRadius: 5, // Size of the dots
+        }]
+    };
+
+    // Config for the Chart.js line chart
+    const config = {
+        type: 'line',
+        data: rainfallData,
+        options: {
+            responsive: true,
+            scales: {
+                x: {
+                    title: {
+                        display: true,
+                        text: 'Hours',
+                        color: 'white',
+                        font: {
+                            size: 14
+                        }
+                    },
+                    ticks: {
+                        color: 'white'
+                    }
+                },
+                y: {
+                    title: {
+                        display: true,
+                        text: 'Rainfall (inches)',
+                        color: 'white',
+                        font: {
+                            size: 14
+                        }
+                    },
+                    ticks: {
+                        color: 'white'
+                    }
+                }
+            },
+            plugins: {
+                legend: {
+                    display: false, // Hide the legend if not needed
+                },
+            }
+        }
+    };
+
+    // Create the chart
+    const rainfallChart = new Chart(ctx, config);
+</script>
+<script>
+    document.getElementById('closeBannerBtn').addEventListener('click', function() {
+        document.getElementById('notificationBanner').style.display = 'none';
+    });
+</script>
+
+
+
+
+</div></body></html>
