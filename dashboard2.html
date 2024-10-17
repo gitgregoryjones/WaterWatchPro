@@ -31,7 +31,7 @@
     --quaternary-color: #CCE3DE; /* Very light green for highlights */
     --accent-color: #EAF4F4; /* Soft, light cyan for emphasis */
     --background-gradient-start: #F6FFF8; /* Light background gradient start */
-    --background-gradient-end: #CCE3DE; /* Light background gradient end */
+    --background-gradient-end: rgba(0, 0, 0, 0.6); /* Light background gradient end */
     --card-background: rgba(107, 144, 128, 0.7); /* Frosted muted green */
     --text-color: white; /* Muted green for text */
     --hover-color: #A4C3B2; /* Light fresh green for hover */
@@ -165,6 +165,7 @@ body {
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
     border: 1px solid var(--text-color);
+    
 }
 
 .card h3 {
@@ -660,7 +661,7 @@ body {
 
 .map {
  background-image:url(https://gitgregoryjones.github.io/WaterWatchPro/Brookhaven.png);
- height:100%;
+ min-height:300px;
  width:100%;
  background-size:contain;
  border-radius:1rem;
