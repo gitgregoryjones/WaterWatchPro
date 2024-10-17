@@ -1,285 +1,242 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
+<html lang="en"><head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Custom Dashboard with Toggle</title>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&amp;display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"> <!-- Font Awesome -->
     
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-    <style>
-        /* Global Styles */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Roboto', sans-serif;
-        }
+   <style>
 
-        body {
-            background-color: #2F3E46;
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
-            color: white;
-            background: linear-gradient(to bottom, rgba(47, 62, 70, 1), rgba(84, 169, 140,.9)),
-                url('https://gitgregoryjones.github.io/WaterWatchPro/Crew.jpeg') no-repeat center center/cover;
-        }
-
-        /* Top Navigation */
-        .top-info {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background-color: rgba(0, 0, 0, 0.9);
-            border-radius: 15px;
-            width: 90%;
-            margin: 2rem auto;
-            padding: 15px 30px;
-            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
-        }
-
-        .logo img {
-            height: 30px;
-        }
-
-        .user-info {
-            display: flex;
-            align-items: center;
-            display:none;
-        }
-
-        .user-info img {
-            height: 50px;
-            width: 50px;
-            border-radius: 50%;
-            margin-right: 10px;
-         
-        }
-
-        .user-name {
-            font-size: 1.2rem;
-        }
-         /* Hamburger Menu */
-        .hamburger-menu {
-            position: relative;
-            display: inline-block;
-        }
-
-        .hamburger-icon {
-            font-size: 1.5rem;
-            cursor: pointer;
-            color: white;
-        }
-
-        /* Dropdown menu */
-        .dropdown-menu {
-            display: none;
-            position: absolute;
-            top: 40px;
-            min-width:200px;
-            right: 0;
-            background-color: #52796F; /* Theme color */
-            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
-            border-radius: 10px;
-            overflow: hidden;
-            z-index:1000;
-        }
-
-        .dropdown-menu.active {
-            display: block;
-        }
-
-        .menu-item {
-            display: flex;
-            align-items: center;
-            padding: 10px 20px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-            color: white;
-        }
-
-        .menu-item i {
-            margin-right: 10px;
-        }
-
-        .menu-item:hover {
-            background-color: #354F52;
-        }
-
-        /* Dropdown icons */
-        .user-icon { color: #CAD2C5; }
-        .location-icon { color: #84A98C; }
-        .report-icon { color: #FFC107; }
-        .profile-icon { color: #CAD2C5; }
-        .logout-icon { color: #FF6B6B; }
+:root {
+    --primary-color: #F6FFF8; /* Soft, light green for background */
+    --secondary-color: #6B9080; /* Muted green for main elements */
+    --tertiary-color: #A4C3B2; /* Light, fresh green for accents */
+    --quaternary-color: #CCE3DE; /* Very light green for highlights */
+    --accent-color: #EAF4F4; /* Soft, light cyan for emphasis */
+    --background-gradient-start:rgba(107, 144, 128, 0.7); ; /* Light background gradient start */
+    --background-gradient-end: rgba(0, 0, 0, 0.6); /* Light background gradient end */
+    --card-background: rgba(107, 144, 128, 0.7); /* Frosted muted green */
+    --text-color: white; /* Muted green for text */
+    --hover-color: #A4C3B2; /* Light fresh green for hover */
+    --icon-color: #6B9080; /* Matches muted green for icons */
+    --icon-hover-color: #CCE3DE; /* Very light green for icon hover */
+    --toggle-container-dark-gradient: linear-gradient(to left, var(--primary-color), var(--tertiary-color));
+}
 
 
-        /* Main Dashboard */
-        .dashboard {
-            display: flex;
-            flex-direction: row;
-            height: 80%;
-            padding: 20px;
-            justify-content: center;
-            border: 1px solid white;
-            margin-left: 10rem;
-            margin-right: 10rem;
-            border-radius: 1.5rem;
-        }
 
-        /* Right Content Area */
-        .right-content {
-            width: 100%;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            grid-template-rows: repeat(2, 1fr);
-            gap: 20px;
-        }
 
-        /* Blurred card (frosted glass effect) */
+
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Roboto', sans-serif;
+}
+
+body {
+    background-color: var(--primary-color);
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    color: var(--text-color);
+    background: linear-gradient(to bottom, var(--background-gradient-start), var(--background-gradient-end)),
+        url('https://gitgregoryjones.github.io/WaterWatchPro/Crew.jpeg') no-repeat center center/cover;
+}
+
+/* Top Navigation */
+.top-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.9);
+    border-radius: 15px;
+    width: 90%;
+    margin: 2rem auto;
+    padding: 15px 30px;
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+}
+
+.logo img {
+    height: 30px;
+}
+
+/* Hamburger Menu */
+.hamburger-menu {
+    position: relative;
+    display: inline-block;
+}
+
+.hamburger-icon {
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: var(--text-color);
+}
+
+/* Dropdown menu */
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    top: 40px;
+    min-width: 200px;
+    right: 0;
+    background-color: var(--secondary-color);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    overflow: hidden;
+    z-index: 1000;
+     backdrop-filter: blur(40px);
+    -webkit-backdrop-filter: blur(40px);
+}
+
+.dropdown-menu.active {
+    display: block;
+}
+
+.menu-item {
+    display: flex;
+    align-items: center;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    color: var(--text-color);
+}
+
+.menu-item i {
+    margin-right: 10px;
+}
+
+.menu-item:hover {
+    background-color: var(--hover-color);
+}
+
+/* Dropdown icons */
+.user-icon { color: var(--icon-color); }
+.location-icon { color: var(--tertiary-color); }
+.report-icon { color: var(--accent-color); }
+.profile-icon { color: var(--icon-color); }
+.logout-icon { color: #FF6B6B; }
+
+/* Main Dashboard */
+.dashboard {
+    display: flex;
+    flex-direction: row;
+    height: 80%;
+    padding: 20px;
+    justify-content: center;
+    border: 1px solid var(--text-color);
+    margin-left: 10rem;
+    margin-right: 10rem;
+    border-radius: 1.5rem;
+}
+
+/* Right Content Area */
+.right-content {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: repeat(2, 1fr);
+    gap: 20px;
+}
+
+/* Blurred card (frosted glass effect) */
 .card {
-    background-color: rgba(132, 169, 140, 0.7);
+    background-color: var(--card-background);
     padding: 20px;
     border-radius: 15px;
-    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2); /* Box shadow for depth */
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     position: relative;
-    backdrop-filter: blur(10px); /* This creates the blur/frosted glass effect */
-    -webkit-backdrop-filter: blur(10px); /* For Safari support */
-    border: 1px solid rgba(255, 255, 255, 0.2); /* Light border for frosted glass look */
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid var(--text-color);
+    
 }
 
 .card h3 {
     font-size: 1.5rem;
-    margin-bottom: 10px; /* Set consistent spacing for both headers */
+    margin-bottom: 10px;
 }
 
 /* Toggle Container */
 .toggle-container {
     display: flex;
     justify-content: space-between;
-    background-color: rgba(0, 0, 0, 0.5);
+    background: var(--toggle-container-dark-gradient);
     border-radius: 10px;
     margin-bottom: 20px;
     padding: 5px;
 }
 
-        .toggle-button {
-            background-color: transparent;
-            border: 2px solid transparent;
-            padding: 10px 20px;
-            border-radius: 8px;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: background-color 0.3s, color 0.3s;
-            color: black;
-        }
-
-        .toggle-button.active {
-            background-color: black;
-            color: white;
-            font-weight: bold;
-        }
-
-        .toggle-button:hover {
-            background-color: black;
-        }
-
-        .chart-placeholder {
-    height: 200px; /* Adjust this value as needed */
-    width: 100%;
-    background-color: rgba(255, 255, 255, 0.1);
-    border-radius: 10px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.toggle-button {
+    background-color: transparent;
+    border: 2px solid transparent;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+    color: black;
 }
 
-        .card-footer {
-            display: flex;
-            justify-content: space-between;
-        }
+.toggle-button.active {
+    background-color: var(--hover-color);
+    color: white;
+    font-weight: bold;
+}
 
-        .card-footer .status {
-            display: flex;
-            align-items: center;
-        }
+.toggle-button:hover {
+    background-color: var(--hover-color);
+    color:white;
+}
 
-        .card-footer .status span {
-            margin-left: 10px;
-        }
 
-        .card-footer .actions {
-            display: flex;
-            gap: 10px;
-        }
+/* Mini Forecast Cards */
+.mini-card-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+}
 
-        .actions i {
-            cursor: pointer;
-            color: #CAD2C5;
-            transition: color 0.3s;
-        }
+.mini-card {
+    background-color: var(--secondary-color);
+    border-radius: 15px;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 130px;
+    min-height: 150px;
+    color:var(--primary-color);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    transition: all .3s ease;
+}
 
-        .actions i:hover {
-            color: #84A98C;
-        }
+.mini-card i {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+}
 
-/* Settings Icon in top right corner */
-        .card-settings {
-            position: absolute;
-            top: 1rem;
-            right: 1.5rem;
-            cursor: pointer;
-            color: white;
-        }
+.mini-card:hover {
+    --transform:scale(1.1);
+    background-color:var(--primary-color);
+    color:var(--secondary-color);
+}
 
-        .card-settings i:hover {
-            color: #84A98C;
-        }
+.mini-card p {
+    margin: 5px 0;
+    color: white
+    font-size: 0.9rem;
+}
 
-        /* Custom styling for RAPIDRAIN button */
-        .rapidrain {
-            text-shadow: 1px 1px black;
-            font-size: large;
-            font-weight: bold;
-        }
 
-        /* Mini Forecast Cards */
-        .mini-card-container {
-            display: flex;
-            justify-content: space-between;
-            gap: 15px;
-        }
-
-        .mini-card {
-            background-color: rgba(255, 255, 255, 0.1); /* Same as the chart background */
-            border-radius: 15px;
-            padding: 10px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            width: 130px;
-            min-height:150px;
-            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2); /* Box shadow for depth */
-            backdrop-filter: blur(10px); /* Frosted glass effect */
-            -webkit-backdrop-filter: blur(10px); /* For Safari */
-        }
-
-        .mini-card i {
-            font-size: 1.5rem;
-            margin-bottom: 10px;
-        }
-
-        .mini-card p {
-            margin: 5px 0;
-            color: white;
-            font-size: 0.9rem;
-        }
 
         /* Scrollable Contacts Area */
         .contacts-scroll {
@@ -294,24 +251,27 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background-color: rgba(255, 255, 255, 0.1); /* Same background color */
+            background-color: var(--secondary-color);/* Same background color */
             border-radius: 10px;
             padding: 10px;
             margin-bottom: 10px;
             transition: background-color 0.3s, color 0.3s;
+            color: var(--primary-color);
+            font-size:.9rem;
         }
         
-        .contact-row.active {
-            background-color: rgba(0, 0, 0, 0.5);
-            background-color: rgba(132, 169, 140, 1);
-            font-weight:bold;
+       
+         .contact-row:hover {
+            background-color: var(--primary-color);
+            color: var(--secondary-color);
+            
         }
 
         .contact-info {
             display: flex;
             align-items: center;
             gap: 15px;
-            color: white;
+          
         }
 
         .contact-info img {
@@ -322,7 +282,7 @@
 
         .contact-info p {
             margin: 0;
-            color: white;
+           
         }
 
         .contact-actions i {
@@ -407,7 +367,7 @@
         right: 1.5rem;        /* Align it to the right */
     }
     .location-header, .subtitle {
-        color:white;
+        color: var(--text-color);
         font-size:1rem;
         font-weight:bold;
         
@@ -554,6 +514,10 @@
 
     .card h3 {
         font-size: 1.2rem;
+        background-image: linear-gradient(to left, var(--primary-color), var(--text-color));
+  color: transparent;
+  background-clip: text;
+  -webkit-background-clip: text;
     }
 
     .mini-card-container {
@@ -577,11 +541,14 @@
     .location-banner {
         margin: 10px 0;
         text-align: center;
+        
     }
 
     /* Adjust font sizes */
     .location-banner h1 {
         font-size: 1.5rem;
+        color:var(--secondary-color);
+        background:  var(--toggle-container-dark-gradient);
     }
 
     .card-footer {
@@ -597,15 +564,16 @@
 
 
     </style>
+
 </head>
-<body>
+<body cz-shortcut-listen="true">
     <div class="spinner" id="spinner"></div>
     <div class="wrapper">
         <!-- Top Info Area -->
         <!-- Notification Banner -->
-<div class="notification-banner" id="notificationBanner">
+<div class="notification-banner" id="notificationBanner" style="display: none;">
     <p>⚠️ System Update: We will be undergoing maintenance from 12 AM to 4 AM. Some features may be unavailable.</p>
-    <button class="close-banner" id="closeBannerBtn">&times;</button>
+    <button class="close-banner" id="closeBannerBtn">×</button>
 </div>
 
 
@@ -620,7 +588,7 @@
         <i class="fas fa-search search-icon"></i>
     </div>
             <div class="location-header">
-                Welcome, John Doe
+                Viewing Atlanta/CFATL1 <i class="fa fa-edit"></i>
                 <p class="subheader">
                  
                     <span class="subtitle"><span class="headeralarm">5</span> locations are missing a contact. Click here to run a report</span>
@@ -685,11 +653,19 @@
 
 .map {
  background-image:url(https://gitgregoryjones.github.io/WaterWatchPro/Brookhaven.png);
- height:100%;
+ min-height:300px;
  width:100%;
- background-size:contain;
+ background-size:100%;
  border-radius:1rem;
+ transition: all 0.5s ease-in-out;
+  &:hover {
+      background-size:150%;
+  }
+  
+  
 }
+
+
 
 </style>
 
@@ -719,6 +695,31 @@
                         <i class="fas fa-sign-out-alt logout-icon"></i>
                         <span>Logout</span>
                     </div>
+                    <p>Themes</p>
+                    <hr>
+                    <div class="menu-item" onclick="handleThemeChange('blue')">
+                        
+                        <span >Blue</span>
+                    </div>
+                    <div class="menu-item" onclick="handleThemeChange('green')">
+                        
+                        <span>Green</span>
+                    </div>
+                    <div class="menu-item" onclick="handleThemeChange('muted')">
+                        
+                        <span>Muted</span>
+                    </div>
+                    
+                    <div class="menu-item" onclick="handleThemeChange('summer')">
+                        
+                        <span>Fall</span>
+                    </div>
+                    <div class="menu-item" onclick="handleThemeChange('dark')">
+                        
+                        <span>Dark</span>
+                    </div>
+                    
+                    
                 </div>
             </div>
             <div class="user-info">
@@ -726,9 +727,6 @@
                 <p class="user-name">John Doe</p>
             </div>
         </header><!-- Location Name Banner -->
-<div class="location-banner">
-    <h1 id="locationName">Viewing: Atlanta/CFATL1 &nbsp;<i class="fas fa-edit"></i></h1>
-</div>
 
         <!-- Main Dashboard -->
         <div class="dashboard">
@@ -753,7 +751,7 @@
 
                     
                     <div class="chart-placeholder">
-    <canvas id="rainfallChart"></canvas>
+    <canvas id="rainfallChart" width="800" height="400" style="display: block; box-sizing: border-box; height: 200px; width: 400px;"></canvas>
 </div>
 
                     <div class="card-footer">
@@ -769,30 +767,11 @@
                     </div>
                 </div>
                 <div class="card">
-                    <h3 class="location-name">Map</h3>
-                    <!-- Toggle Control -->
-                    
-                    <div class="chart-placeholder">
-                        <div class="map"></div>
-                    </div>
-
-                    <div class="card-footer">
-                        <div class="status">
-                            <i class="fas fa-pin"></i>
-                            <span>Latitiude/Longitude : 33.860537,-84.016415</span>
-                            
-                        </div>
-                        
-                    </div>
-                </div>
-
-                <!-- Card 2 with mini forecast cards -->
-                <div class="card">
                     <h3>Forecast</h3>
                         <!-- New Toggle Control -->
                     <div class="toggle-container">
-                        <button class="toggle-button active" id="toggle-national">National Forecast</button>
-                        <button class="toggle-button" id="toggle-location"><i class="fas fa-star gold-star"></i> This Location</button>
+                        <button class="toggle-button" id="toggle-national">National Forecast</button>
+                        <button class="toggle-button active" id="toggle-location"><i class="fas fa-star gold-star"></i> This Location</button>
                     </div>
 
                     
@@ -815,7 +794,7 @@
                         </div>
                     </div>
 
-                    <div class="card-footer"style="visibility:hidden">
+                    <div class="card-footer" style="visibility:hidden">
                         <div class="status">
                             <i class="fas fa-bolt"></i>
                             <span>72% Efficiency</span>
@@ -827,6 +806,26 @@
                     </div>
                 </div>
 
+                <div class="card">
+                    <h3 class="location-name">Map</h3>
+                    <!-- Toggle Control -->
+                    
+                    <div class="map-container">
+                        <div class="map"></div>
+                    </div>
+
+                    <div class="card-footer">
+                        <div class="status">
+                            <i class="fas fa-pin"></i>
+                            <span>Latitiude/Longitude : 33.860537,-84.016415</span>
+                            
+                        </div>
+                        
+                    </div>
+                </div>
+
+                <!-- Card 2 with mini forecast cards -->
+                
                 <!-- Card 3 with Scrollable Contacts -->
                 <div class="card">
                     <h3>Contacts</h3>
@@ -838,8 +837,8 @@
                     <div class="contacts-scroll">
                         <div class="contact-row">
                             <div class="contact-info">
-                                <img src="https://via.placeholder.com/40" alt="Contact">
-                                <p>John Smith</p>
+                                <img src="https://i.pravatar.cc/220" alt="Contact">
+                                <p>John S.</p>
                                 <p>john.smith@example.com</p>
                                 <p>(555) 123-4567</p>
                             </div>
@@ -850,8 +849,8 @@
                         </div>
                         <div class="contact-row">
                             <div class="contact-info">
-                                <img src="https://via.placeholder.com/40" alt="Contact">
-                                <p>Jane Doe</p>
+                                <img src="https://i.pravatar.cc/210" alt="Contact">
+                                <p>Jane D</p>
                                 <p>jane.doe@example.com</p>
                                 <p>(555) 765-4321</p>
                             </div>
@@ -861,7 +860,7 @@
                             </div>
                         </div><div class="contact-row">
                             <div class="contact-info">
-                                <img src="https://via.placeholder.com/40" alt="Contact">
+                                <img src="https://i.pravatar.cc/200" alt="Contact">
                                 <p>Jane Doe</p>
                                 <p>jane.doe@example.com</p>
                                 <p>(555) 765-4321</p>
@@ -873,8 +872,8 @@
                         </div>
                         <div class="contact-row">
                             <div class="contact-info">
-                                <img src="https://via.placeholder.com/40" alt="Contact">
-                                <p>Jane Doe</p>
+                                <img src="https://i.pravatar.cc/140" alt="Contact">
+                                <p>Bob M</p>
                                 <p>jane.doe@example.com</p>
                                 <p>(555) 765-4321</p>
                             </div>
@@ -885,8 +884,8 @@
                         </div>
                         <div class="contact-row">
                             <div class="contact-info">
-                                <img src="https://via.placeholder.com/40" alt="Contact">
-                                <p>Jane Doe</p>
+                                <img src="https://i.pravatar.cc/150" alt="Contact">
+                                <p>Sara Q</p>
                                 <p>jane.doe@example.com</p>
                                 <p>(555) 765-4321</p>
                             </div>
@@ -897,8 +896,8 @@
                         </div>
                         <div class="contact-row">
                             <div class="contact-info">
-                                <img src="https://via.placeholder.com/40" alt="Contact">
-                                <p>Jane Doe</p>
+                                <img src="https://i.pravatar.cc/110" alt="Contact">
+                                <p>Debbie R</p>
                                 <p>jane.doe@example.com</p>
                                 <p>(555) 765-4321</p>
                             </div>
@@ -909,8 +908,8 @@
                         </div>
                         <div class="contact-row">
                             <div class="contact-info">
-                                <img src="https://via.placeholder.com/40" alt="Contact">
-                                <p>Jane Doe</p>
+                                <img src="https://i.pravatar.cc/120" alt="Contact">
+                                <p>Francis P</p>
                                 <p>jane.doe@example.com</p>
                                 <p>(555) 765-4321</p>
                             </div>
@@ -989,7 +988,7 @@
                 <!-- Add more alarm rows as needed -->
             </div>
 
-             <div class="card-footer"style="visibility:hidden">
+             <div class="card-footer" style="visibility:hidden">
                         <div class="status">
                             <span class="alarm"><i class="fas fa-user"></i>5</span> contacts are unassigned. Click here to run a report.
                         </div>
@@ -1113,8 +1112,160 @@
     document.getElementById('closeBannerBtn').addEventListener('click', function() {
         document.getElementById('notificationBanner').style.display = 'none';
     });
+    
+        function handleThemeChange(theme) {
+           // const theme = document.getElementById('theme-selector').value;
+
+            if (theme === 'green') {
+                // Theme 1: Green & Fresh
+                changeTheme(
+                    '#F6FFF8', /* primary */
+                    '#6B9080', /* secondary */
+                    '#A4C3B2', /* tertiary */
+                    '#CCE3DE', /* quaternary */
+                    '#EAF4F4', /* accent */
+                    '#F6FFF8', /* background start */
+                    'rgba(0, 0, 0, 0.6)', /* background end */
+                    'rgba(107, 144, 128, 0.7)', /* card background */
+                    'white', /* text color */
+                    '#A4C3B2', /* hover color */
+                    '#6B9080', /* icon color */
+                    '#CCE3DE' /* icon hover color */
+                );
+            } else if (theme === 'blue') {
+                // Theme 2: Dark & Blue
+                changeTheme(
+                    '#E0E1DD', /* primary */
+                    '#0D1B2A', /* secondary */
+                    '#415A77', /* tertiary */
+                    '#778DA9', /* quaternary */
+                    '#1B263B', /* accent */
+                    '#E0E1DD', /* background start */
+                    'rgba(0, 0, 0, 0.6)', /* background end */
+                    'rgba(65, 90, 119, 0.7)', /* card background */
+                    'white', /* text color */
+                    '#415A77', /* hover color */
+                    '#0D1B2A', /* icon color */
+                    '#778DA9' /* icon hover color */
+                );
+            } else if(theme == 'sunny'){
+                    changeTheme(
+                    '#97DFFC', /* primary */
+                    '#858AE3', /* secondary */
+                    '#613DC1', /* tertiary */
+                    '#4E148C', /* quaternary */
+                    '#2C0735', /* accent */
+                    '#97DFFC', /* background start */
+                    'rgba(0, 0, 0, 0.6)', /* background end (same transparency as previous themes) */
+                    'rgba(97, 61, 193, 0.7)', /* card background */
+                    'white', /* text color */
+                    '#858AE3', /* hover color */
+                    '#4E148C', /* icon color */
+                    '#2C0735'  /* icon hover color */
+                );
+
+
+
+            } else if(theme == 'muted'){
+                    changeTheme(
+                        '#E0E2DB', /* primary */
+                        '#D2D4C8', /* secondary */
+                        '#B8BDB5', /* tertiary */
+                        '#889696', /* quaternary */
+                        '#5F7470', /* accent */
+                        '#E0E2DB', /* background start */
+                        'rgba(0, 0, 0, 0.6)', /* background end (same transparency as previous themes) */
+                        'rgba(136, 150, 150, 0.7)', /* card background */
+                        'white', /* text color */
+                        '#B8BDB5', /* hover color */
+                        '#5F7470', /* icon color */
+                        '#889696'  /* icon hover color */
+                    );
+
+            } else if(theme == 'summer'){
+                    changeTheme(
+                        '#ECF8F8', /* primary */
+                        'silver', /* secondary */
+                        '#E7D8C9', /* tertiary */
+                        '#E6BEAE', /* quaternary */
+                        '#B2967D', /* accent */
+                        '#ECF8F8', /* background start */
+                        'rgba(0, 0, 0, 0.6)', /* background end (same transparency as previous themes) */
+                        'rgba(182, 150, 125, 0.7)', /* card background */
+                        'white', /* text color */
+                        '#E7D8C9', /* hover color */
+                        '#B2967D', /* icon color */
+                        '#E6BEAE'  /* icon hover color */
+                    );
+                
+            } else if(theme == 'warm'){
+                    changeTheme(
+                        '#FDC5F5', /* primary */
+                        '#F7AEF8', /* secondary */
+                        '#B388EB', /* tertiary */
+                        '#8093F1', /* quaternary */
+                        '#72DDF7', /* accent */
+                        '#FDC5F5', /* background start */
+                        'rgba(0, 0, 0, 0.6)', /* background end (same transparency as previous themes) */
+                        'rgba(179, 136, 235, 0.7)', /* card background */
+                        'white', /* text color */
+                        '#F7AEF8', /* hover color */
+                        '#8093F1', /* icon color */
+                        '#72DDF7'  /* icon hover color */
+                    );
+
+            }
+                else if(theme == 'dark'){
+                   changeTheme(
+        '#1B263B', /* primary - dark blue */
+        'rgba(255, 255, 255, 0.4)', /* secondary - very dark navy */
+        '#415A77', /* tertiary - muted blue */
+        '#778DA9', /* quaternary - light blue-grey */
+        '#E0E1DD', /* accent - light grey */
+        '#0D1B2A', /* background start */
+        'rgba(0, 0, 0, 0.8)', /* background end - dark with transparency */
+        'rgba(65, 90, 119, 0.7)', /* card background - frosted muted blue */
+        'white', /* text color */
+        '#415A77', /* hover color */
+        '#0D1B2A', /* icon color */
+        '#778DA9' /* icon hover color */
+    );
+            } else if(theme == 'light'){
+                    changeTheme(
+        '#F6FFF8', /* primary - soft light green */
+        '#6b9ac4', /* secondary - bright blue */
+        '#A4C3B2', /* tertiary - light green */
+        '#CCE3DE', /* quaternary - very light green */
+        '#6B9080', /* accent - muted green */
+        '#F6FFF8', /* background start */
+        '#6b9ac4', /* background end - almost white */
+        'rgba(150, 200, 190, 0.7)', /* card background - frosted green */
+        '#283618', /* text color - dark green */
+        '#A4C3B2', /* hover color */
+        '#6B9080', /* icon color */
+        '#CCE3DE' /* icon hover color */
+    );
+            }
+        }
+
+        function changeTheme(primary, secondary, tertiary, quaternary, accent, bgStart, bgEnd, cardBg, text, hover, icon, iconHover) {
+            document.documentElement.style.setProperty('--primary-color', primary);
+            document.documentElement.style.setProperty('--secondary-color', secondary);
+            document.documentElement.style.setProperty('--tertiary-color', tertiary);
+            document.documentElement.style.setProperty('--quaternary-color', quaternary);
+            document.documentElement.style.setProperty('--accent-color', accent);
+            document.documentElement.style.setProperty('--background-gradient-start', bgStart);
+            document.documentElement.style.setProperty('--background-gradient-end', bgEnd);
+            document.documentElement.style.setProperty('--card-background', cardBg);
+            document.documentElement.style.setProperty('--text-color', text);
+            document.documentElement.style.setProperty('--hover-color', hover);
+            document.documentElement.style.setProperty('--icon-color', icon);
+            document.documentElement.style.setProperty('--icon-hover-color', iconHover);
+        }
+
 </script>
 
 
-</body>
-</html>
+
+
+</div></body></html>
