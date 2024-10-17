@@ -664,8 +664,12 @@ body {
  background-image:url(https://gitgregoryjones.github.io/WaterWatchPro/Brookhaven.png);
  min-height:300px;
  width:100%;
- background-size:contain;
+ background-size:100%;
  border-radius:1rem;
+ transition: all 0.5s ease-in-out;
+  &:hover {
+      background-size:150%;
+  }
 }
 
 </style>
