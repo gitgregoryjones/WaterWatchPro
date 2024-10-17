@@ -15,31 +15,17 @@
     --tertiary-color: #A4C3B2; /* Light, fresh green for accents */
     --quaternary-color: #CCE3DE; /* Very light green for highlights */
     --accent-color: #EAF4F4; /* Soft, light cyan for emphasis */
-    --background-gradient-start: #F6FFF8; /* Light background gradient start */
+    --background-gradient-start:rgba(107, 144, 128, 0.7); ; /* Light background gradient start */
     --background-gradient-end: rgba(0, 0, 0, 0.6); /* Light background gradient end */
     --card-background: rgba(107, 144, 128, 0.7); /* Frosted muted green */
     --text-color: white; /* Muted green for text */
     --hover-color: #A4C3B2; /* Light fresh green for hover */
     --icon-color: #6B9080; /* Matches muted green for icons */
     --icon-hover-color: #CCE3DE; /* Very light green for icon hover */
-    --toggle-container-dark-gradient: linear-gradient(to right, var(--primary-color), var(--tertiary-color));
+    --toggle-container-dark-gradient: linear-gradient(to left, var(--primary-color), var(--tertiary-color));
 }
 
-:root {
-    --primary-color: #E0E1DD; /* Soft, light grey for background */
-    --secondary-color: #0D1B2A; /* Dark navy for main elements */
-    --tertiary-color: #415A77; /* Muted blue for accents */
-    --quaternary-color: #778DA9; /* Light blue-grey for highlights */
-    --accent-color: #1B263B; /* Dark blue for emphasis */
-    --background-gradient-start: #E0E1DD; /* Light background gradient start */
-    --background-gradient-end: rgba(0, 0, 0, 0.6); /* Gradient end with transparency */
-    --card-background: rgba(65, 90, 119, 0.7); /* Frosted muted blue */
-    --text-color: white; /* White for contrast against dark backgrounds */
-    --hover-color: #415A77; /* Muted blue for hover */
-    --icon-color: #0D1B2A; /* Dark navy for icons */
-    --icon-hover-color: #778DA9; /* Light blue-grey for icon hover */
-    --toggle-container-dark-gradient: linear-gradient(to right, var(--primary-color), var(--tertiary-color));
-}
+
 
 
 
@@ -102,6 +88,8 @@ body {
     border-radius: 10px;
     overflow: hidden;
     z-index: 1000;
+     backdrop-filter: blur(40px);
+    -webkit-backdrop-filter: blur(40px);
 }
 
 .dropdown-menu.active {
@@ -206,6 +194,7 @@ body {
     background-color: var(--hover-color);
     color:white;
 }
+
 
 /* Mini Forecast Cards */
 .mini-card-container {
@@ -672,7 +661,11 @@ body {
   &:hover {
       background-size:150%;
   }
+  
+  
 }
+
+
 
 </style>
 
@@ -712,6 +705,21 @@ body {
                         
                         <span>Green</span>
                     </div>
+                    <div class="menu-item" onclick="handleThemeChange('muted')">
+                        
+                        <span>Muted</span>
+                    </div>
+                    
+                    <div class="menu-item" onclick="handleThemeChange('summer')">
+                        
+                        <span>Fall</span>
+                    </div>
+                    <div class="menu-item" onclick="handleThemeChange('dark')">
+                        
+                        <span>Dark</span>
+                    </div>
+                    
+                    
                 </div>
             </div>
             <div class="user-info">
@@ -759,25 +767,6 @@ body {
                     </div>
                 </div>
                 <div class="card">
-                    <h3 class="location-name">Map</h3>
-                    <!-- Toggle Control -->
-                    
-                    <div class="chart-placeholder">
-                        <div class="map"></div>
-                    </div>
-
-                    <div class="card-footer">
-                        <div class="status">
-                            <i class="fas fa-pin"></i>
-                            <span>Latitiude/Longitude : 33.860537,-84.016415</span>
-                            
-                        </div>
-                        
-                    </div>
-                </div>
-
-                <!-- Card 2 with mini forecast cards -->
-                <div class="card">
                     <h3>Forecast</h3>
                         <!-- New Toggle Control -->
                     <div class="toggle-container">
@@ -817,6 +806,26 @@ body {
                     </div>
                 </div>
 
+                <div class="card">
+                    <h3 class="location-name">Map</h3>
+                    <!-- Toggle Control -->
+                    
+                    <div class="map-container">
+                        <div class="map"></div>
+                    </div>
+
+                    <div class="card-footer">
+                        <div class="status">
+                            <i class="fas fa-pin"></i>
+                            <span>Latitiude/Longitude : 33.860537,-84.016415</span>
+                            
+                        </div>
+                        
+                    </div>
+                </div>
+
+                <!-- Card 2 with mini forecast cards -->
+                
                 <!-- Card 3 with Scrollable Contacts -->
                 <div class="card">
                     <h3>Contacts</h3>
@@ -1139,6 +1148,103 @@ body {
                     '#0D1B2A', /* icon color */
                     '#778DA9' /* icon hover color */
                 );
+            } else if(theme == 'sunny'){
+                    changeTheme(
+                    '#97DFFC', /* primary */
+                    '#858AE3', /* secondary */
+                    '#613DC1', /* tertiary */
+                    '#4E148C', /* quaternary */
+                    '#2C0735', /* accent */
+                    '#97DFFC', /* background start */
+                    'rgba(0, 0, 0, 0.6)', /* background end (same transparency as previous themes) */
+                    'rgba(97, 61, 193, 0.7)', /* card background */
+                    'white', /* text color */
+                    '#858AE3', /* hover color */
+                    '#4E148C', /* icon color */
+                    '#2C0735'  /* icon hover color */
+                );
+
+
+
+            } else if(theme == 'muted'){
+                    changeTheme(
+                        '#E0E2DB', /* primary */
+                        '#D2D4C8', /* secondary */
+                        '#B8BDB5', /* tertiary */
+                        '#889696', /* quaternary */
+                        '#5F7470', /* accent */
+                        '#E0E2DB', /* background start */
+                        'rgba(0, 0, 0, 0.6)', /* background end (same transparency as previous themes) */
+                        'rgba(136, 150, 150, 0.7)', /* card background */
+                        'white', /* text color */
+                        '#B8BDB5', /* hover color */
+                        '#5F7470', /* icon color */
+                        '#889696'  /* icon hover color */
+                    );
+
+            } else if(theme == 'summer'){
+                    changeTheme(
+                        '#ECF8F8', /* primary */
+                        'silver', /* secondary */
+                        '#E7D8C9', /* tertiary */
+                        '#E6BEAE', /* quaternary */
+                        '#B2967D', /* accent */
+                        '#ECF8F8', /* background start */
+                        'rgba(0, 0, 0, 0.6)', /* background end (same transparency as previous themes) */
+                        'rgba(182, 150, 125, 0.7)', /* card background */
+                        'white', /* text color */
+                        '#E7D8C9', /* hover color */
+                        '#B2967D', /* icon color */
+                        '#E6BEAE'  /* icon hover color */
+                    );
+                
+            } else if(theme == 'warm'){
+                    changeTheme(
+                        '#FDC5F5', /* primary */
+                        '#F7AEF8', /* secondary */
+                        '#B388EB', /* tertiary */
+                        '#8093F1', /* quaternary */
+                        '#72DDF7', /* accent */
+                        '#FDC5F5', /* background start */
+                        'rgba(0, 0, 0, 0.6)', /* background end (same transparency as previous themes) */
+                        'rgba(179, 136, 235, 0.7)', /* card background */
+                        'white', /* text color */
+                        '#F7AEF8', /* hover color */
+                        '#8093F1', /* icon color */
+                        '#72DDF7'  /* icon hover color */
+                    );
+
+            }
+                else if(theme == 'dark'){
+                   changeTheme(
+        '#1B263B', /* primary - dark blue */
+        'rgba(255, 255, 255, 0.4)', /* secondary - very dark navy */
+        '#415A77', /* tertiary - muted blue */
+        '#778DA9', /* quaternary - light blue-grey */
+        '#E0E1DD', /* accent - light grey */
+        '#0D1B2A', /* background start */
+        'rgba(0, 0, 0, 0.8)', /* background end - dark with transparency */
+        'rgba(65, 90, 119, 0.7)', /* card background - frosted muted blue */
+        'white', /* text color */
+        '#415A77', /* hover color */
+        '#0D1B2A', /* icon color */
+        '#778DA9' /* icon hover color */
+    );
+            } else if(theme == 'light'){
+                    changeTheme(
+        '#F6FFF8', /* primary - soft light green */
+        '#6b9ac4', /* secondary - bright blue */
+        '#A4C3B2', /* tertiary - light green */
+        '#CCE3DE', /* quaternary - very light green */
+        '#6B9080', /* accent - muted green */
+        '#F6FFF8', /* background start */
+        '#6b9ac4', /* background end - almost white */
+        'rgba(150, 200, 190, 0.7)', /* card background - frosted green */
+        '#283618', /* text color - dark green */
+        '#A4C3B2', /* hover color */
+        '#6B9080', /* icon color */
+        '#CCE3DE' /* icon hover color */
+    );
             }
         }
 
