@@ -47,6 +47,61 @@ body {
         url('https://gitgregoryjones.github.io/WaterWatchPro/Crew.jpeg') no-repeat center center/cover;
 }
 
+  /* RAPIDRAIN Promo Banner */
+        .upsell-banner {
+            background-color: #ffb703;
+            color: black;
+            padding: 15px;
+            font-size: 1.1rem;
+            text-align: center;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            z-index: 999;
+        }
+
+        .upsell-banner p {
+            margin: 0;
+            text-align: center;
+        }
+
+        .upsell-banner button {
+            background-color: #219ebc;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-left: 20px;
+            transition: background-color 0.3s ease;
+        }
+
+        .upsell-banner button:hover {
+            background-color: #023047;
+        }
+
+        .close-banner {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: black;
+            cursor: pointer;
+            position: absolute;
+            right: 15px;
+        }
+
+        .close-banner:hover {
+            color: #333;
+        }
+
+       
+
+        /* Rest of the styles omitted for brevity */
+    
+
 /* Top Navigation */
 .top-info {
     display: flex;
@@ -507,6 +562,10 @@ body {
        
     }
     
+    .upsell-banner  {
+        display:none;
+    }
+    
     .user-info {
         align-self:center;
         margin:0;
@@ -701,10 +760,12 @@ body {
     
         <!-- Top Info Area -->
         <!-- Notification Banner -->
-<div class="notification-banner" id="notificationBanner" style="display: none;">
-    <p>⚠️ System Update: We will be undergoing maintenance from 12 AM to 4 AM. Some features may be unavailable.</p>
-    <button class="close-banner" id="closeBannerBtn">×</button>
-</div>
+ <!-- RAPIDRAIN Banner -->
+    <div class="upsell-banner" id="rapidrainBanner">
+        <p>Upgrade to <strong>RAPIDRAIN</strong> for real-time weather alerts and advanced rainfall monitoring!</p>
+        <button onclick="window.location.href='https://yourupgradeurl.com'">Learn More</button>
+        <button class="close-banner" onclick="document.getElementById('rapidrainBanner').style.display = 'none';">×</button>
+    </div>
 
 
 
