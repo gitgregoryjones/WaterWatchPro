@@ -1,7 +1,7 @@
-<html lang="en"><head>
+<html lang="en" style="--primary-color: #1B263B; --secondary-color: rgba(255, 255, 255, 0.4); --tertiary-color: #415A77; --quaternary-color: #778DA9; --accent-color: #E0E1DD; --background-gradient-start: #0D1B2A; --background-gradient-end: rgba(0, 0, 0, 0.8); --card-background: rgba(65, 90, 119, 0.7); --text-color: white; --hover-color: #415A77; --icon-color: #0D1B2A; --icon-hover-color: #778DA9;"><head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Custom Dashboard with Toggle</title>
+    <title>HTML preview</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&amp;display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"> <!-- Font Awesome -->
     
@@ -54,8 +54,7 @@ body {
     align-items: center;
     background-color: rgba(0, 0, 0, 0.9);
     border-radius: 15px;
-    width: 90%;
-    margin: 2rem auto;
+    margin: 2rem;
     padding: 15px 30px;
     box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
 }
@@ -84,6 +83,7 @@ body {
     min-width: 200px;
     right: 0;
     background-color: var(--secondary-color);
+    background-color:black;
     box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
     border-radius: 10px;
     overflow: hidden;
@@ -120,17 +120,32 @@ body {
 .profile-icon { color: var(--icon-color); }
 .logout-icon { color: #FF6B6B; }
 
-/* Main Dashboard */
 .dashboard {
-    display: flex;
-    flex-direction: row;
-    height: 80%;
+    --display: flex;
+    --height: 80%;
     padding: 20px;
     justify-content: center;
     border: 1px solid var(--text-color);
-    margin-left: 10rem;
-    margin-right: 10rem;
+    /* margin-left: 10rem; */
+    /* margin-right: 10rem; */
+    margin: auto;
     border-radius: 1.5rem;
+    /* height: 2000px; */
+}
+
+.user-info, .location-header {
+    align-self: end;
+    margin: 2rem;
+    display:flex;
+    gap:1rem;
+    justify-content:center;
+    align-items:center;
+}
+
+
+
+.user-info img {
+    border-radius:50%;
 }
 
 /* Right Content Area */
@@ -145,22 +160,29 @@ body {
 /* Blurred card (frosted glass effect) */
 .card {
     background-color: var(--card-background);
-    padding: 20px;
+    /* padding: 20px; */
     border-radius: 15px;
     box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
     display: flex;
+    flex: 1;
+    padding: 1rem;
+    min-width: 20rem;
     flex-direction: column;
     justify-content: space-between;
     position: relative;
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
     border: 1px solid var(--text-color);
-    
 }
 
 .card h3 {
     font-size: 1.5rem;
     margin-bottom: 10px;
+}
+
+.card-footer {
+    display: flex;
+    justify-content: space-around;
 }
 
 /* Toggle Container */
@@ -447,6 +469,11 @@ body {
     color: #333;
 }
 
+.location-header {
+    font-size:2rem;
+    align-self:center;
+}
+
    .spinner {
             display: none;
             width: 50px;
@@ -473,13 +500,32 @@ body {
     .top-info {
         flex-direction: column;
         align-items: flex-end;
-        width: 100%;
-        padding: 15px;
+        --width: 100%;
+        --padding: 15px;
         margin: 0;
+        --position:absolute;
+       
+    }
+    
+    .user-info {
+        align-self:center;
+        margin:0;
+        flex-direction:row;
+        display:flex;
+        align-items:center;
+        gap:10px;
+        padding:10px;
+        border:1px solid white;
+        border-radius:1rem;
+    }
+    .user-info img {
+        border-radius:50%;
+        
     }
 
     .logo {
         margin-bottom: 10px;
+        align-self:start;
     }
 
     .search-container {
@@ -489,13 +535,13 @@ body {
 
     .hamburger-menu {
         margin-top: 10px;
+        align-self:end;
     }
 
     /* Stack dashboard content */
     .dashboard {
-        flex-direction: column;
-        margin-left: 0;
-        margin-right: 0;
+        
+        
         padding: 10px;
         border: none;
     }
@@ -550,10 +596,21 @@ body {
         color:var(--secondary-color);
         background:  var(--toggle-container-dark-gradient);
     }
+    
+    .location-header {
+        align-self: center;
+        margin: 2rem;
+        display:flex;
+        gap:1rem;
+        justify-content:center;
+        align-items:center;
+        font-size:2rem;
+    }
 
     .card-footer {
-        flex-direction: column;
+        flex-direction: row;
         align-items: flex-start;
+    
     }
 
     .card-footer .status,
@@ -564,38 +621,7 @@ body {
 
 
     </style>
-
-</head>
-<body cz-shortcut-listen="true">
-    <div class="spinner" id="spinner"></div>
-    <div class="wrapper">
-        <!-- Top Info Area -->
-        <!-- Notification Banner -->
-<div class="notification-banner" id="notificationBanner" style="display: none;">
-    <p>⚠️ System Update: We will be undergoing maintenance from 12 AM to 4 AM. Some features may be unavailable.</p>
-    <button class="close-banner" id="closeBannerBtn">×</button>
-</div>
-
-
-
-        <header class="top-info">
-            <div class="logo">
-                <img src="https://img1.wsimg.com/isteam/ip/88056157-8118-4fa6-a40b-afa381a48cd5/Eye%20Words.png/:/rs=h:30" alt="Logo">
-            </div>
-             <!-- Location Search Field -->
-    <div class="search-container">
-        <input type="text" id="locationSearch" placeholder="Search locations...">
-        <i class="fas fa-search search-icon"></i>
-    </div>
-            <div class="location-header">
-                Viewing Atlanta/CFATL1 <i class="fa fa-edit"></i>
-                <p class="subheader">
-                 
-                    <span class="subtitle"><span class="headeralarm">5</span> locations are missing a contact. Click here to run a report</span>
-                </p>
-            </div>
-          
-<style>
+    <style>
     .add-location-btn {
         background-color: #52796F; /* Theme color for background */
         color: white;
@@ -669,8 +695,35 @@ body {
 
 </style>
 
-  <!-- Hamburger Menu -->
-            <div class="hamburger-menu">
+</head>
+<body cz-shortcut-listen="true">
+    <div class="spinner" id="spinner"></div>
+    
+        <!-- Top Info Area -->
+        <!-- Notification Banner -->
+<div class="notification-banner" id="notificationBanner" style="display: none;">
+    <p>⚠️ System Update: We will be undergoing maintenance from 12 AM to 4 AM. Some features may be unavailable.</p>
+    <button class="close-banner" id="closeBannerBtn">×</button>
+</div>
+
+
+
+        <!-- Location Name Banner -->
+ <header class="top-info">
+            <div class="logo">
+                <img src="https://img1.wsimg.com/isteam/ip/88056157-8118-4fa6-a40b-afa381a48cd5/Eye%20Words.png/:/rs=h:30" alt="Logo">
+            </div>
+             <!-- Location Search Field -->
+    <div class="search-container">
+        <input type="text" id="locationSearch" placeholder="Search locations...">
+        <i class="fas fa-search search-icon"></i>
+    </div>
+     <div class="user-info">
+                <img src="https://i.pravatar.cc/50" alt="Profile Picture">
+                <p class="user-name">Foreman James</p>
+            </div>
+           
+<div class="hamburger-menu">
                 <i class="fas fa-bars hamburger-icon"></i> <!-- Hamburger icon -->
 
                 <!-- Dropdown Menu -->
@@ -722,12 +775,16 @@ body {
                     
                 </div>
             </div>
-            <div class="user-info">
-                <img src="https://via.placeholder.com/50" alt="Profile Picture">
-                <p class="user-name">John Doe</p>
+            
+        </header> 
+       
+         <div class="location-header">
+                Viewing Atlanta/CFATL1 <i class="fa fa-edit"></i>
+                <p class="subheader">
+                 
+                    <span class="subtitle"><span class="headeralarm">5</span> locations are missing a contact. Click here to run a report</span>
+                </p>
             </div>
-        </header><!-- Location Name Banner -->
-
         <!-- Main Dashboard -->
         <div class="dashboard">
             
@@ -751,7 +808,7 @@ body {
 
                     
                     <div class="chart-placeholder">
-    <canvas id="rainfallChart" width="800" height="400" style="display: block; box-sizing: border-box; height: 200px; width: 400px;"></canvas>
+    <canvas id="rainfallChart" width="576" height="288" style="display: block; box-sizing: border-box; height: 144px; width: 288px;"></canvas>
 </div>
 
                     <div class="card-footer">
@@ -1268,4 +1325,4 @@ body {
 
 
 
-</div></body></html>
+</body></html>
