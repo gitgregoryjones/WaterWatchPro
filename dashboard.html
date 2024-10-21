@@ -750,8 +750,39 @@ body {
   
 }
 
+ .autocomplete-list {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            width: 100%;
+            max-height: 200px;
+            border: 1px solid black;
+            border-top: none;
+            background-color: white;
+            overflow-y: auto;
+            z-index: 1000;
+            color:black;
+            margin-top:1rem;
+            border-radius:1rem;
+        }
 
+        .autocomplete-item {
+            padding: 10px;
+            cursor: pointer;
+            border-bottom: 1px solid #ccc;
+        }
 
+        .autocomplete-item:hover {
+            background-color: #f0f0f0;
+        }
+
+        .autocomplete-item:last-child {
+            border-bottom: none;
+        }
+
+        .current_city {
+            
+        }
 </style>
 
 </head>
@@ -777,6 +808,7 @@ body {
              <!-- Location Search Field -->
     <div class="search-container">
         <input type="text" id="locationSearch" placeholder="Search locations...">
+        <div id="autocompleteList" class="autocomplete-list"></div>
         <i class="fas fa-search search-icon"></i>
     </div>
      <div class="user-info">
@@ -840,7 +872,7 @@ body {
         </header> 
        
          <div class="location-header">
-                Viewing Atlanta/CFATL1 <i class="fa fa-edit"></i>
+                Viewing<span id="current_city">Atlanta/CFATL1</span> <i class="fa fa-edit"></i>
                 <p class="subheader">
                  
                     <span class="subtitle"><span class="headeralarm">5</span> locations are missing a contact. Click here to run a report</span>
@@ -1118,6 +1150,8 @@ body {
 
    <script>
    
+    
+   
     const spinner = document.getElementById('spinner');
 
    document.querySelector(".logout-icon").addEventListener('click', function(event) {
@@ -1225,6 +1259,45 @@ body {
 
     // Create the chart
     const rainfallChart = new Chart(ctx, config);
+</script>
+<script>
+    const citySearchInput = document.getElementById('locationSearch');
+    const autocompleteList = document.getElementById('autocompleteList');
+
+    // Generate 10 random city names for demo
+    const cities = ['New York', 'Los Angeles', 'Chicago', 'Houston', 'Phoenix', 'Philadelphia', 'San Antonio', 'San Diego', 'Dallas', 'San Jose'];
+
+    // Handle input event
+    citySearchInput.addEventListener('input', function() {
+        const query = this.value.toLowerCase();
+        autocompleteList.innerHTML = ''; // Clear the list
+
+        if (query.length === 0) return; // If input is empty, do nothing
+
+        // Filter city names based on the query
+        const filteredCities = cities.filter(city => city.toLowerCase().includes(query));
+
+        // Display the filtered list
+        filteredCities.forEach(city => {
+            const div = document.createElement('div');
+            div.classList.add('autocomplete-item');
+            div.innerText = city;
+            div.addEventListener('click', () => selectCity(city));
+            autocompleteList.appendChild(div);
+        });
+    });
+
+    // Handle city selection
+    function selectCity(city) {
+        window.location.href = `${window.location.pathname}?city=${city}`;
+    }
+    
+    const urlParams = new URLSearchParams(window.location.search);
+    
+    if(urlParams && urlParams.get('city')){
+        var theCity = urlParams.get('city')
+        document.querySelector('.current_city').textContent = theCity;
+    }
 </script>
 <script>
     document.getElementById('closeBannerBtn').addEventListener('click', function() {
