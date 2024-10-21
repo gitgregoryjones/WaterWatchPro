@@ -1294,7 +1294,7 @@ body {
     
     const urlParams = new URLSearchParams(window.location.search);
     
-    if(urlParams && urlParams.get('city')){
+    if(urlParams.has('city')){
         var theCity = urlParams.get('city')
         document.querySelector('.current_city').textContent = theCity;
     }
