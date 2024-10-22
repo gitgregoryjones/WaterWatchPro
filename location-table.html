@@ -1,3 +1,107 @@
+<style>
+     /* Overlay */
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 999;
+        }
+
+        /* Dialog Box */
+        .dialog-box {
+            background-color: var(--secondary-color);
+            width: 40%;
+            height: 60%;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            position: relative;
+        }
+
+        .dialog-box h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: var(--accent-color);
+        }
+
+        /* Form Fields */
+        .form-field {
+            margin-bottom: 15px;
+        }
+
+        .form-field label {
+            display: block;
+            margin-bottom: 5px;
+            color: var(--accent-color);
+        }
+
+        .form-field input {
+            width: 100%;
+            padding: 10px;
+            border-radius: 5px;
+            border: none;
+            background-color: var(--quaternary-color);
+            color: var(--secondary-color);
+            font-size: 1rem;
+        }
+
+        /* Locations Div */
+        .locations-container {
+            flex-grow: 1;
+            border: 1px solid var(--tertiary-color);
+            background-color: var(--primary-color);
+            padding: 10px;
+            margin-top: 10px;
+            overflow-y: auto;
+            color: var(--secondary-color);
+            border-radius: 5px;
+        }
+
+        .locations-container p {
+            margin: 5px 0;
+        }
+
+        /* Buttons */
+        .dialog-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 10px;
+        }
+
+        .dialog-buttons button {
+            padding: 10px 20px;
+            border-radius: 5px;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+            background-color: var(--tertiary-color);
+            color: var(--text-color);
+            transition: background-color 0.3s ease;
+        }
+
+        .dialog-buttons button:hover {
+            background-color: var(--hover-color);
+        }
+
+        /* Close Icon */
+        .close-dialog {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            font-size: 1.5rem;
+            color: var(--accent-color);
+            cursor: pointer;
+        }
+</style>
 <html lang="en"><head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -457,11 +561,13 @@ document.querySelector('header').addEventListener('click',()=> window.location.h
             padding: 10px;
             font-size: 1rem;
             cursor:pointer;
-             &:hover {
+            
+        }
+        
+         .table-body .table-row .table-cell:hover {
                 border:1px dashed var(--text-color);
                 background-color: var(--header-color);
             }
-        }
 
         .table-cell input {
             width: 100%;
@@ -580,7 +686,7 @@ document.querySelector('header').addEventListener('click',()=> window.location.h
                 <div class="table-cell latlong-cell">Longitude</div>
                 <div class="table-cell latlong-cell">Latitude</div>
                 <div class="table-cell status-cell">Status</div>
-                <div class="table-cell contact-cell">Contact Name</div>
+                <div class="table-cell contact-cell"><span id="openDialogBtn">Contacts [+]</span></div>
             </div>
 
             <div class="table-body" id="tableBody">
@@ -692,9 +798,18 @@ document.querySelectorAll('.contact-input').forEach(input => {
 
         if (query) {
             const filteredContacts = contacts.filter(contact => contact.toLowerCase().includes(query));
+            if(filteredContacts.length > 0){
             filteredContacts.forEach((contact) => {
                 list.appendChild(displayUnassignedContacts(contact,input));
             });
+            } else {
+                var li = document.createElement('li');
+                li.style.backgroundColor = 'gold';
+                li.style.marginTop = "1rem";
+                li.textContent = `Not Found: Click to add -> ${query}`;
+                li.addEventListener('click',()=> openDialogBtn.click())
+                list.appendChild(li);
+            }
 
                 //list.appendChild(listItem);
             list.style.display = 'block';
@@ -762,9 +877,18 @@ document.querySelectorAll('.contact-input').forEach(input => {
 
                     if (query) {
                         const filteredContacts = contacts.filter(contact => contact.toLowerCase().includes(query));
-                         filteredContacts.forEach((contact) => {
-                            list.appendChild(displayUnassignedContacts(contact,input));
-                         });
+                          if(filteredContacts.length > 0){
+                            filteredContacts.forEach((contact) => {
+                                list.appendChild(displayUnassignedContacts(contact,input));
+                            });
+                            } else {
+                                var li = document.createElement('li');
+                                li.style.backgroundColor = 'gold';
+                                li.style.marginTop = "1rem";
+                                li.textContent = `Not Found: Click to add -> ${query}`;
+                                li.addEventListener('click',()=> openDialogBtn.click())
+                                list.appendChild(li);
+                         }
 
                 //list.appendChild(listItem);
             list.style.display = 'block';
@@ -820,6 +944,72 @@ document.querySelectorAll('.contact-input').forEach(input => {
         });
     </script>
 
+
+<div class="overlay" id="overlay">
+    <div class="dialog-box">
+        <i class="fas fa-times close-dialog" id="closeDialogBtn"></i>
+        <h2>Add/Update Contact</h2>
+
+        <form id="dialogForm">
+            <div class="form-field">
+                <label for="name">Name</label>
+                <input type="text" id="name" placeholder="Enter your name" required>
+            </div>
+
+            <div class="form-field">
+                <label for="email">Email Address</label>
+                <input type="email" id="email" placeholder="Enter your email" required>
+            </div>
+
+            <div class="form-field">
+                <label for="mobile">Mobile Number</label>
+                <input type="tel" id="mobile" placeholder="Enter your mobile number" required>
+            </div>
+
+            <div class="locations-container">
+                <p>Location 1: Example City</p>
+                <p>Location 2: Sample Town</p>
+                <p>Location 3: Another Place</p>
+                <!-- You can add more locations dynamically here if needed -->
+            </div>
+
+            <div class="dialog-buttons">
+                <button type="button" id="cancelBtn">Cancel</button>
+                <button type="submit">Submit</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+    const openDialogBtn = document.getElementById('openDialogBtn');
+    const closeDialogBtn = document.getElementById('closeDialogBtn');
+    const cancelBtn = document.getElementById('cancelBtn');
+    const overlay = document.getElementById('overlay');
+
+    // Open dialog box
+    openDialogBtn.addEventListener('click', () => {
+        overlay.style.display = 'flex';
+    });
+
+    // Close dialog box
+    closeDialogBtn.addEventListener('click', () => {
+        overlay.style.display = 'none';
+    });
+
+    // Close dialog on cancel button
+    cancelBtn.addEventListener('click', () => {
+        overlay.style.display = 'none';
+    });
+
+    // Submit form
+    document.getElementById('dialogForm').addEventListener('submit', function (e) {
+        e.preventDefault();
+        // Handle form submission logic here
+        alert('Form submitted!');
+        overlay.style.display = 'none';
+    });
+</script>
 
 
 
