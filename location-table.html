@@ -437,54 +437,82 @@ document.querySelector('header').addEventListener('click',()=> window.location.h
     </div>
 
     <script>
-        const contacts = ['John Smith', 'Jane Doe', 'Sarah Brown', 'Bob Johnson', 'Alice Green'];
+       const contacts = ['John Smith', 'Jane Doe', 'Sarah Brown', 'Bob Johnson', 'Alice Green'];
 
-        document.querySelectorAll('.contact-input').forEach(input => {
-            input.addEventListener('input', function () {
-                const query = this.value.toLowerCase();
-                const list = this.nextElementSibling;
-                list.innerHTML = '';
+document.querySelectorAll('.contact-input').forEach(input => {
+    input.addEventListener('input', function () {
+        const query = this.value.toLowerCase();
+        const list = this.nextElementSibling;
+        list.innerHTML = '';
 
-                if (query) {
-                    const filteredContacts = contacts.filter(contact => contact.toLowerCase().includes(query));
-                    filteredContacts.forEach(contact => {
-                        const listItem = document.createElement('li');
-                        listItem.textContent = contact;
-                        listItem.addEventListener('click', () => {
-                            const contactDiv = document.createElement('div');
-                            contactDiv.classList.add('selected-contact');
-                            contactDiv.textContent = contact;
+        if (query) {
+            const filteredContacts = contacts.filter(contact => contact.toLowerCase().includes(query));
+            filteredContacts.forEach(contact => {
+                const listItem = document.createElement('li');
+                listItem.textContent = contact;
+                listItem.addEventListener('click', () => {
+                    // Create a div to hold the selected contact
+                    const contactDiv = document.createElement('div');
+                    contactDiv.classList.add('selected-contact');
+                    contactDiv.textContent = contact;
 
-                            contactDiv.style.border = '1px solid var(--secondary-color)';
-                            contactDiv.style.borderRadius = '20px';
-                                                        contactDiv.style.padding = '5px 10px';
-                            contactDiv.style.backgroundColor = 'var(--tertiary-color)';
-                            contactDiv.style.color = 'var(--text-color)';
-                            contactDiv.style.display = 'inline-block';
-                            contactDiv.style.marginRight = '10px';
+                    // Style the contact div
+                    contactDiv.style.border = '1px solid var(--secondary-color)';
+                    contactDiv.style.borderRadius = '20px';
+                    contactDiv.style.padding = '5px 10px';
+                    contactDiv.style.backgroundColor = 'var(--tertiary-color)';
+                    contactDiv.style.color = 'var(--text-color)';
+                    contactDiv.style.display = 'inline-block';
+                    contactDiv.style.marginRight = '10px';
+                    contactDiv.style.fontSize = 'small';
+                    contactDiv.style.minWidth = '100px';
+                    contactDiv.style.position = 'relative';
+                    contactDiv.style.overflow = 'hidden';
+                    contactDiv.style.whiteSpace = 'nowrap';
+                    contactDiv.style.textOverflow = 'ellipsis';
 
-                            // Append the contact div to the cell
-                            this.parentElement.appendChild(contactDiv);
-                            input.value = ''; // Clear the input field
+                    // Create the close icon using Font Awesome
+                    const closeIcon = document.createElement('i');
+                    closeIcon.classList.add('fas', 'fa-times-circle');
+                    closeIcon.style.position = 'absolute';
+                    closeIcon.style.top = '3';
+                    closeIcon.style.right = '3';
+                    closeIcon.style.fontSize = '12px';
+                    closeIcon.style.cursor = 'pointer';
+                    closeIcon.style.color = 'red';
+                    closeIcon.style.marginLeft ='.25rem';
+                    closeIcon.style.borderRadius = '50%';
 
-                            // Hide the contact list
-                            list.style.display = 'none';
-                        });
+                    // Append the close icon to the contact div
+                    contactDiv.append(closeIcon);
 
-                        list.appendChild(listItem);
-                    });
-                    list.style.display = 'block';
-                } else {
+                    // Append the contact div to the cell
+                    this.parentElement.appendChild(contactDiv);
+                    input.value = ''; // Clear the input field
+
+                    // Hide the contact list
                     list.style.display = 'none';
-                }
-            });
 
-            input.addEventListener('blur', function () {
-                setTimeout(() => {
-                    this.nextElementSibling.style.display = 'none';
-                }, 200); // Delay to allow clicking the contact
+                    // Add event listener to the close icon to remove the contact div
+                    closeIcon.addEventListener('click', () => {
+                        contactDiv.remove();
+                    });
+                });
+
+                list.appendChild(listItem);
             });
-        });
+            list.style.display = 'block';
+        } else {
+            list.style.display = 'none';
+        }
+    });
+
+    input.addEventListener('blur', function () {
+        setTimeout(() => {
+            this.nextElementSibling.style.display = 'none';
+        }, 200); // Add a short delay to allow clicking the contact
+    });
+});
 
         // Add new location functionality
         const addLocationBtn = document.getElementById('addLocationBtn');
@@ -603,4 +631,3 @@ document.querySelector('header').addEventListener('click',()=> window.location.h
 </body>
 
 </html>
-
