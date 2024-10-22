@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Location Table with Add and Edit Functionality</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #F6FFF8;
+            --secondary-color: #6B9080;
+            --tertiary-color: #A4C3B2;
+            --quaternary-color: #CCE3DE;
+            --accent-color: #EAF4F4;
+            --text-color: white;
+            --hover-color: #A4C3B2;
+        }
+
+        body {
+            background-color: var(--primary-color);
+            font-family: 'Roboto', sans-serif;
+            color: var(--text-color);
+            margin: 20px;
+        }
+
+        .add-location-btn {
+            background-color: var(--secondary-color);
+            color: var(--text-color);
+            border: none;
+            padding: 10px 20px;
+            border-radius: 30px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: background-color 0.3s, box-shadow 0.3s;
+        }
+
+        .add-location-btn i {
+            font-size: 1.2rem;
+        }
+
+        .add-location-btn:hover {
+            background-color: var(--hover-color);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        .table {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            border: 1px solid var(--tertiary-color);
+            border-radius: 10px;
+            background-color: var(--secondary-color);
+            overflow: visible;
+            margin-top: 20px;
+        }
+
+        .table-header,
+        .table-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px;
+            border-bottom: 1px solid var(--tertiary-color);
+        }
+
+        .table-header {
+            background-color: var(--tertiary-color);
+            font-weight: bold;
+        }
+
+        .table-row:nth-child(even) {
+            background-color: var(--hover-color);
+        }
+
+        .table-row:hover {
+            background-color: var(--hover-color);
+        }
+
+        .table-cell {
+            flex: 1;
+            text-align: center;
+            padding: 10px;
+            font-size:1.5rem;
+        }
+
+        .table-cell input {
+            width: 100%;
+            padding: 5px;
+            text-align: center;
+            font-size:1.5rem;
+        }
+
+        .table-cell select {
+            padding: 5px;
+            border-radius: 5px;
+            background-color: var(--primary-color);
+            border: none;
+            color: var(--secondary-color);
+            font-size:1.5rem;
+        }
+
+        .editable input,
+        .editable select {
+            width: 100%;
+        }
+
+        .table-cell.status {
+            --pointer-events: none;
+        }
+        
+        
+
+        .table-cell.contact {
+            position: relative;
+        }
+
+        .contact-input {
+            width: 100%;
+            
+            padding: 5px;
+            border: 1px solid var(--tertiary-color);
+            border-radius: 5px;
+        }
+
+        .contact-list {
+            position: absolute;
+            background-color: var(--primary-color);
+            border: 1px solid var(--secondary-color);
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            max-height: 150px;
+            overflow-y: auto;
+            z-index: 10;
+            width: 100%;
+        }
+
+        .contact-list li {
+            padding: 5px;
+            cursor: pointer;
+            z-index:100;
+            color:black;
+        }
+
+        .contact-list li:hover {
+            background-color: var(--hover-color);
+            color: var(--text-color);
+        }
+        
+       
+    </style>
+</head>
+
+<body>
+
+    <button class="add-location-btn" id="addLocationBtn">
+        <i class="fas fa-plus"></i>
+        Add Location
+    </button>
+
+    <div class="table">
+        <div class="table-header">
+            <div class="table-cell">Location Name</div>
+            <div class="table-cell">Longitude</div>
+            <div class="table-cell">Latitude</div>
+            <div class="table-cell">Status</div>
+            <div class="table-cell">Contact Name</div>
+        </div>
+
+        <div class="table-body" id="tableBody">
+            <div class="table-row">
+                <div class="table-cell editable" data-field="location">Atlanta Central</div>
+                <div class="table-cell editable" data-field="longitude">-84.3880</div>
+                <div class="table-cell editable" data-field="latitude">33.7490</div>
+                <div class="table-cell status" data-field="status">
+                    <select>
+                        <option value="Active">Active</option>
+                        <option value="Archived">Archived</option>
+                    </select>
+                </div>
+                <div class="table-cell contact" data-field="contact">
+                    <input type="text" class="contact-input" placeholder="Search contact...">
+                    <ul class="contact-list" style="display:none;"></ul>
+                </div>
+            </div>
+
+            <div class="table-row">
+                <div class="table-cell editable" data-field="location">Brookhaven South</div>
+                <div class="table-cell editable" data-field="longitude">-84.3350</div>
+                <div class="table-cell editable" data-field="latitude">33.8565</div>
+                <div class="table-cell status" data-field="status">
+                    <select>
+                        <option value="Active">Active</option>
+                        <option value="Archived">Archived</option>
+                    </select>
+                </div>
+                <div class="table-cell contact" data-field="contact">
+                    <input type="text" class="contact-input" placeholder="Search contact...">
+                    <ul class="contact-list" style="display:none;"></ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const contacts = ['John Smith', 'Jane Doe', 'Sarah Brown', 'Bob Johnson', 'Alice Green'];
+
+document.querySelectorAll('.contact-input').forEach(input => {
+    input.addEventListener('input', function () {
+        const query = this.value.toLowerCase();
+        const list = this.nextElementSibling;
+        list.innerHTML = '';
+
+        if (query) {
+            const filteredContacts = contacts.filter(contact => contact.toLowerCase().includes(query));
+            filteredContacts.forEach(contact => {
+                const listItem = document.createElement('li');
+                listItem.style.color="black";
+                listItem.textContent = contact;
+                
+                listItem.addEventListener('click', () => {
+                    // Create a div to hold the selected contact
+                    const contactDiv = document.createElement('div');
+                    contactDiv.classList.add('selected-contact');
+                    contactDiv.textContent = contact;
+
+                    // Style the div (rounded)
+                    contactDiv.style.border = '1px solid var(--secondary-color)';
+                    contactDiv.style.borderRadius = '20px';
+                    contactDiv.style.padding = '5px 10px';
+                    contactDiv.style.backgroundColor = 'var(--tertiary-color)';
+                    contactDiv.style.color = 'var(--text-color)';
+                    contactDiv.style.display = 'inline-block';
+                    contactDiv.style.marginRight = '10px';
+
+                    // Remove the input and list
+                    //this.parentElement.innerHTML = ''; 
+                    this.parentElement.appendChild(contactDiv); // Append the contact div to the cell
+
+                    list.style.display = 'none';
+                });
+
+                list.appendChild(listItem);
+            });
+            list.style.display = 'block';
+        } else {
+            list.style.display = 'none';
+        }
+    });
+
+    input.addEventListener('blur', function () {
+        setTimeout(() => {
+            this.nextElementSibling.style.display = 'none';
+        }, 200); // Add a short delay to allow clicking the contact
+    });
+});
+
+
+        // Add new location functionality
+        const addLocationBtn = document.getElementById('addLocationBtn');
+        const tableBody = document.getElementById('tableBody');
+
+        addLocationBtn.addEventListener('click', () => {
+            const newRow = document.createElement('div');
+            newRow.classList.add('table-row');
+
+            newRow.innerHTML = `
+                <div class="table-cell editable">
+                    <input type="text" placeholder="Enter Location Name" required>
+                </div>
+                <div class="table-cell editable">
+                    <input type="number" placeholder="Enter Longitude" required>
+                </div>
+                <div class="table-cell editable">
+                    <input type="number" placeholder="Enter Latitude" required>
+                </div>
+                <div class="table-cell status">
+                    <select>
+                        <option value="Active">Active</option>
+                        <option value="Archived">Archived</option>
+                    </select>
+                </div>
+                <div class="table-cell contact">
+                    <input type="text" class="contact-input" placeholder="Search contact...">
+                    <ul class="contact-list" style="display:none;"></ul>
+                </div>
+            `;
+
+            tableBody.insertBefore(newRow, tableBody.firstChild);
+
+            // Apply the same contact search functionality to the new row
+            newRow.querySelectorAll('.contact-input').forEach(input => {
+                input.addEventListener('input', function () {
+                    const query = this.value.toLowerCase();
+                    const list = this.nextElementSibling;
+                    list.innerHTML = '';
+
+                    if (query) {
+                        const filteredContacts = contacts.filter(contact => contact.toLowerCase().includes(query));
+                        filteredContacts.forEach(contact => {
+                            const listItem = document.createElement('li');
+                            listItem.textContent = contact;
+                                                        listItem.textContent = contact;
+                            listItem.addEventListener('click', () => {
+                                this.value = contact;
+                                list.style.display = 'none';
+                            });
+                            list.appendChild(listItem);
+                        });
+                        list.style.display = 'block';
+                    } else {
+                        list.style.display = 'none';
+                    }
+                });
+
+                input.addEventListener('blur', function () {
+                    setTimeout(() => {
+                        this.nextElementSibling.style.display = 'none';
+                    }, 200);
+                });
+            });
+
+            // Make the other fields editable as well
+            handleEditableFields(newRow);
+        });
+
+        // Function to handle editing of fields
+        function handleEditableFields(row) {
+            row.querySelectorAll('.table-cell.editable').forEach(cell => {
+                cell.addEventListener('click', function () {
+                    const originalValue = cell.textContent;
+                    const field = cell.dataset.field;
+
+                    if (!cell.classList.contains('editing')) {
+                        cell.innerHTML = `<input type="${field === 'longitude' || field === 'latitude' ? 'number' : 'text'}" value="${originalValue}">`;
+                        const input = cell.querySelector('input');
+                        input.focus();
+
+                        input.addEventListener('blur', function () {
+                            const newValue = input.value.trim();
+                            cell.textContent = newValue || originalValue;
+                            cell.classList.remove('editing');
+                        });
+
+                        cell.classList.add('editing');
+                    }
+                });
+            });
+        }
+
+        // Initial setup for existing rows
+        document.querySelectorAll('.table-row').forEach(row => {
+            handleEditableFields(row);
+        });
+    </script>
+
+</body>
+
+</html>
+
