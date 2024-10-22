@@ -823,7 +823,7 @@ body {
                         <i class="fas fa-user-group user-icon"></i>
                         <span>Add Contact</span>
                     </div>
-                    <div class="menu-item">
+                    <div class="menu-item location-icon">
                         <i class="fas fa-map-marker-alt location-icon"></i>
                         <span>Add Location</span>
                     </div>
@@ -1151,6 +1151,19 @@ body {
     
    
     const spinner = document.getElementById('spinner');
+
+   
+    document.querySelector(".location-icon").addEventListener('click', function(event) {
+            event.preventDefault();
+
+            // Show spinner for 3 seconds then redirect to dashboard.html
+            spinner.style.display = 'block';
+            spinner.style.position = "absolute";
+            setTimeout(() => {
+                spinner.style.display = 'none';
+                window.location.href = 'location-table.html';
+            }, 3000);
+        });
 
    document.querySelector(".logout-icon").addEventListener('click', function(event) {
             event.preventDefault();
