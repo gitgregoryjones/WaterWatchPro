@@ -1,7 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
+<html lang="en"><head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Water Watch Pro Insights</title>
@@ -15,6 +12,7 @@
             --accent-color: #EAF4F4;
             --text-color: white;
             --hover-color: #A4C3B2;
+            --header-color: rgba(0,0,0,.7)
         }
 
         body {
@@ -40,7 +38,7 @@
             border-radius: 15px;
             margin: 20px;
             padding: 15px 30px;
-            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 8px 15px var(--header-color);
         }
 
         .logo img {
@@ -103,8 +101,9 @@
         }
 
         .table-header {
-            background-color: var(--tertiary-color);
+            background-color: var(--header-color) !important;
             font-weight: bold;
+            text-decoration:underline;
         }
 
         .table-row:nth-child(even) {
@@ -181,7 +180,7 @@
     </style>
 </head>
 
-<body>
+<body cz-shortcut-listen="true">
     <header class="top-info">
     <div class="logo">
         <img src="https://img1.wsimg.com/isteam/ip/88056157-8118-4fa6-a40b-afa381a48cd5/Eye%20Words.png/:/rs=h:30" alt="Logo">
@@ -355,6 +354,220 @@ document.querySelector('header').addEventListener('click',()=> window.location.h
 </script>
 
 
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Water Watch Pro Insights</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #F6FFF8;
+            --secondary-color: #6B9080;
+            --tertiary-color: #A4C3B2;
+            --quaternary-color: #CCE3DE;
+            --accent-color: #EAF4F4;
+            --text-color: white;
+            --hover-color: #A4C3B2;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            color: var(--text-color);
+            margin: 0;
+            background: linear-gradient(to bottom, var(--primary-color), rgba(0, 0, 0, 0.6)),
+                url('https://gitgregoryjones.github.io/WaterWatchPro/Crew.jpeg') no-repeat center center/cover;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .container {
+            margin: 20px;
+        }
+
+        .top-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: rgba(0, 0, 0, 0.9);
+            border-radius: 15px;
+            margin: 20px;
+            padding: 15px 30px;
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .add-location-btn {
+            background-color: var(--secondary-color);
+            color: var(--text-color);
+            border: none;
+            padding: 10px 20px;
+            border-radius: 30px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: background-color 0.3s, box-shadow 0.3s;
+        }
+
+        .add-location-btn i {
+            font-size: 1.2rem;
+        }
+
+        .add-location-btn:hover {
+            background-color: var(--hover-color);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        .table {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            border: 1px solid var(--tertiary-color);
+            border-radius: 10px;
+            background-color: var(--secondary-color);
+            overflow: visible;
+            margin-top: 20px;
+        }
+
+        .table-header,
+        .table-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px;
+            border-bottom: 1px solid var(--tertiary-color);
+        }
+
+        .table-header {
+            background-color: var(--tertiary-color);
+            font-weight: bold;
+        }
+
+        .table-row:nth-child(even) {
+            background-color: var(--hover-color);
+        }
+
+        .table-row:hover {
+            background-color: var(--hover-color);
+        }
+
+        .table-cell {
+            padding: 10px;
+            font-size: 1rem;
+            cursor:pointer;
+             &:hover {
+                border:1px dashed var(--text-color);
+                background-color: var(--header-color);
+            }
+        }
+
+        .table-cell input {
+            width: 100%;
+            padding: 5px;
+            text-align: center;
+            font-size: 1rem;
+           
+        }
+        
+        
+
+        .table-cell select {
+            padding: 5px;
+            border-radius: 5px;
+            background-color: var(--primary-color);
+            border: none;
+            color: var(--secondary-color);
+            font-size: 1rem;
+        }
+
+        /* Flexbox-based column sizing */
+        .location-cell {
+            flex: 3;
+        }
+
+        .latlong-cell {
+            flex: 1;
+        }
+
+        .status-cell {
+            flex: 1.5;
+        }
+
+        .contact-cell {
+            flex: 4;
+            display: flex;
+            position: relative;
+            flex-direction:column;
+        }
+
+        .contact-input {
+            width: 100%;
+            padding: 5px;
+            border: 1px solid var(--tertiary-color);
+            border-radius: 5px;
+        }
+
+        .contact-list {
+            position: absolute;
+            background-color: var(--primary-color);
+            border: 1px solid var(--secondary-color);
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            max-height: 150px;
+            overflow-y: auto;
+            z-index: 10;
+            width: 100%;
+        }
+
+        .contact-list li {
+            padding: 5px;
+            cursor: pointer;
+            z-index: 100;
+            color: black;
+        }
+
+        .contact-list li:hover {
+            background-color: var(--hover-color);
+            color: var(--text-color);
+        }
+
+        .selected-contact {
+            border: 1px solid var(--secondary-color);
+            border-radius: 20px;
+            padding: 5px 10px;
+            background-color: var(--tertiary-color);
+            color: var(--text-color);
+            display: inline-block;
+            margin-right: 10px;
+            max-width: 80px;
+            position: relative;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+        }
+
+        .selected-contact .fa-times-circle {
+            position: absolute;
+            top: 2px;
+            right: 2px;
+            font-size: 12px;
+            color: red;
+            cursor: pointer;
+        }
+        .assigned-customers {
+            display: flex;
+            flex:1;
+            flex-direction:row;
+            flex-wrap:wrap;
+            
+        }
+    </style>
+
+
+
     <div class="container">
         <button class="add-location-btn" id="addLocationBtn">
             <i class="fas fa-plus"></i>
@@ -363,91 +576,61 @@ document.querySelector('header').addEventListener('click',()=> window.location.h
 
         <div class="table">
             <div class="table-header">
-                <div class="table-cell">Location Name</div>
-                <div class="table-cell">Longitude</div>
-                <div class="table-cell">Latitude</div>
-                <div class="table-cell">Status</div>
-                <div class="table-cell">Contact Name</div>
+                <div class="table-cell location-cell">Location Name</div>
+                <div class="table-cell latlong-cell">Longitude</div>
+                <div class="table-cell latlong-cell">Latitude</div>
+                <div class="table-cell status-cell">Status</div>
+                <div class="table-cell contact-cell">Contact Name</div>
             </div>
 
             <div class="table-body" id="tableBody">
                 <div class="table-row">
-                    <div class="table-cell editable" data-field="location">Atlanta Central</div>
-                    <div class="table-cell editable" data-field="longitude">-84.3880</div>
-                    <div class="table-cell editable" data-field="latitude">33.7490</div>
-                    <div class="table-cell status" data-field="status">
+                    <div class="table-cell location-cell editable" data-field="location" placeholder="Enter Location Name">Atlanta Central</div>
+                    <div class="table-cell latlong-cell editable" data-field="longitude">-84.3880</div>
+                    <div class="table-cell latlong-cell editable" data-field="latitude">33.7490</div>
+                    <div class="table-cell status-cell" data-field="status">
                         <select>
                             <option value="Active">Active</option>
                             <option value="Archived">Archived</option>
                         </select>
                     </div>
-                    <div class="table-cell contact" data-field="contact">
-                        <input type="text" class="contact-input" placeholder="Search contact...">
+                    <div class="table-cell contact-cell" data-field="contact">
+                        <input type="text" class="contact-input" placeholder="Type to assign contact">
                         <ul class="contact-list" style="display:none;"></ul>
+                        <div class="assigned-customers"></div>
                     </div>
                 </div>
 
                 <div class="table-row">
-                    <div class="table-cell editable" data-field="location">Brookhaven South</div>
-                    <div class="table-cell editable" data-field="longitude">-84.3350</div>
-                    <div class="table-cell editable" data-field="latitude">33.8565</div>
-                    <div class="table-cell status" data-field="status">
+                    <div class="table-cell location-cell editable" data-field="location">Brookhaven South</div>
+                    <div class="table-cell latlong-cell editable" data-field="longitude">-84.3350</div>
+                    <div class="table-cell latlong-cell editable" data-field="latitude">33.8565</div>
+                    <div class="table-cell status-cell" data-field="status">
                         <select>
                             <option value="Active">Active</option>
                             <option value="Archived">Archived</option>
                         </select>
                     </div>
-                    <div class="table-cell contact" data-field="contact">
-                        <input type="text" class="contact-input" placeholder="Search contact...">
+                    <div class="table-cell contact-cell" data-field="contact">
+                        <input type="text" class="contact-input" placeholder="Type to assign contact">
                         <ul class="contact-list" style="display:none;"></ul>
-                    </div>
-                </div>
-                <div class="table-row">
-                    <div class="table-cell editable" data-field="location">ATL/15</div>
-                    <div class="table-cell editable" data-field="longitude">-4.3350</div>
-                    <div class="table-cell editable" data-field="latitude">13.8565</div>
-                    <div class="table-cell status" data-field="status">
-                        <select>
-                            <option value="Active">Active</option>
-                            <option value="Archived">Archived</option>
-                        </select>
-                    </div>
-                    <div class="table-cell contact" data-field="contact">
-                        <input type="text" class="contact-input" placeholder="Search contact...">
-                        <ul class="contact-list" style="display:none;"></ul>
-                    </div>
-                </div>
-                <div class="table-row">
-                    <div class="table-cell editable" data-field="location">Chicago/ DL10</div>
-                    <div class="table-cell editable" data-field="longitude">-24.350</div>
-                    <div class="table-cell editable" data-field="latitude">23.8565</div>
-                    <div class="table-cell status" data-field="status">
-                        <select>
-                            <option value="Active">Active</option>
-                            <option value="Archived">Archived</option>
-                        </select>
-                    </div>
-                    <div class="table-cell contact" data-field="contact">
-                        <input type="text" class="contact-input" placeholder="Search contact...">
-                        <ul class="contact-list" style="display:none;"></ul>
+                         <div class="assigned-customers"></div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
+    
+
+
+
+
+
     <script>
        const contacts = ['John Smith', 'Jane Doe', 'Sarah Brown', 'Bob Johnson', 'Alice Green'];
-
-document.querySelectorAll('.contact-input').forEach(input => {
-    input.addEventListener('input', function () {
-        const query = this.value.toLowerCase();
-        const list = this.nextElementSibling;
-        list.innerHTML = '';
-
-        if (query) {
-            const filteredContacts = contacts.filter(contact => contact.toLowerCase().includes(query));
-            filteredContacts.forEach(contact => {
+       
+       function displayUnassignedContacts(contact,input){
                 const listItem = document.createElement('li');
                 listItem.textContent = contact;
                 listItem.addEventListener('click', () => {
@@ -487,11 +670,11 @@ document.querySelectorAll('.contact-input').forEach(input => {
                     contactDiv.append(closeIcon);
 
                     // Append the contact div to the cell
-                    this.parentElement.appendChild(contactDiv);
+                    input.parentElement.querySelector('.assigned-customers').appendChild(contactDiv);
                     input.value = ''; // Clear the input field
 
                     // Hide the contact list
-                    list.style.display = 'none';
+                    //list.style.display = 'none';
 
                     // Add event listener to the close icon to remove the contact div
                     closeIcon.addEventListener('click', () => {
@@ -499,8 +682,21 @@ document.querySelectorAll('.contact-input').forEach(input => {
                     });
                 });
 
-                list.appendChild(listItem);
+               return listItem;
+        }
+document.querySelectorAll('.contact-input').forEach(input => {
+    input.addEventListener('input', function () {
+        const query = this.value.toLowerCase();
+        const list = this.nextElementSibling;
+        list.innerHTML = '';
+
+        if (query) {
+            const filteredContacts = contacts.filter(contact => contact.toLowerCase().includes(query));
+            filteredContacts.forEach((contact) => {
+                list.appendChild(displayUnassignedContacts(contact,input));
             });
+
+                //list.appendChild(listItem);
             list.style.display = 'block';
         } else {
             list.style.display = 'none';
@@ -519,9 +715,17 @@ document.querySelectorAll('.contact-input').forEach(input => {
         const tableBody = document.getElementById('tableBody');
 
         addLocationBtn.addEventListener('click', () => {
-            const newRow = document.createElement('div');
+            var newRow = document.createElement('div');
             newRow.classList.add('table-row');
-
+            
+            newRow = document.querySelector('.table-row').cloneNode(true);
+            
+            /*
+            Array.from(newRow.querySelectorAll('.table-row .table-cell')).forEach(cell => cell.textContent = '');*/
+            
+            
+            
+            /*
             newRow.innerHTML = `
                 <div class="table-cell editable">
                     <input type="text" placeholder="Enter Location Name" required>
@@ -541,10 +745,13 @@ document.querySelectorAll('.contact-input').forEach(input => {
                 <div class="table-cell contact">
                     <input type="text" class="contact-input" placeholder="Search contact...">
                     <ul class="contact-list" style="display:none;"></ul>
+                    <div class="assigned-customers"></div>
                 </div>
-            `;
+            `;*/
 
             tableBody.insertBefore(newRow, tableBody.firstChild);
+            
+            
 
             // Apply the same contact search functionality to the new row
             newRow.querySelectorAll('.contact-input').forEach(input => {
@@ -555,33 +762,12 @@ document.querySelectorAll('.contact-input').forEach(input => {
 
                     if (query) {
                         const filteredContacts = contacts.filter(contact => contact.toLowerCase().includes(query));
-                        filteredContacts.forEach(contact => {
-                            const listItem = document.createElement('li');
-                            listItem.textContent = contact;
-                            listItem.addEventListener('click', () => {
-                                const contactDiv = document.createElement('div');
-                                contactDiv.classList.add('selected-contact');
-                                contactDiv.textContent = contact;
+                         filteredContacts.forEach((contact) => {
+                            list.appendChild(displayUnassignedContacts(contact,input));
+                         });
 
-                                contactDiv.style.border = '1px solid var(--secondary-color)';
-                                contactDiv.style.borderRadius = '20px';
-                                contactDiv.style.padding = '5px 10px';
-                                contactDiv.style.backgroundColor = 'var(--tertiary-color)';
-                                contactDiv.style.color = 'var(--text-color)';
-                                contactDiv.style.display = 'inline-block';
-                                contactDiv.style.marginRight = '10px';
-
-                                // Append the contact div to the cell
-                                this.parentElement.appendChild(contactDiv);
-                                input.value = ''; // Clear the input field
-
-                                // Hide the contact list
-                                list.style.display = 'none';
-                            });
-
-                            list.appendChild(listItem);
-                        });
-                        list.style.display = 'block';
+                //list.appendChild(listItem);
+            list.style.display = 'block';
                     } else {
                         list.style.display = 'none';
                     }
@@ -596,6 +782,12 @@ document.querySelectorAll('.contact-input').forEach(input => {
 
             // Make the other fields editable as well
             handleEditableFields(newRow);
+            
+            document.querySelector('.table-body .table-row .table-cell').textContent += ' Copy';
+            
+            document.querySelector('.table-body .table-row .table-cell .assigned-customers').textContent = '';
+            
+            document.querySelector('.table-body .table-row .table-cell').click();
         });
 
         // Function to handle editing of fields
@@ -628,6 +820,7 @@ document.querySelectorAll('.contact-input').forEach(input => {
         });
     </script>
 
-</body>
 
-</html>
+
+
+</body></html>
