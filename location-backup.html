@@ -1,0 +1,850 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Water Watch Pro Insights</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #F6FFF8;
+            --secondary-color: #6B9080;
+            --tertiary-color: #A4C3B2;
+            --quaternary-color: #CCE3DE;
+            --accent-color: #EAF4F4;
+            --text-color: white;
+            --hover-color: #A4C3B2;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            color: var(--text-color);
+            margin: 0;
+            background: linear-gradient(to bottom, var(--primary-color), rgba(0, 0, 0, 0.6)),
+                url('https://gitgregoryjones.github.io/WaterWatchPro/Crew.jpeg') no-repeat center center/cover;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .container {
+            margin: 20px;
+        }
+
+        .top-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: rgba(0, 0, 0, 0.9);
+            border-radius: 15px;
+            margin: 20px;
+            padding: 15px 30px;
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .logo img {
+            height: 30px;
+        }
+
+        .user-info {
+            display: none;
+            align-items: center;
+        }
+
+        .user-info img {
+            height: 40px;
+            width: 40px;
+            border-radius: 50%;
+        }
+
+        .add-location-btn {
+            background-color: var(--secondary-color);
+            color: var(--text-color);
+            border: none;
+            padding: 10px 20px;
+            border-radius: 30px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: background-color 0.3s, box-shadow 0.3s;
+        }
+
+        .add-location-btn i {
+            font-size: 1.2rem;
+        }
+
+        .add-location-btn:hover {
+            background-color: var(--hover-color);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        .table {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            border: 1px solid var(--tertiary-color);
+            border-radius: 10px;
+            background-color: var(--secondary-color);
+            overflow: visible;
+            margin-top: 20px;
+        }
+
+        .table-header,
+        .table-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px;
+            border-bottom: 1px solid var(--tertiary-color);
+        }
+
+        .table-header {
+            background-color: var(--tertiary-color);
+            font-weight: bold;
+        }
+
+        .table-row:nth-child(even) {
+            background-color: var(--hover-color);
+        }
+
+        .table-row:hover {
+            background-color: var(--hover-color);
+        }
+
+        .table-cell {
+            flex: 1;
+            text-align: center;
+            padding: 10px;
+            font-size: 1rem;
+        }
+
+        .table-cell input {
+            width: 100%;
+            padding: 5px;
+            text-align: center;
+            font-size: 1rem;
+        }
+
+        .table-cell select {
+            padding: 5px;
+            border-radius: 5px;
+            background-color: var(--primary-color);
+            border: none;
+            color: var(--secondary-color);
+            font-size: 1rem;
+        }
+
+        .editable input,
+        .editable select {
+            width: 100%;
+        }
+
+        .table-cell.contact {
+            position: relative;
+        }
+
+        .contact-input {
+            width: 100%;
+            padding: 5px;
+            border: 1px solid var(--tertiary-color);
+            border-radius: 5px;
+        }
+
+        .contact-list {
+            position: absolute;
+            background-color: var(--primary-color);
+            border: 1px solid var(--secondary-color);
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            max-height: 150px;
+            overflow-y: auto;
+            z-index: 10;
+            width: 100%;
+        }
+
+        .contact-list li {
+            padding: 5px;
+            cursor: pointer;
+            z-index: 100;
+            color: black;
+        }
+
+        .contact-list li:hover {
+            background-color: var(--hover-color);
+            color: var(--text-color);
+        }
+    </style>
+</head>
+
+<body>
+    <header class="top-info">
+    <div class="logo">
+        <img src="https://img1.wsimg.com/isteam/ip/88056157-8118-4fa6-a40b-afa381a48cd5/Eye%20Words.png/:/rs=h:30" alt="Logo">
+    </div>
+    <div class="user-info">
+        <img src="https://i.pravatar.cc/50" alt="Profile Picture">
+        <p class="user-name">Foreman James</p>
+    </div>
+    <div class="hamburger-menu">
+        <i class="fas fa-bars hamburger-icon"></i> <!-- Hamburger icon -->
+
+        <!-- Dropdown Menu -->
+        <div class="dropdown-menu">
+            <div class="menu-item">
+                <i class="fas fa-user-group user-icon"></i>
+                <span>Add Contact</span>
+            </div>
+            <div class="menu-item">
+                <i class="fas fa-map-marker-alt location-icon"></i>
+                <span>Add Location</span>
+            </div>
+            <div class="menu-item">
+                <i class="fas fa-file-alt report-icon"></i>
+                <span>Reports</span>
+            </div>
+            <div class="menu-item">
+                <i class="fas fa-edit profile-icon"></i>
+                <span>My Profile</span>
+            </div>
+            <div class="menu-item logout-icon">
+                <i class="fas fa-sign-out-alt logout-icon"></i>
+                <span>Logout</span>
+            </div>
+            <p>Themes</p>
+            <hr>
+            <div class="menu-item" onclick="handleThemeChange('blue')">
+                <span>Blue</span>
+            </div>
+            <div class="menu-item" onclick="handleThemeChange('green')">
+                <span>Green</span>
+            </div>
+            <div class="menu-item" onclick="handleThemeChange('muted')">
+                <span>Muted</span>
+            </div>
+            <div class="menu-item" onclick="handleThemeChange('summer')">
+                <span>Fall</span>
+            </div>
+            <div class="menu-item" onclick="handleThemeChange('dark')">
+                <span>Dark</span>
+            </div>
+        </div>
+    </div>
+</header>
+
+<style>
+:root {
+    --primary-color: #F6FFF8;
+    --secondary-color: #6B9080;
+    --tertiary-color: #A4C3B2;
+    --quaternary-color: #CCE3DE;
+    --accent-color: #EAF4F4;
+    --text-color: white;
+    --hover-color: #A4C3B2;
+}
+
+body {
+    background-color: var(--primary-color);
+    font-family: 'Roboto', sans-serif;
+    color: var(--text-color);
+    margin: 20px;
+    background: linear-gradient(to bottom, var(--primary-color), rgba(0, 0, 0, 0.6)),
+        url('https://gitgregoryjones.github.io/WaterWatchPro/Crew.jpeg') no-repeat center center/cover;
+}
+
+.top-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.9);
+    border-radius: 15px;
+    margin: 2rem;
+    padding: 15px 30px;
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+}
+
+.logo img {
+    height: 30px;
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    display:none;
+}
+
+.user-info img {
+    border-radius: 50%;
+    height: 50px;
+    width: 50px;
+}
+
+.hamburger-menu {
+    position: relative;
+    display: inline-block;
+}
+
+.hamburger-icon {
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: var(--text-color);
+}
+
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    top: 40px;
+    right: 0;
+    background-color: var(--secondary-color);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    overflow: hidden;
+    z-index: 1000;
+    width:max-content;
+}
+
+.dropdown-menu.active {
+    display: block;
+}
+
+.menu-item {
+    display: flex;
+    align-items: center;
+    padding: 10px 20px;
+    cursor: pointer;
+    color: var(--text-color);
+}
+
+.menu-item:hover {
+    background-color: var(--hover-color);
+}
+
+.menu-item i {
+    margin-right: 10px;
+}
+
+.logout-icon {
+    color: #FF6B6B;
+}
+
+.user-icon, .location-icon, .report-icon, .profile-icon {
+    color: var(--text-color);
+}
+</style>
+
+<script>
+const hamburgerIcon = document.querySelector('.hamburger-icon');
+const dropdownMenu = document.querySelector('.dropdown-menu');
+
+hamburgerIcon.addEventListener('click', (e) => {
+    e.stopPropagation();
+    dropdownMenu.classList.toggle('active');
+});
+
+document.addEventListener('click', (e) => {
+    if (!hamburgerIcon.contains(e.target) && !dropdownMenu.contains(e.target)) {
+        dropdownMenu.classList.remove('active');
+    }
+});
+document.querySelector('header').addEventListener('click',()=> window.location.href='dashboard.html');
+</script>
+
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Water Watch Pro Insights</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #F6FFF8;
+            --secondary-color: #6B9080;
+            --tertiary-color: #A4C3B2;
+            --quaternary-color: #CCE3DE;
+            --accent-color: #EAF4F4;
+            --text-color: white;
+            --hover-color: #A4C3B2;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            color: var(--text-color);
+            margin: 0;
+            background: linear-gradient(to bottom, var(--primary-color), rgba(0, 0, 0, 0.6)),
+                url('https://gitgregoryjones.github.io/WaterWatchPro/Crew.jpeg') no-repeat center center/cover;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .container {
+            margin: 20px;
+        }
+
+        .top-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: rgba(0, 0, 0, 0.9);
+            border-radius: 15px;
+            margin: 20px;
+            padding: 15px 30px;
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .add-location-btn {
+            background-color: var(--secondary-color);
+            color: var(--text-color);
+            border: none;
+            padding: 10px 20px;
+            border-radius: 30px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: background-color 0.3s, box-shadow 0.3s;
+        }
+
+        .add-location-btn i {
+            font-size: 1.2rem;
+        }
+
+        .add-location-btn:hover {
+            background-color: var(--hover-color);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        .table {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            border: 1px solid var(--tertiary-color);
+            border-radius: 10px;
+            background-color: var(--secondary-color);
+            overflow: visible;
+            margin-top: 20px;
+        }
+
+        .table-header,
+        .table-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px;
+            border-bottom: 1px solid var(--tertiary-color);
+        }
+
+        .table-header {
+            background-color: var(--tertiary-color);
+            font-weight: bold;
+        }
+
+        .table-row:nth-child(even) {
+            background-color: var(--hover-color);
+        }
+
+        .table-row:hover {
+            background-color: var(--hover-color);
+        }
+
+        .table-cell {
+            padding: 10px;
+            font-size: 1rem;
+        }
+
+        .table-cell input {
+            width: 100%;
+            padding: 5px;
+            text-align: center;
+            font-size: 1rem;
+        }
+
+        .table-cell select {
+            padding: 5px;
+            border-radius: 5px;
+            background-color: var(--primary-color);
+            border: none;
+            color: var(--secondary-color);
+            font-size: 1rem;
+        }
+
+        /* Flexbox-based column sizing */
+        .location-cell {
+            flex: 3;
+        }
+
+        .latlong-cell {
+            flex: 1;
+        }
+
+        .status-cell {
+            flex: 1.5;
+        }
+
+        .contact-cell {
+            flex: 4;
+            display: flex;
+            position: relative;
+            flex-direction:column;
+        }
+
+        .contact-input {
+            width: 100%;
+            padding: 5px;
+            border: 1px solid var(--tertiary-color);
+            border-radius: 5px;
+        }
+
+        .contact-list {
+            position: absolute;
+            background-color: var(--primary-color);
+            border: 1px solid var(--secondary-color);
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            max-height: 150px;
+            overflow-y: auto;
+            z-index: 10;
+            width: 100%;
+        }
+
+        .contact-list li {
+            padding: 5px;
+            cursor: pointer;
+            z-index: 100;
+            color: black;
+        }
+
+        .contact-list li:hover {
+            background-color: var(--hover-color);
+            color: var(--text-color);
+        }
+
+        .selected-contact {
+            border: 1px solid var(--secondary-color);
+            border-radius: 20px;
+            padding: 5px 10px;
+            background-color: var(--tertiary-color);
+            color: var(--text-color);
+            display: inline-block;
+            margin-right: 10px;
+            max-width: 80px;
+            position: relative;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+        }
+
+        .selected-contact .fa-times-circle {
+            position: absolute;
+            top: 2px;
+            right: 2px;
+            font-size: 12px;
+            color: red;
+            cursor: pointer;
+        }
+        .assigned-customers {
+            display: flex;
+            flex:1;
+            flex-direction:row;
+            flex-wrap:wrap;
+            
+        }
+    </style>
+</head>
+
+
+    <div class="container">
+        <button class="add-location-btn" id="addLocationBtn">
+            <i class="fas fa-plus"></i>
+            Add Location
+        </button>
+
+        <div class="table">
+            <div class="table-header">
+                <div class="table-cell location-cell">Location Name</div>
+                <div class="table-cell latlong-cell">Longitude</div>
+                <div class="table-cell latlong-cell">Latitude</div>
+                <div class="table-cell status-cell">Status</div>
+                <div class="table-cell contact-cell">Contact Name</div>
+            </div>
+
+            <div class="table-body" id="tableBody">
+                <div class="table-row">
+                    <div class="table-cell location-cell editable" data-field="location">Atlanta Central</div>
+                    <div class="table-cell latlong-cell editable" data-field="longitude">-84.3880</div>
+                    <div class="table-cell latlong-cell editable" data-field="latitude">33.7490</div>
+                    <div class="table-cell status-cell" data-field="status">
+                        <select>
+                            <option value="Active">Active</option>
+                            <option value="Archived">Archived</option>
+                        </select>
+                    </div>
+                    <div class="table-cell contact-cell" data-field="contact">
+                        <input type="text" class="contact-input" placeholder="Search contact...">
+                        <ul class="contact-list" style="display:none;"></ul>
+                        <div class="assigned-customers"></div>
+                    </div>
+                </div>
+
+                <div class="table-row">
+                    <div class="table-cell location-cell editable" data-field="location">Brookhaven South</div>
+                    <div class="table-cell latlong-cell editable" data-field="longitude">-84.3350</div>
+                    <div class="table-cell latlong-cell editable" data-field="latitude">33.8565</div>
+                    <div class="table-cell status-cell" data-field="status">
+                        <select>
+                            <option value="Active">Active</option>
+                            <option value="Archived">Archived</option>
+                        </select>
+                    </div>
+                    <div class="table-cell contact-cell" data-field="contact">
+                        <input type="text" class="contact-input" placeholder="Search contact...">
+                        <ul class="contact-list" style="display:none;"></ul>
+                         <div class="assigned-customers"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    
+</body>
+
+</html>
+
+
+    <script>
+       const contacts = ['John Smith', 'Jane Doe', 'Sarah Brown', 'Bob Johnson', 'Alice Green'];
+       
+       function displayUnassignedContacts(contact){
+                const listItem = document.createElement('li');
+                listItem.textContent = contact;
+                listItem.addEventListener('click', () => {
+                    // Create a div to hold the selected contact
+                    const contactDiv = document.createElement('div');
+                    contactDiv.classList.add('selected-contact');
+                    contactDiv.textContent = contact;
+
+                    // Style the contact div
+                    contactDiv.style.border = '1px solid var(--secondary-color)';
+                    contactDiv.style.borderRadius = '20px';
+                    contactDiv.style.padding = '5px 10px';
+                    contactDiv.style.backgroundColor = 'var(--tertiary-color)';
+                    contactDiv.style.color = 'var(--text-color)';
+                    contactDiv.style.display = 'inline-block';
+                    contactDiv.style.marginRight = '10px';
+                    contactDiv.style.fontSize = 'small';
+                    contactDiv.style.minWidth = '100px';
+                    contactDiv.style.position = 'relative';
+                    contactDiv.style.overflow = 'hidden';
+                    contactDiv.style.whiteSpace = 'nowrap';
+                    contactDiv.style.textOverflow = 'ellipsis';
+
+                    // Create the close icon using Font Awesome
+                    const closeIcon = document.createElement('i');
+                    closeIcon.classList.add('fas', 'fa-times-circle');
+                    closeIcon.style.position = 'absolute';
+                    closeIcon.style.top = '3';
+                    closeIcon.style.right = '3';
+                    closeIcon.style.fontSize = '12px';
+                    closeIcon.style.cursor = 'pointer';
+                    closeIcon.style.color = 'red';
+                    closeIcon.style.marginLeft ='.25rem';
+                    closeIcon.style.borderRadius = '50%';
+
+                    // Append the close icon to the contact div
+                    contactDiv.append(closeIcon);
+
+                    // Append the contact div to the cell
+                    this.parentElement.querySelector('.assigned-customers').appendChild(contactDiv);
+                    input.value = ''; // Clear the input field
+
+                    // Hide the contact list
+                    list.style.display = 'none';
+
+                    // Add event listener to the close icon to remove the contact div
+                    closeIcon.addEventListener('click', () => {
+                        contactDiv.remove();
+                    });
+                });
+
+               return listItem;
+        }
+document.querySelectorAll('.contact-input').forEach(input => {
+    input.addEventListener('input', function () {
+        const query = this.value.toLowerCase();
+        const list = this.nextElementSibling;
+        list.innerHTML = '';
+
+        if (query) {
+            const filteredContacts = contacts.filter(contact => contact.toLowerCase().includes(query));
+            filteredContacts.forEach((contact) => {list.appendChild(displayUnassignedContacts(contact)) });
+
+                //list.appendChild(listItem);
+            });
+            list.style.display = 'block';
+        } else {
+            list.style.display = 'none';
+        }
+    });
+
+    input.addEventListener('blur', function () {
+        setTimeout(() => {
+            this.nextElementSibling.style.display = 'none';
+        }, 200); // Add a short delay to allow clicking the contact
+    });
+});
+
+        // Add new location functionality
+        const addLocationBtn = document.getElementById('addLocationBtn');
+        const tableBody = document.getElementById('tableBody');
+
+        addLocationBtn.addEventListener('click', () => {
+            const newRow = document.createElement('div');
+            newRow.classList.add('table-row');
+
+            newRow.innerHTML = `
+                <div class="table-cell editable">
+                    <input type="text" placeholder="Enter Location Name" required>
+                </div>
+                <div class="table-cell editable">
+                    <input type="number" placeholder="Enter Longitude" required>
+                </div>
+                <div class="table-cell editable">
+                    <input type="number" placeholder="Enter Latitude" required>
+                </div>
+                <div class="table-cell status">
+                    <select>
+                        <option value="Active">Active</option>
+                        <option value="Archived">Archived</option>
+                    </select>
+                </div>
+                <div class="table-cell contact">
+                    <input type="text" class="contact-input" placeholder="Search contact...">
+                    <ul class="contact-list" style="display:none;"></ul>
+                    <div class="assigned-customers"></div>
+                </div>
+            `;
+
+            tableBody.insertBefore(newRow, tableBody.firstChild);
+
+            // Apply the same contact search functionality to the new row
+            newRow.querySelectorAll('.contact-input').forEach(input => {
+                input.addEventListener('input', function () {
+                    const query = this.value.toLowerCase();
+                    const list = this.nextElementSibling;
+                    list.innerHTML = '';
+
+                    if (query) {
+                        const filteredContacts = contacts.filter(contact => contact.toLowerCase().includes(query));
+                        filteredContacts.forEach(contact => {
+                const listItem = document.createElement('li');
+                listItem.textContent = contact;
+                listItem.addEventListener('click', () => {
+                    // Create a div to hold the selected contact
+                    const contactDiv = document.createElement('div');
+                    contactDiv.classList.add('selected-contact');
+                    contactDiv.textContent = contact;
+
+                    // Style the contact div
+                    contactDiv.style.border = '1px solid var(--secondary-color)';
+                    contactDiv.style.borderRadius = '20px';
+                    contactDiv.style.padding = '5px 10px';
+                    contactDiv.style.backgroundColor = 'var(--tertiary-color)';
+                    contactDiv.style.color = 'var(--text-color)';
+                    contactDiv.style.display = 'inline-block';
+                    contactDiv.style.marginRight = '10px';
+                    contactDiv.style.fontSize = 'small';
+                    contactDiv.style.minWidth = '100px';
+                    contactDiv.style.position = 'relative';
+                    contactDiv.style.overflow = 'hidden';
+                    contactDiv.style.whiteSpace = 'nowrap';
+                    contactDiv.style.textOverflow = 'ellipsis';
+
+                    // Create the close icon using Font Awesome
+                    const closeIcon = document.createElement('i');
+                    closeIcon.classList.add('fas', 'fa-times-circle');
+                    closeIcon.style.position = 'absolute';
+                    closeIcon.style.top = '3';
+                    closeIcon.style.right = '3';
+                    closeIcon.style.fontSize = '12px';
+                    closeIcon.style.cursor = 'pointer';
+                    closeIcon.style.color = 'red';
+                    closeIcon.style.marginLeft ='.25rem';
+                    closeIcon.style.borderRadius = '50%';
+
+                    // Append the close icon to the contact div
+                    contactDiv.append(closeIcon);
+
+                    // Append the contact div to the cell
+                    this.parentElement.querySelector('.assigned-customers').appendChild(contactDiv);
+                    input.value = ''; // Clear the input field
+
+                    // Hide the contact list
+                    list.style.display = 'none';
+
+                    // Add event listener to the close icon to remove the contact div
+                    closeIcon.addEventListener('click', () => {
+                        contactDiv.remove();
+                    });
+                });
+
+                list.appendChild(listItem);
+            });
+                        list.style.display = 'block';
+                    } else {
+                        list.style.display = 'none';
+                    }
+                });
+
+                input.addEventListener('blur', function () {
+                    setTimeout(() => {
+                        this.nextElementSibling.style.display = 'none';
+                    }, 200);
+                });
+            });
+
+            // Make the other fields editable as well
+            handleEditableFields(newRow);
+        });
+
+        // Function to handle editing of fields
+        function handleEditableFields(row) {
+            row.querySelectorAll('.table-cell.editable').forEach(cell => {
+                cell.addEventListener('click', function () {
+                    const originalValue = cell.textContent;
+                    const field = cell.dataset.field;
+
+                    if (!cell.classList.contains('editing')) {
+                        cell.innerHTML = `<input type="${field === 'longitude' || field === 'latitude' ? 'number' : 'text'}" value="${originalValue}">`;
+                        const input = cell.querySelector('input');
+                        input.focus();
+
+                        input.addEventListener('blur', function () {
+                            const newValue = input.value.trim();
+                            cell.textContent = newValue || originalValue;
+                            cell.classList.remove('editing');
+                        });
+
+                        cell.classList.add('editing');
+                    }
+                });
+            });
+        }
+
+        // Initial setup for existing rows
+        document.querySelectorAll('.table-row').forEach(row => {
+            handleEditableFields(row);
+        });
+    </script>
+
+</body>
+
+</html>
