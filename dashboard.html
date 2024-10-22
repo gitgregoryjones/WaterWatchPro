@@ -780,9 +780,7 @@ body {
             border-bottom: none;
         }
 
-        .current_city {
-            
-        }
+       
 </style>
 
 </head>
@@ -1296,7 +1294,7 @@ body {
     
     if(urlParams.has('city')){
         var theCity = urlParams.get('city')
-        document.querySelector('.current_city').textContent = theCity;
+        document.querySelector('#current_city').textContent = theCity;
     }
 </script>
 <script>
