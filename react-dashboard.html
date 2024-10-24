@@ -6,7 +6,7 @@
 <style>
 
     * {
-        font-size:.9rem;
+        
         font-family: Poppins;
     }
     
@@ -31,12 +31,52 @@
         
         Card {
             border:1px solid black;
-            height:20rem;
+            --height:20rem;
             border-radius:1rem;
-            --display:flex;
-            justify-content:center;
-            padding-top:1rem;
+            padding:1rem;
             text-align:center;
+            
+            
+            h1 {
+                text-align:left;
+                padding-left:1.5rem;
+                font-size:large;
+                
+                
+            }
+            
+            CardContent {
+                display: grid;
+                grid-template-columns: 1fr 1fr 1fr 1fr;
+                grid-template-rows: auto;
+                grid-template-areas: 
+                    "header header header header"
+                    "content content content content"
+                    "footer footer footer footer";
+                
+                    
+                --border:1px solid black;
+                
+                .header {
+                    
+                    grid-area: header;
+                }
+                
+                .content {
+                
+                    grid-area: content;
+                    
+                }
+                
+                .footer {
+                    grid-area:footer;
+                    --border: 1px solid black;
+                    
+                }
+                            
+            }
+            
+            
         }
         
         .cardBackground {
@@ -55,9 +95,18 @@
         display:flex;
         flex-direction:column;
         margin:auto;
-        
+        font-size:.9rem;
     
     }
+    
+    /* */
+    .rainfall-controls {
+        display:flex;
+        justify-content:space-around;
+        margin:1rem;
+    }
+    
+    
     
     PillSwap {
         
@@ -74,6 +123,7 @@
         
         
         
+        
         pill {
            background-color:var(--main-color);
             width:100%;
@@ -82,29 +132,45 @@
             padding-bottom:.25rem;
             transition: all .3s ease-in-out;
             border: none;
+            opacity: .15;
+            cursor:pointer;
         }
     }
     
     .active, a:visited {
-        background-color:var(--highlight-color) !important;
+        background-color:var(--main-color); !important;
+        opacity:1;
     }
+    
     
     
     
     header {
         display:flex;
         justify-content:center;
-        --border:1px solid black;
+        
         min-height:100;
         margin-bottom:1rem;
         padding-top:1rem;
         
     }
     
+    
+    .forecastCards {
+        margin:auto;
+        padding:.25rem;
+        color: var(--text-color);
+        font-weight:700;
+        min-width:5rem;
+        min-height:6rem;
+        text-transform:uppercase;
+        font-size:1rem;
+    }
+    
     @media(max-width:600px){
         
         * {
-            font-size:1rem;
+            --font-size:1rem;
         }
         
         .g {
@@ -119,12 +185,60 @@
     <header>header</header>
     <div class="g">
         <Card class="cardBackground">
+            <h1>Rainfall</h1>
             <PillSwap>
-            <Pill>24hr</Pill>
-            <Pill>1hr</Pill>
+            <Pill>Daily</Pill>
+            <Pill>Hourly</Pill>
             <Pill class="rapidrain">RAPIDRAIN</Pill>
             </PillSwap>
-            <p>Hello</p>
+            <CardContent>
+               <div class="header">hello</div>
+               
+               <div class="footer">
+                   <div class="rainfall-controls">
+                       <div>calendar</div>
+                       <div>Reports</div>
+                   </div>
+                   
+               </div>
+               
+            </CardContent>
+        </Card>
+        <Card class="cardBackground">
+            <h1>Forecast</h1>
+            <PillSwap>
+            <Pill class="active">National Forecast</Pill>
+            <Pill>Atlanta, GA</Pill>
+            </PillSwap>
+            <CardContent>
+               <div class="header">hello</div>
+               <div class="content" style="display:flex; justify-content:space-around">
+                   <Card class="cardBackground">
+                       <CardContent class="forecastCards">
+                           <div class="header">Mon</div>
+                           <div class="content">0.25</div>
+                       </CardContent>
+                       
+                   </Card>
+                   <Card class="cardBackground">
+                       <CardContent class="forecastCards">
+                           <div class="header">Tues</div>
+                           <div class="content">0.5</div>
+                       </CardContent>
+                       
+                   </Card>
+                   <Card class="cardBackground">
+                       <CardContent class="forecastCards">
+                           <div class="header">Wed</div>
+                           <div class="content">0.1</div>
+                       </CardContent>
+                       
+                   </Card>
+                   
+               </div>
+               
+               
+            </CardContent>
         </Card>
         <Card>Eggs</card>
         <Card>Bacon</card>
